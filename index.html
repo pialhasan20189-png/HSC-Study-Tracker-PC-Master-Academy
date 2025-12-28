@@ -373,7 +373,323 @@ document.addEventListener("DOMContentLoaded",()=>{
  if(localStorage.getItem("dark-mode")==="true")document.body.classList.add("dark");
 });
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Social Links Section -->
+<div class="social-links">
+  <a href="https://www.facebook.com/share/g/1CcTXUmsJt/" target="_blank" class="social-link">Facebook</a>
+  <a href="https://www.youtube.com/channel/UCuQqF74xSaxiIXX5GgeHaKA" target="_blank" class="social-link">YouTube</a>
+  <a href="https://t.me/PC_Master_Academy" target="_blank" class="social-link">Telegram Channel</a>
+</div>
+
+<style>
+  /* Social Links Section */
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+    margin-bottom: 30px; /* Added margin-bottom for space below the buttons */
+  }
+
+  .social-link {
+    display: block;
+    background-color: var(--box-light);
+    color: black; /* Default text color: Black */
+    padding: 6px 16px; /* Reduced padding to make the box height smaller */
+    font-size: 14px;
+    text-decoration: none;
+    border-radius: 6px; /* Slightly rounded corners */
+    transition: background-color 0.3s, color 0.3s;
+    text-align: center;
+    width: 120px;
+    border: 2px solid var(--accent-light); /* Border color */
+  }
+
+  .social-link:hover {
+    background-color: var(--accent-light);
+    color: var(--bg-dark); /* Color change on hover */
+  }
+
+  /* Dark Mode styling */
+  body.dark .social-link {
+    background-color: var(--box-dark);
+    color: white; /* Change text color to white in dark mode */
+    border: 2px solid var(--accent-dark); /* Dark mode border */
+  }
+
+  body.dark .social-link:hover {
+    background-color: var(--accent-dark);
+    color: var(--text-light); /* Change text color to light in dark mode */
+  }
+
+  @media(max-width: 600px) {
+    .social-links {
+      flex-direction: column;
+      gap: 10px;
+    }
+    .social-link {
+      width: auto;
+    }
+  }
+</style>
+
+
 </body>
 </html>
 
+
+
+
+
+<!-- Login Modal HTML -->
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <h2>Login</h2>
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="PC Master Academy" required />
+      <input type="password" id="password" placeholder="www.pcmasteracademy.com" required />
+      <div class="checkbox-container">
+        <label for="savePassword">Save Password</label>
+        <input type="checkbox" id="savePassword" />
+      </div>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+</div>
+
+<!-- Add the following CSS in your existing style section -->
+<style>
+ /* Modal Styles */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Fixed position */
+  top: 0;
+  left: 0;
+  width: 100%; /* Full-width */
+  height: 100%; /* Full-height */
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  justify-content: center; /* Center modal */
+  align-items: center;
+  z-index: 100;
+  padding: 20px;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: white;
+  padding: 25px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.3s ease;
+}
+
+/* Modal Animation */
+@keyframes slideIn {
+  0% {
+    transform: translateY(-50px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Modal Header */
+.modal h2 {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+/* Input Field Styling */
+.modal .input-container {
+  margin: 10px 0;
+}
+
+.modal input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+/* Focus Effect */
+.modal input:focus {
+  border-color: #2563eb;
+  outline: none;
+}
+
+/* Action Buttons */
+.modal .action-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.modal .action-container button {
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 45%;
+  border: none;
+}
+
+.modal .save-btn {
+  background-color: #2563eb;
+  color: white;
+}
+
+.modal .save-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.modal .never-btn {
+  background-color: #ccc;
+  color: black;
+}
+
+.modal .never-btn:hover {
+  background-color: #aaa;
+}
+
+/* Close Button */
+.modal .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 28px;
+  cursor: pointer;
+  color: #2563eb;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  .modal-content {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .modal button {
+    padding: 12px;
+    font-size: 14px;
+  }
+}
+
+</style>
+
+<!-- Add the following JavaScript at the end of your current script section -->
+<script>
+  // Function to show the login modal
+  const showLoginModal = () => {
+    const modal = document.getElementById("loginModal");
+    modal.style.display = "flex";
+  };
+
+  // Close the modal if the user clicks on the close button
+  document.querySelector(".close-btn").onclick = () => {
+    const modal = document.getElementById("loginModal");
+    modal.style.display = "none";
+  };
+
+  // Check if user has already logged in using localStorage
+  window.onload = function () {
+    const storedUsername = localStorage.getItem("username");
+    const storedPassword = localStorage.getItem("password");
+
+    if (storedUsername && storedPassword) {
+      // Auto-fill login fields
+      document.getElementById("username").value = storedUsername;
+      document.getElementById("password").value = storedPassword;
+      document.getElementById("savePassword").checked = true;
+      showLoginModal(); // Show the modal on page load if no login is done
+    } else {
+      showLoginModal(); // Show login modal on initial page load
+    }
+  };
+
+  // Handle form submission
+  document.getElementById("loginForm").onsubmit = function (e) {
+    e.preventDefault(); // Prevent default form submission
+
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const savePassword = document.getElementById("savePassword").checked;
+
+    // Check if username and password match
+    if (username === "PC Master Academy" && password === "www.pcmasteracademy.com") {
+      // Store username and password if 'Save Password' is checked
+      if (savePassword) {
+        localStorage.setItem("username", username);
+        localStorage.setItem("password", password);
+      }
+
+      // Close the login modal
+      document.getElementById("loginModal").style.display = "none";
+    } else {
+      alert("Incorrect username or password. Please try again.");
+    }
+  };
+</script>
+
+
+
+
+<script>
+// Prevent right-click (context menu) on the entire page
+document.addEventListener("contextmenu", function (e) {
+    e.preventDefault();
+});
+
+// Disable F12 (Developer Tools)
+document.onkeydown = function (e) {
+    if (e.keyCode === 123) { // F12 key
+        return false;
+    }
+    // Disable CTRL + SHIFT + I (Inspect Tools)
+    if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+        return false;
+    }
+    // Disable CTRL + U (View Source)
+    if (e.ctrlKey && e.keyCode === 85) {
+        return false;
+    }
+};
+
+// Prevent DevTools from opening when right-click is used in DevTools
+setInterval(function () {
+    if (window.innerWidth <= 500) {
+        return; // Skip on mobile devices
+    }
+    // Prevent opening DevTools (detecting certain keypress events)
+    if (typeof window.___devtools === 'undefined') {
+        window.___devtools = new Image();
+        window.___devtools.__defineGetter__('id', function () {
+            window.___devtools = undefined;
+            alert("Sorry, you cannot inspect this page.");
+            window.location.reload();
+        });
+    }
+}, 1000);
+</script>
 
