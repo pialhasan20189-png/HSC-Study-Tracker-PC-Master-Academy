@@ -637,7 +637,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     const savePassword = document.getElementById("savePassword").checked;
 
     // Check if username and password match
-    if (username === "PC Master Academy" && password === "www.pcmasteracademy.com") {
+    if (username === "" && password === "") {
       // Store username and password if 'Save Password' is checked
       if (savePassword) {
         localStorage.setItem("username", username);
@@ -692,4 +692,5 @@ setInterval(function () {
     }
 }, 1000);
 </script>
+
 
