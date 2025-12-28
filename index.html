@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HSC Study Tracker – EduSoft Final v9.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg-light:#f5f7fa;
+  --bg-dark:#0d1117;
+  --text-light:#1e2329;
+  --text-dark:#f0f0f0;
+  --accent-light:#3b82f6;
+  --accent-dark:#60a5fa;
+  --box-light:#ffffff;
+  --box-dark:#161b22;
+  --track-light:#dbe2ef;
+  --track-dark:#2d333b;
+}
+body {
+  font-family:'Hind Siliguri',sans-serif;
+  margin:0;
+  background:var(--bg-light);
+  color:var(--text-light);
+  transition:.4s ease;
+}
+body.dark {background:var(--bg-dark);color:var(--text-dark);}
+header {
+  background:linear-gradient(90deg,#2563eb,#3b82f6);
+  color:#fff;text-align:center;padding:14px;font-weight:600;
+  box-shadow:0 3px 10px rgba(59,130,246,0.3);
+}
+h1,h2{text-align:center;margin:10px 0;}
+.subjects {
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:15px;max-width:950px;margin:auto;padding:0 15px;
+}
+.subject-btn {
+  position:relative;border:2px solid var(--accent-light);
+  border-radius:12px;padding:20px;font-weight:600;
+  font-size:18px;text-align:center;cursor:pointer;
+  background:var(--box-light);color:var(--text-light);
+  transition:0.4s;overflow:hidden;box-shadow:0 4px 8px rgba(59,130,246,0.15);
+}
+body.dark .subject-btn {
+  border-color:var(--accent-dark);
+  background:var(--box-dark);
+  color:var(--text-dark);
+}
+.subject-btn.active {
+  background:linear-gradient(90deg,#2563eb,#3b82f6);
+  color:#fff;
+}
+.subject-btn:hover{transform:scale(1.03);}
+.progress-overlay {
+  position:absolute;bottom:0;left:0;height:6px;
+  background:linear-gradient(90deg,#2563eb,#3b82f6);
+  transition:width 0.5s;border-radius:0 0 8px 8px;
+}
+.progress-label {position:absolute;bottom:6px;right:10px;font-size:13px;opacity:0.8;}
+
+.total-progress {
+  max-width:950px;margin:25px auto;padding:10px 20px;
+  background:var(--box-light);
+  border-radius:12px;box-shadow:0 3px 10px rgba(59,130,246,0.15);
+}
+body.dark .total-progress {background:var(--box-dark);}
+.total-progress h3{
+  text-align:center;margin:0 0 10px;color:var(--accent-light);
+}
+body.dark .total-progress h3{color:#fff;}
+.total-bar {
+  background:var(--track-light);border-radius:10px;overflow:hidden;height:22px;
+}
+body.dark .total-bar{background:var(--track-dark);}
+.total-fill {
+  height:100%;width:0%;
+  background:linear-gradient(90deg,#2563eb,#3b82f6);
+  color:#fff;text-align:center;line-height:22px;
+  font-weight:600;font-size:13px;transition:width 0.4s;
+}
+
+.btns{text-align:center;margin:15px 0;}
+.btns button {
+  border:none;border-radius:6px;padding:8px 15px;margin:5px;
+  font-size:14px;color:#fff;
+  background:linear-gradient(90deg,#2563eb,#3b82f6);
+  cursor:pointer;transition:.3s;
+}
+.btns button:hover{transform:scale(1.05);}
+
+.paper-btns{text-align:center;margin-bottom:15px;}
+.paper-btn{
+  display:inline-block;border:2px solid var(--accent-light);border-radius:6px;
+  margin:5px;padding:7px 14px;cursor:pointer;background:var(--box-light);
+  transition:.3s;
+}
+body.dark .paper-btn{border-color:var(--accent-dark);background:var(--box-dark);}
+.paper-btn.active,.paper-btn:hover{
+  background:linear-gradient(90deg,#2563eb,#3b82f6);color:#fff;
+}
+.box{
+  background:var(--box-light);border:1px solid #ccc;border-radius:10px;
+  padding:15px;box-shadow:0 2px 6px rgba(59,130,246,0.15);transition:.3s;
+}
+body.dark .box{background:var(--box-dark);border-color:#444;}
+.box.complete{border-color:var(--accent-light);}
+.progress-bar{background:var(--track-light);border-radius:8px;overflow:hidden;height:20px;margin:10px 0;}
+body.dark .progress-bar{background:var(--track-dark);}
+.progress{
+  background:linear-gradient(90deg,#2563eb,#3b82f6);
+  height:100%;width:0%;color:#fff;text-align:center;line-height:20px;font-size:13px;transition:width .4s;
+}
+ul{list-style:none;padding:0;margin:10px 0;}
+li{margin:6px 0;font-size:15px;}
+.timestamp{font-size:12px;color:#777;margin-left:25px;}
+.congrats{text-align:center;font-weight:600;color:var(--accent-light);margin-top:10px;display:none;}
+body.dark .congrats{color:#fff;}
+.allcheck, .uncheck{
+  background:linear-gradient(90deg,#2563eb,#3b82f6);
+  color:#fff;border:none;border-radius:6px;padding:6px 12px;margin:5px;
+  cursor:pointer;font-size:13px;
+}
+.modal-bg{
+  position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);
+  display:none;align-items:center;justify-content:center;z-index:1000;
+}
+.modal{
+  background:var(--box-light);padding:20px;border-radius:10px;text-align:center;
+  box-shadow:0 0 10px rgba(0,0,0,0.3);color:var(--text-light);
+}
+body.dark .modal{background:var(--box-dark);color:var(--text-dark);}
+.modal button{margin:6px;padding:6px 12px;border:none;border-radius:5px;cursor:pointer;
+background:linear-gradient(90deg,#2563eb,#3b82f6);color:#fff;}
+@media(max-width:600px){.subject-btn{font-size:16px;padding:14px;}}
+</style>
+</head>
+
+<body>
+<header>Developed by Md. Pial Hasan, Department of CSE, DIU, Batch-70</header>
+<h1>📘 HSC Study Tracker – PC Master Academy</h1>
+<h2>বিষয় নির্বাচন করুন</h2>
+
+<div class="subjects" id="subjectContainer"></div>
+
+<div class="total-progress">
+  <h3>🎯 মোট অগ্রগতি</h3>
+  <div class="total-bar"><div class="total-fill" id="totalFill">0%</div></div>
+</div>
+
+<div class="btns">
+  <button onclick="toggleDarkMode()">🌙 ডার্ক মোড</button>
+  <button onclick="exportPDF()">🖨️ প্রিন্ট / PDF</button>
+</div>
+
+<div id="trackerArea"></div>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <p id="modalText">তুমি কি সব অধ্যায় একসাথে শেষ করেছো?</p>
+    <button id="yesBtn">হ্যাঁ</button>
+    <button id="noBtn">না</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+// ✅ Full Syllabus Data (unchanged)
+const subjects = {
+ "পদার্থবিজ্ঞান": {
+   "প্রথম পত্র": ["ভৌত জগৎ ও পরিমাপ","ভেক্টর","গতিবিদ্যা","নিউটনিয়ান বলবিদ্যা","কাজ শক্তি ও ক্ষমতা","মহাকর্ষ ও অভিকর্ষ","পদার্থের গাঠনিক ধর্ম","পর্যায়বৃত্ত গতি","তরঙ্গ","আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব"],
+   "দ্বিতীয় পত্র": ["তাপ গতিবিদ্যা","স্থির তড়িৎ","চল তড়িৎ","চৌম্বক ক্রিয়া ও চুম্বকত্ব","তড়িৎ চৌম্বকীয় আবেশ","জ্যামিতিক আলোকবিজ্ঞান","ভৌত আলোকবিজ্ঞান","আধুনিক পদার্থবিজ্ঞানের সূচনা","পরমাণুর মডেল","সেমিকন্ডাক্টর ও ইলেকট্রনিক্স","জ্যোতির্বিজ্ঞান"]
+ },
+ "রসায়ন": {
+   "প্রথম পত্র": ["ল্যাবরেটরির নিরাপদ ব্যবহার","গুণগত রসায়ন","মৌলের পর্যবৃত্ত ধর্ম ও রাসায়নিক বন্ধন","রাসায়নিক পরিবর্তন","কর্মমুখী রসায়ন"],
+   "দ্বিতীয় পত্র": ["পরিবেশ রসায়ন","জৈব রসায়ন","পরিমাণগত রসায়ন","তড়িৎ রসায়ন","অর্থনৈতিক রসায়ন"]
+ },
+ "জীববিজ্ঞান": {
+   "প্রথম পত্র": ["কোষ ও এর গঠন","কোষ বিভাজন","কোষ রসায়ন","অনুজীব","শৈবাল ও ছত্রাক","ব্রায়োফাইটা ও টেরিডোফাইটা","নগ্নবীজী ও আবৃতবীজী উদ্ভিদ","টিস্যু ও টিস্যু তন্ত্র","উদ্ভিদ শরীরতত্ত্ব","উদ্ভিদ প্রজনন","জীব প্রযুক্তি","জীবের পরিবেশ বিস্তার ও সংরক্ষণ"],
+   "দ্বিতীয় পত্র": ["প্রাণীর বিভিন্নতা ও শ্রেণীবিন্যাস","প্রাণীর পরিচিতি","মানব শরীর তত্ত্ব : পরিপাক ও শ্বসন","মানব শরীর তত্ত্ব : রক্ত সঞ্চালন","মানব শরীর তত্ত্ব : শ্বাসক্রিয়া ও শোষণ","বর্জ্য ও নিষ্কাশন","মানব শরীর তত্ত্ব : চলন ও অঙ্গ চালনা","সমন্বয় ও নিয়ন্ত্রণ","মানব জীবনের ধারাবাহিকতা","মানবদেহের প্রতিরক্ষা","জিনতত্ত্ব ও বিবর্তন","প্রাণীর আচরণ"]
+ },
+ "উচ্চতর গণিত": {
+   "প্রথম পত্র": ["ম্যাট্রিক্স নির্ণায়ক","ভেক্টর","সরলরেখা","বৃত্ত","বিন্যাস ও সমাবেশ","ত্রিকোণমিতিক অনুপাত","সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত","ফাংশন","অন্তরীকরণ","যোগজীকরণ"],
+   "দ্বিতীয় পত্র": ["বাস্তব সংখ্যা ও অসমতা","যোগাশ্রয়ী প্রোগ্রাম","জটিল সংখ্যা","বহুপদী সমীকরণ","দ্বিপদী বিস্তৃতি","কনিক","বিপরীত ত্রিকোণমিতিক ফাংশন ও ত্রিকোণমিতিক সমীকরণ","স্থিতিবিদ্যা","সমতলে বস্তুকণার গতি","বিস্তার পরিমাপ ও সম্ভাব্যতা"]
+ }
+};
+
+const subjectContainer=document.getElementById("subjectContainer");
+const trackerArea=document.getElementById("trackerArea");
+
+Object.keys(subjects).forEach(sub=>{
+ const div=document.createElement("div");
+ div.className="subject-btn";
+ div.innerHTML=`${sub}<div class='progress-overlay' id='prog-${sub}'></div><div class='progress-label' id='progLabel-${sub}'>0%</div>`;
+ div.onclick=()=>openSubject(sub,div);
+ subjectContainer.appendChild(div);
+ updateSubjectOverall(sub);
+});
+
+function openSubject(sub,btn){
+ document.querySelectorAll(".subject-btn").forEach(b=>b.classList.remove("active"));
+ btn.classList.add("active");
+ trackerArea.innerHTML=renderPapers(sub);
+}
+
+function renderPapers(sub){
+ let html="<div class='paper-btns'>";
+ Object.keys(subjects[sub]).forEach(p=>{
+   html+=`<span class='paper-btn' onclick="openPaper('${sub}','${p}',this)">${p}</span>`;
+ });
+ html+="</div><div id='paper-area'></div>";
+ return html;
+}
+
+function openPaper(sub,paper,btn){
+ document.querySelectorAll(".paper-btn").forEach(b=>b.classList.remove("active"));
+ btn.classList.add("active");
+ const topics=subjects[sub][paper];
+ let html=`<div class='box'><h3>${sub} – ${paper}</h3>
+ <button class='allcheck' onclick="confirmAll('${sub}','${paper}')">সবগুলো টিক চিহ্ন দাও</button>
+ <button class='uncheck' onclick="confirmUncheck('${sub}','${paper}')">সবগুলো টিক চিহ্ন উঠিয়ে নাও</button>
+ <div class='progress-bar'><div class='progress' id='progress-${sub}-${paper}'>0%</div></div><ul>`;
+ topics.forEach((t,i)=>{html+=`<li><input type='checkbox' data-id='${i+1}' data-sub='${sub}' data-paper='${paper}'> ${i+1}. ${t} <div class='timestamp' id='timestamp-${sub}-${paper}-${i+1}'></div></li>`});
+ html+=`</ul></div><div id='congrats-${sub}-${paper}' class='congrats'>অভিনন্দন! আপনি ${sub} (${paper}) সম্পন্ন করেছেন!</div>`;
+ document.getElementById("paper-area").innerHTML=html;
+ loadProgress(sub,paper);
+ bindCheckboxEvents(sub,paper);
+}
+
+function bindCheckboxEvents(sub,paper){
+ document.querySelectorAll(`input[data-sub='${sub}'][data-paper='${paper}']`).forEach(cb=>{
+   cb.onchange=()=>{
+     const id=cb.dataset.id;
+     const ts=document.getElementById(`timestamp-${sub}-${paper}-${id}`);
+     ts.textContent=cb.checked?`✅ শেষ: ${new Date().toLocaleString()}`:"";
+     updateProgress(sub,paper);
+   };
+ });
+}
+
+function updateProgress(sub,paper){
+ const all=document.querySelectorAll(`input[data-sub='${sub}'][data-paper='${paper}']`);
+ const done=[...all].filter(c=>c.checked).length;
+ const total=all.length;
+ const percent=total?Math.round((done/total)*100):0;
+ const bar=document.getElementById(`progress-${sub}-${paper}`);
+ if(bar){bar.style.width=percent+"%";bar.textContent=percent+"%";}
+ const congrats=document.getElementById(`congrats-${sub}-${paper}`);
+ const box=document.querySelector(".box");
+ if(percent===100){box.classList.add("complete");congrats.style.display="block";}else{box.classList.remove("complete");congrats.style.display="none";}
+ saveProgress(sub,paper);
+ updateSubjectOverall(sub);
+}
+
+function saveProgress(sub,paper){
+ const data=[...document.querySelectorAll(`input[data-sub='${sub}'][data-paper='${paper}']`)].map(cb=>{
+   const id=cb.dataset.id;
+   const ts=document.getElementById(`timestamp-${sub}-${paper}-${id}`);
+   return{checked:cb.checked,timestamp:ts.textContent};
+ });
+ localStorage.setItem(`progress-${sub}-${paper}`,JSON.stringify(data));
+}
+
+function loadProgress(sub,paper){
+ const saved=JSON.parse(localStorage.getItem(`progress-${sub}-${paper}`));
+ if(!saved)return;
+ saved.forEach((it,i)=>{
+   const cb=document.querySelector(`input[data-sub='${sub}'][data-paper='${paper}'][data-id='${i+1}']`);
+   const ts=document.getElementById(`timestamp-${sub}-${paper}-${i+1}`);
+   if(cb)cb.checked=it.checked;
+   if(ts)ts.textContent=it.timestamp;
+ });
+ updateProgress(sub,paper);
+}
+
+function updateSubjectOverall(sub){
+ let paperPercents=[];
+ Object.keys(subjects[sub]).forEach(paper=>{
+   const data=JSON.parse(localStorage.getItem(`progress-${sub}-${paper}`));
+   if(data){
+     const done=data.filter(x=>x.checked).length;
+     const total=data.length;
+     paperPercents.push(total?Math.round((done/total)*100):0);
+   }else{paperPercents.push(0);}
+ });
+ const avg=Math.round(paperPercents.reduce((a,b)=>a+b,0)/paperPercents.length);
+ const overlay=document.getElementById(`prog-${sub}`);
+ const label=document.getElementById(`progLabel-${sub}`);
+ if(overlay)overlay.style.width=avg+"%";
+ if(label)label.textContent=avg+"%";
+ updateTotalProgress();
+}
+
+function updateTotalProgress(){
+ let total=0;
+ const subs=Object.keys(subjects);
+ subs.forEach(s=>{
+   const label=document.getElementById(`progLabel-${s}`);
+   const val=label?parseInt(label.textContent)||0:0;
+   total+=val;
+ });
+ const avg=Math.round(total/subs.length);
+ const fill=document.getElementById("totalFill");
+ fill.style.width=avg+"%";
+ fill.textContent=avg+"%";
+}
+
+// ✅ সব টিক উঠিয়ে নাও
+function confirmUncheck(sub,paper){
+ const modal=document.getElementById("modalBg");
+ document.getElementById("modalText").textContent="তুমি কি সব টিক চিহ্ন উঠিয়ে ফেলতে চাও?";
+ modal.style.display="flex";
+ const yes=document.getElementById("yesBtn");
+ const no=document.getElementById("noBtn");
+ yes.onclick=()=>{
+   document.querySelectorAll(`input[data-sub='${sub}'][data-paper='${paper}']`).forEach(cb=>{
+     cb.checked=false;
+     const id=cb.dataset.id;
+     const ts=document.getElementById(`timestamp-${sub}-${paper}-${id}`);
+     if(ts)ts.textContent="";
+   });
+   modal.style.display="none";
+   updateProgress(sub,paper);
+ };
+ no.onclick=()=>modal.style.display="none";
+}
+
+// ✅ সব টিক দাও
+function confirmAll(sub,paper){
+ const modal=document.getElementById("modalBg");
+ document.getElementById("modalText").textContent="তুমি কি সব অধ্যায় একসাথে শেষ করেছো?";
+ modal.style.display="flex";
+ const yes=document.getElementById("yesBtn");
+ const no=document.getElementById("noBtn");
+ yes.onclick=()=>{
+   document.querySelectorAll(`input[data-sub='${sub}'][data-paper='${paper}']`).forEach(cb=>{
+     cb.checked=true;
+     const id=cb.dataset.id;
+     const ts=document.getElementById(`timestamp-${sub}-${paper}-${id}`);
+     if(ts)ts.textContent=`✅ শেষ: ${new Date().toLocaleString()}`;
+   });
+   modal.style.display="none";
+   updateProgress(sub,paper);
+ };
+ no.onclick=()=>modal.style.display="none";
+}
+
+// ✅ মোবাইল ও পিসি দুইয়ের জন্য প্রিন্ট / PDF একসাথে
+function exportPDF(){
+  const isMobile=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if(isMobile){
+    const element=document.body;
+    const opt={
+      margin:0.5,
+      filename:"HSC_Study_Tracker.pdf",
+      image:{type:"jpeg",quality:0.98},
+      html2canvas:{scale:2},
+      jsPDF:{unit:"in",format:"letter",orientation:"portrait"}
+    };
+    html2pdf().set(opt).from(element).save();
+  } else {
+    window.print();
+  }
+}
+
+function toggleDarkMode(){
+ document.body.classList.toggle("dark");
+ localStorage.setItem("dark-mode",document.body.classList.contains("dark"));
+}
+document.addEventListener("DOMContentLoaded",()=>{
+ if(localStorage.getItem("dark-mode")==="true")document.body.classList.add("dark");
+});
+</script>
+</body>
+</html>
