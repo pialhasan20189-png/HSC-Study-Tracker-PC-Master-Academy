@@ -44,15 +44,8 @@ h1,h2{text-align:center;margin:10px 0;}
   background:var(--box-light);color:var(--text-light);
   transition:0.4s;overflow:hidden;box-shadow:0 4px 8px rgba(59,130,246,0.15);
 }
-body.dark .subject-btn {
-  border-color:var(--accent-dark);
-  background:var(--box-dark);
-  color:var(--text-dark);
-}
-.subject-btn.active {
-  background:linear-gradient(90deg,#2563eb,#3b82f6);
-  color:#fff;
-}
+body.dark .subject-btn { border-color:var(--accent-dark); background:var(--box-dark); color:var(--text-dark); }
+.subject-btn.active { background:linear-gradient(90deg,#2563eb,#3b82f6); color:#fff; }
 .subject-btn:hover{transform:scale(1.03);}
 .progress-overlay {
   position:absolute;bottom:0;left:0;height:6px;
@@ -67,13 +60,9 @@ body.dark .subject-btn {
   border-radius:12px;box-shadow:0 3px 10px rgba(59,130,246,0.15);
 }
 body.dark .total-progress {background:var(--box-dark);}
-.total-progress h3{
-  text-align:center;margin:0 0 10px;color:var(--accent-light);
-}
+.total-progress h3{ text-align:center;margin:0 0 10px;color:var(--accent-light); }
 body.dark .total-progress h3{color:#fff;}
-.total-bar {
-  background:var(--track-light);border-radius:10px;overflow:hidden;height:22px;
-}
+.total-bar { background:var(--track-light);border-radius:10px;overflow:hidden;height:22px; }
 body.dark .total-bar{background:var(--track-dark);}
 .total-fill {
   height:100%;width:0%;
@@ -97,70 +86,39 @@ body.dark .total-bar{background:var(--track-dark);}
   transition:.3s;
 }
 body.dark .paper-btn{border-color:var(--accent-dark);background:var(--box-dark);}
-.paper-btn.active,.paper-btn:hover{
-  background:linear-gradient(90deg,#2563eb,#3b82f6);color:#fff;
-}
-.box{
-  background:var(--box-light);border:1px solid #ccc;border-radius:10px;
-  padding:15px;box-shadow:0 2px 6px rgba(59,130,246,0.15);transition:.3s;
-}
+.paper-btn.active,.paper-btn:hover{ background:linear-gradient(90deg,#2563eb,#3b82f6);color:#fff; }
+.box{ background:var(--box-light);border:1px solid #ccc;border-radius:10px; padding:15px; box-shadow:0 2px 6px rgba(59,130,246,0.15);transition:.3s; }
 body.dark .box{background:var(--box-dark);border-color:#444;}
-.box.complete{border-color:var(--accent-light);}
 .progress-bar{background:var(--track-light);border-radius:8px;overflow:hidden;height:20px;margin:10px 0;}
 body.dark .progress-bar{background:var(--track-dark);}
-.progress{
-  background:linear-gradient(90deg,#2563eb,#3b82f6);
-  height:100%;width:0%;color:#fff;text-align:center;line-height:20px;font-size:13px;transition:width .4s;
-}
+.progress{ background:linear-gradient(90deg,#2563eb,#3b82f6); height:100%;width:0%;color:#fff;text-align:center;line-height:20px;font-size:13px;transition:width .4s; }
 ul{list-style:none;padding:0;margin:10px 0;}
 li{margin:6px 0;font-size:15px;}
-.timestamp{font-size:12px;color:#777;margin-left:25px;}
+.timestamp{font-size:11px;color:#777;margin-left:25px;}
 
-.allcheck, .uncheck{
-  background:linear-gradient(90deg,#2563eb,#3b82f6);
-  color:#fff;border:none;border-radius:6px;padding:6px 12px;margin:5px;
-  cursor:pointer;font-size:13px;
-}
+.allcheck, .uncheck{ background:linear-gradient(90deg,#2563eb,#3b82f6); color:#fff;border:none;border-radius:6px;padding:6px 12px;margin:5px; cursor:pointer;font-size:13px; }
 
 /* Modal Styles */
-.modal-bg {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6);
-  display: none; align-items: center; justify-content: center; z-index: 1000;
-}
-.modal-content {
-  background: var(--box-light); padding: 25px; border-radius: 15px; text-align: center;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2); color: var(--text-light); width: 320px;
-  position: relative;
-}
+.modal-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; }
+.modal-content { background: var(--box-light); padding: 25px; border-radius: 15px; text-align: center; color: var(--text-light); width: 320px; position: relative; }
 body.dark .modal-content { background: var(--box-dark); color: var(--text-dark); }
+.modal-content button { margin: 10px 10px; padding: 10px 25px; border: none; border-radius: 8px; cursor: pointer; background: #3b82f6; color: #fff; font-size: 15px; font-weight: 600; }
 
-.modal-content p { font-size: 16px; margin-bottom: 20px; font-weight: 500; }
-.modal-content button {
-  margin: 0 10px; padding: 10px 25px; border: none; border-radius: 8px; cursor: pointer;
-  background: #3b82f6; color: #fff; font-size: 15px; font-weight: 600;
-}
-
-/* Login Modal Specific */
-.modal-login {
-  display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.7); justify-content: center; align-items: center; z-index: 2000;
-}
-.login-card {
-  background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 380px;
-  text-align: center; position: relative;
-}
+/* Login Modal */
+.modal-login { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); justify-content: center; align-items: center; z-index: 2000; }
+.login-card { background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 380px; text-align: center; position: relative; }
 .login-card h2 { color: #2563eb; font-size: 2em; margin-bottom: 25px; }
-.login-card input {
-  width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ccc;
-  box-sizing: border-box; font-size: 14px;
-}
-.login-card button {
-  width: 100%; padding: 12px; background: #2563eb; color: white; border: none;
-  border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 15px;
-}
+.login-card input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; }
+.login-card button { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; }
 .close-btn-login { position: absolute; top: 10px; right: 15px; font-size: 25px; cursor: pointer; color: #2563eb; }
 
-@media(max-width:600px){.subject-btn{font-size:16px;padding:14px;}}
+/* Social Links Section */
+.social-links { display: flex; justify-content: center; gap: 15px; margin-top: 30px; margin-bottom: 30px; }
+.social-link { display: block; background-color: var(--box-light); color: black; padding: 6px 16px; font-size: 14px; text-decoration: none; border-radius: 6px; transition: 0.3s; text-align: center; width: 120px; border: 2px solid var(--accent-light); }
+.social-link:hover { background-color: var(--accent-light); color: var(--bg-dark); }
+body.dark .social-link { background-color: var(--box-dark); color: white; border: 2px solid var(--accent-dark); }
+
+@media(max-width:600px){ .subject-btn{font-size:16px;padding:14px;} .social-links { flex-direction: column; align-items: center; } .social-link { width: 80%; } }
 </style>
 </head>
 
@@ -177,7 +135,7 @@ body.dark .modal-content { background: var(--box-dark); color: var(--text-dark);
 
 <div class="btns">
   <button onclick="toggleDarkMode()">🌙 ডার্ক মোড</button>
-  <button onclick="exportPDF()">🖨️ প্রিন্ট / PDF</button>
+  <button id="exportBtn" onclick="exportPDF()">🖨️ প্রিন্ট PDF</button>
 </div>
 
 <div id="trackerArea"></div>
@@ -210,9 +168,14 @@ body.dark .modal-content { background: var(--box-dark); color: var(--text-dark);
   </div>
 </div>
 
+<div class="social-links">
+  <a href="https://www.facebook.com/share/g/1CcTXUmsJt/" target="_blank" class="social-link">Facebook</a>
+  <a href="https://www.youtube.com/channel/UCuQqF74xSaxiIXX5GgeHaKA" target="_blank" class="social-link">YouTube</a>
+  <a href="https://t.me/s/PC_Master_Academy" target="_blank" rel="noopener noreferrer" class="social-link">Telegram Channel</a>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
-// Syllabus Data
 const subjects = {
  "পদার্থবিজ্ঞান": {
    "প্রথম পত্র": ["ভৌত জগৎ ও পরিমাপ","ভেক্টর","গতিবিদ্যা","নিউটনিয়ান বলবিদ্যা","কাজ শক্তি ও ক্ষমতা","মহাকর্ষ ও অভিকর্ষ","পদার্থের গাঠনিক ধর্ম","পর্যায়বৃত্ত গতি","তরঙ্গ","আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব"],
@@ -227,8 +190,8 @@ const subjects = {
    "দ্বিতীয় পত্র": ["প্রাণীর বিভিন্নতা ও শ্রেণীবিন্যাস","প্রাণীর পরিচিতি","মানব শরীর তত্ত্ব : পরিপাক ও শ্বসন","মানব শরীর তত্ত্ব : রক্ত সঞ্চালন","মানব শরীর তত্ত্ব : শ্বাসক্রিয়া ও শোষণ","বর্জ্য ও নিষ্কাশন","মানব শরীর তত্ত্ব : চলন ও অঙ্গ চালনা","সমন্বয় ও নিয়ন্ত্রণ","মানব জীবনের ধারাবাহিকতা","মানবদেহের প্রতিরক্ষা","জিনতত্ত্ব ও বিবর্তন","প্রাণীর আচরণ"]
  },
  "উচ্চতর গণিত": {
-   "প্রথম পত্র": ["ম্যাট্রিক্স নির্ণায়ক","ভেক্টর","সরলরেখা","বৃত্ত","বিন্যাস ও সমাবেশ","ত্রিকোণমিতিক অনুপাত","সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত","ফাংশন","অন্তরীকরণ","যোগজীকরণ"],
-   "দ্বিতীয় পত্র": ["বাস্তব সংখ্যা ও অসমতা","যোগাশ্রয়ী প্রোগ্রাম","জটিল সংখ্যা","বহুপদী সমীকরণ","দ্বিপদী বিস্তৃতি","কনিক","বিপরীত ত্রিকোণমিতিক ফাংশন ও ত্রিকোণমিতিক সমীকরণ","স্থিতিবিদ্যা","সমতলে বস্তুকণার গতি","বিস্তার পরিমাপ ও সম্ভাব্যতা"]
+   "প্রথম পত্র": ["ম্যাট্রিক্স নির্ণায়ক","ভেক্টর","সরলরেখা","বৃত্ত","বিন্যাস ও সমাবেশ","ত্রিকোণমিতিক অনুপাত","সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত","ফাংশন","অন্তরীকরণ","যোগজীকরণ"],
+   "দ্বিতীয় পত্র": ["বাস্তব সংখ্যা ও অসমতা","যোগাশ্রয়ী প্রোগ্রাম","জটিল সংখ্যা","বহুপদী সমীকরণ","দ্বিপদী বিস্তৃতি","কনিক","বিপরীত ত্রিকোণমিতিক ফাংশন ও ত্রিকোণমিতিক সমীকরণ","স্থিতিবিদ্যা","সমতলে বস্তুকণার গতি","বিস্তার পরিমাপ ও সম্ভাব্যতা"]
  }
 };
 
@@ -252,9 +215,7 @@ function openSubject(sub,btn){
 
 function renderPapers(sub){
  let html="<div class='paper-btns'>";
- Object.keys(subjects[sub]).forEach(p=>{
-   html+=`<span class='paper-btn' onclick="openPaper('${sub}','${p}',this)">${p}</span>`;
- });
+ Object.keys(subjects[sub]).forEach(p=>{ html+=`<span class='paper-btn' onclick="openPaper('${sub}','${p}',this)">${p}</span>`; });
  html+="</div><div id='paper-area'></div>";
  return html;
 }
@@ -265,10 +226,10 @@ function openPaper(sub,paper,btn){
  const topics=subjects[sub][paper];
  let html=`<div class='box'><h3>${sub} – ${paper}</h3>
  <button class='allcheck' onclick="confirmAll('${sub}','${paper}')">সবগুলো টিক চিহ্ন দাও</button>
- <button class='uncheck' onclick="confirmUncheck('${sub}','${paper}')">সবগুলো টিক চিহ্ন উঠিয়ে নাও</button>
+ <button class='uncheck' onclick="confirmUncheck('${sub}','${paper}')">সবগুলো টিক চিহ্ন উঠিয়ে নাও</button>
  <div class='progress-bar'><div class='progress' id='progress-${sub}-${paper}'>0%</div></div><ul>`;
- topics.forEach((t,i)=>{html+=`<li><input type='checkbox' data-id='${i+1}' data-sub='${sub}' data-paper='${paper}'> ${i+1}. ${t} <div class='timestamp' id='timestamp-${sub}-${paper}-${i+1}'></div></li>`});
- html+=`</ul></div><div id='congrats-${sub}-${paper}' style='display:none; text-align:center; color:#2563eb; font-weight:bold;'>অভিনন্দন! আপনি সম্পন্ন করেছেন!</div>`;
+ topics.forEach((t,i)=>{ html+=`<li><input type='checkbox' data-id='${i+1}' data-sub='${sub}' data-paper='${paper}'> ${i+1}. ${t} <div class='timestamp' id='timestamp-${sub}-${paper}-${i+1}'></div></li>` });
+ html+=`</ul></div>`;
  document.getElementById("paper-area").innerHTML=html;
  loadProgress(sub,paper);
  bindCheckboxEvents(sub,paper);
@@ -321,10 +282,7 @@ function updateSubjectOverall(sub){
  let paperPercents=[];
  Object.keys(subjects[sub]).forEach(paper=>{
    const data=JSON.parse(localStorage.getItem(`progress-${sub}-${paper}`));
-   if(data){
-     const done=data.filter(x=>x.checked).length;
-     const total=data.length;
-     paperPercents.push(total?Math.round((done/total)*100):0);
+   if(data){ const done=data.filter(x=>x.checked).length; const total=data.length; paperPercents.push(total?Math.round((done/total)*100):0);
    }else{paperPercents.push(0);}
  });
  const avg=Math.round(paperPercents.reduce((a,b)=>a+b,0)/paperPercents.length);
@@ -336,135 +294,109 @@ function updateSubjectOverall(sub){
 }
 
 function updateTotalProgress(){
- let total=0;
- const subs=Object.keys(subjects);
- subs.forEach(s=>{
-   const label=document.getElementById(`progLabel-${s}`);
-   const val=label?parseInt(label.textContent)||0:0;
-   total+=val;
- });
+ let total=0; const subs=Object.keys(subjects);
+ subs.forEach(s=>{ const label=document.getElementById(`progLabel-${s}`); const val=label?parseInt(label.textContent)||0:0; total+=val; });
  const avg=Math.round(total/subs.length);
  const fill=document.getElementById("totalFill");
- fill.style.width=avg+"%";
- fill.textContent=avg+"%";
+ if(fill){ fill.style.width=avg+"%"; fill.textContent=avg+"%"; }
 }
 
 function confirmUncheck(sub,paper){
- const modal=document.getElementById("confirmUncheckModal");
- modal.style.display="flex";
+ const modal=document.getElementById("confirmUncheckModal"); modal.style.display="flex";
  document.getElementById("confirmUncheckYesBtn").onclick=()=>{
-   document.querySelectorAll(`input[data-sub='${sub}'][data-paper='${paper}']`).forEach(cb=>{
-     cb.checked=false;
-     document.getElementById(`timestamp-${sub}-${paper}-${cb.dataset.id}`).textContent="";
-   });
-   modal.style.display="none";
-   updateProgress(sub,paper);
+   document.querySelectorAll(`input[data-sub='${sub}'][data-paper='${paper}']`).forEach(cb=>{ cb.checked=false; document.getElementById(`timestamp-${sub}-${paper}-${cb.dataset.id}`).textContent=""; });
+   modal.style.display="none"; updateProgress(sub,paper);
  };
  document.getElementById("confirmUncheckNoBtn").onclick=()=>modal.style.display="none";
 }
 
 function confirmAll(sub,paper){
- const modal=document.getElementById("confirmAllModal");
- modal.style.display="flex";
+ const modal=document.getElementById("confirmAllModal"); modal.style.display="flex";
  document.getElementById("confirmAllYesBtn").onclick=()=>{
-   document.querySelectorAll(`input[data-sub='${sub}'][data-paper='${paper}']`).forEach(cb=>{
-     cb.checked=true;
-     document.getElementById(`timestamp-${sub}-${paper}-${cb.dataset.id}`).textContent=`✅ শেষ: ${new Date().toLocaleString()}`;
-   });
-   modal.style.display="none";
-   updateProgress(sub,paper);
+   document.querySelectorAll(`input[data-sub='${sub}'][data-paper='${paper}']`).forEach(cb=>{ cb.checked=true; document.getElementById(`timestamp-${sub}-${paper}-${cb.dataset.id}`).textContent=`✅ শেষ: ${new Date().toLocaleString()}`; });
+   modal.style.display="none"; updateProgress(sub,paper);
  };
  document.getElementById("confirmAllNoBtn").onclick=()=>modal.style.display="none";
 }
 
 const hideLogin = () => document.getElementById("loginModal").style.display = "none";
-
 window.onload = function () {
   const loginFlag = localStorage.getItem("isLoggedIn");
-  if (loginFlag === "true") {
-    hideLogin();
-  } else {
-    document.getElementById("loginModal").style.display = "flex";
-  }
+  if (loginFlag === "true") { hideLogin(); } else { document.getElementById("loginModal").style.display = "flex"; }
 };
 
 document.getElementById("loginForm").onsubmit = function (e) {
   e.preventDefault();
   const u = document.getElementById("username").value;
   const p = document.getElementById("password").value;
-  if (u === "PC Master Academy" && p === "www.pcmasteracademy.com") {
-    localStorage.setItem("isLoggedIn", "true");
-    hideLogin();
-  } else {
-    alert("ভুল ইউজারনেম বা পাসওয়ার্ড। আবার চেষ্টা করুন।");
-  }
+  if (u === "PC Master Academy" && p === "www.pcmasteracademy.com") { localStorage.setItem("isLoggedIn", "true"); hideLogin(); } 
+  else { alert("ভুল ইউজারনেম বা পাসওয়ার্ড।"); }
 };
 
-function exportPDF(){ window.print(); }
+// MULTI-PAGE PDF EXPORT LOGIC
+async function exportPDF() {
+  const exportBtn = document.getElementById("exportBtn");
+  exportBtn.textContent = "অপেক্ষা করুন...";
+  
+  const printContainer = document.createElement('div');
+  printContainer.style.padding = '30px';
+  printContainer.style.background = '#fff';
+  printContainer.style.color = '#000';
+
+  const totalVal = document.getElementById("totalFill").textContent;
+  printContainer.innerHTML = `
+    <div style="text-align:center; border-bottom: 2px solid #2563eb; margin-bottom: 20px; padding-bottom: 10px;">
+      <h1 style="color:#2563eb; margin:0;">HSC Study Tracker - Full Report</h1>
+      <p style="margin:5px 0;">PC Master Academy | Developed by Md. Pial Hasan</p>
+      <h2 style="background:#f0f7ff; padding:10px; border-radius:8px;">🎯 সর্বমোট অগ্রগতি: ${totalVal}</h2>
+    </div>
+  `;
+
+  for (const sub in subjects) {
+    let subHtml = `<div style="page-break-before: always;">
+                   <h2 style="color:#2563eb; border-left: 5px solid #2563eb; padding-left:10px;">📘 ${sub}</h2>`;
+    for (const paper in subjects[sub]) {
+      const saved = JSON.parse(localStorage.getItem(`progress-${sub}-${paper}`)) || [];
+      const topics = subjects[sub][paper];
+      const done = saved.filter(x => x.checked).length;
+      const perc = topics.length ? Math.round((done / topics.length) * 100) : 0;
+
+      subHtml += `<div style="margin:15px 0; border:1px solid #eee; padding:10px; border-radius:8px;">
+                  <h3 style="margin:0 0 10px 0;">📍 ${paper} (${perc}%)</h3>
+                  <table style="width:100%; border-collapse:collapse; font-size:12px;">`;
+      topics.forEach((t, i) => {
+        const check = (saved[i] && saved[i].checked) ? "✅" : "⬜";
+        const time = (saved[i] && saved[i].timestamp) ? saved[i].timestamp : "";
+        subHtml += `<tr style="border-bottom:1px solid #f9f9f9;">
+                      <td style="padding:4px; width:25px;">${check}</td>
+                      <td style="padding:4px;">${i+1}. ${t}</td>
+                      <td style="padding:4px; text-align:right; color:#888;">${time}</td>
+                    </tr>`;
+      });
+      subHtml += `</table></div>`;
+    }
+    subHtml += `</div>`;
+    printContainer.innerHTML += subHtml;
+  }
+
+  const opt = {
+    margin: 0.3,
+    filename: 'HSC_Complete_Syllabus.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+  };
+
+  html2pdf().set(opt).from(printContainer).save().then(() => {
+    exportBtn.textContent = "🖨️ প্রিন্ট PDF";
+  });
+}
+
 function toggleDarkMode(){
   document.body.classList.toggle("dark");
   localStorage.setItem("dark-mode",document.body.classList.contains("dark"));
 }
 if(localStorage.getItem("dark-mode")==="true")document.body.classList.add("dark");
 </script>
-
-<div class="social-links">
-  <a href="https://www.facebook.com/share/g/1CcTXUmsJt/" target="_blank" class="social-link">Facebook</a>
-  <a href="https://www.youtube.com/channel/UCuQqF74xSaxiIXX5GgeHaKA" target="_blank" class="social-link">YouTube</a>
-  <a href="https://t.me/PC_Master_Academy" target="_blank" class="social-link">Telegram Channel</a>
-</div>
-
-<style>
-  /* Social Links Section Styles */
-  .social-links {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 30px;
-    margin-bottom: 30px;
-  }
-
-  .social-link {
-    display: block;
-    background-color: var(--box-light);
-    color: black;
-    padding: 6px 16px;
-    font-size: 14px;
-    text-decoration: none;
-    border-radius: 6px;
-    transition: background-color 0.3s, color 0.3s;
-    text-align: center;
-    width: 120px;
-    border: 2px solid var(--accent-light);
-  }
-
-  .social-link:hover {
-    background-color: var(--accent-light);
-    color: var(--bg-dark);
-  }
-
-  body.dark .social-link {
-    background-color: var(--box-dark);
-    color: white;
-    border: 2px solid var(--accent-dark);
-  }
-
-  body.dark .social-link:hover {
-    background-color: var(--accent-dark);
-    color: var(--text-light);
-  }
-
-  @media(max-width: 600px) {
-    .social-links {
-      flex-direction: column;
-      gap: 10px;
-      align-items: center;
-    }
-    .social-link {
-      width: 80%;
-    }
-  }
-</style>
-
 </body>
 </html>
