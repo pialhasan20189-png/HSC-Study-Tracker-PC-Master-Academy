@@ -25,7 +25,16 @@ body {
   background:var(--bg-light);
   color:var(--text-light);
   transition:.4s ease;
+  /* Disable text selection globally */
+  user-select: none; 
+  -webkit-user-select: none;
 }
+/* Re-enable selection for input fields only */
+input {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+}
+
 body.dark {background:var(--bg-dark);color:var(--text-dark);}
 header {
   background:linear-gradient(90deg,#2563eb,#3b82f6);
@@ -110,7 +119,6 @@ body.dark .modal-content { background: var(--box-dark); color: var(--text-dark);
 .login-card h2 { color: #2563eb; font-size: 2em; margin-bottom: 25px; }
 .login-card input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; }
 .login-card button { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; }
-.close-btn-login { position: absolute; top: 10px; right: 15px; font-size: 25px; cursor: pointer; color: #2563eb; }
 
 /* Social Links Section */
 .social-links { display: flex; justify-content: center; gap: 15px; margin-top: 30px; margin-bottom: 30px; }
@@ -158,7 +166,6 @@ body.dark .social-link { background-color: var(--box-dark); color: white; border
 
 <div id="loginModal" class="modal-login">
   <div class="login-card">
-    <span class="close-btn-login" onclick="hideLogin()">&times;</span>
     <h2>Login</h2>
     <form id="loginForm">
       <input type="text" id="username" placeholder="Username" required />
@@ -176,6 +183,25 @@ body.dark .social-link { background-color: var(--box-dark); color: white; border
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
+// --- Protection Scripts Start ---
+// Disable Right Click
+document.addEventListener('contextmenu', event => event.preventDefault());
+
+// Disable Key Shortcuts (F12, Ctrl+Shift+I, Ctrl+U etc.)
+document.onkeydown = function(e) {
+  if (e.keyCode == 123) return false; // F12
+  if (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) return false;
+  if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
+};
+
+// Global Copy Prevention (Allows inputs)
+document.addEventListener('copy', (e) => {
+  if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+    e.preventDefault();
+  }
+});
+// --- Protection Scripts End ---
+
 const subjects = {
  "পদার্থবিজ্ঞান": {
    "প্রথম পত্র": ["ভৌত জগৎ ও পরিমাপ","ভেক্টর","গতিবিদ্যা","নিউটনিয়ান বলবিদ্যা","কাজ শক্তি ও ক্ষমতা","মহাকর্ষ ও অভিকর্ষ","পদার্থের গাঠনিক ধর্ম","পর্যায়বৃত্ত গতি","তরঙ্গ","আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব"],
@@ -190,8 +216,8 @@ const subjects = {
    "দ্বিতীয় পত্র": ["প্রাণীর বিভিন্নতা ও শ্রেণীবিন্যাস","প্রাণীর পরিচিতি","মানব শরীর তত্ত্ব : পরিপাক ও শ্বসন","মানব শরীর তত্ত্ব : রক্ত সঞ্চালন","মানব শরীর তত্ত্ব : শ্বাসক্রিয়া ও শোষণ","বর্জ্য ও নিষ্কাশন","মানব শরীর তত্ত্ব : চলন ও অঙ্গ চালনা","সমন্বয় ও নিয়ন্ত্রণ","মানব জীবনের ধারাবাহিকতা","মানবদেহের প্রতিরক্ষা","জিনতত্ত্ব ও বিবর্তন","প্রাণীর আচরণ"]
  },
  "উচ্চতর গণিত": {
-   "প্রথম পত্র": ["ম্যাট্রিক্স নির্ণায়ক","ভেক্টর","সরলরেখা","বৃত্ত","বিন্যাস ও সমাবেশ","ত্রিকোণমিতিক অনুপাত","সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত","ফাংশন","অন্তরীকরণ","যোগজীকরণ"],
-   "দ্বিতীয় পত্র": ["বাস্তব সংখ্যা ও অসমতা","যোগাশ্রয়ী প্রোগ্রাম","জটিল সংখ্যা","বহুপদী সমীকরণ","দ্বিপদী বিস্তৃতি","কনিক","বিপরীত ত্রিকোণমিতিক ফাংশন ও ত্রিকোণমিতিক সমীকরণ","স্থিতিবিদ্যা","সমতলে বস্তুকণার গতি","বিস্তার পরিমাপ ও সম্ভাব্যতা"]
+   "প্রথম পত্র": ["ম্যাট্রিক্স নির্ণায়ক","ভেক্টর","সরলরেখা","বৃত্ত","বিন্যাস ও সমাবেশ","ত্রিকোণমিতিক অনুপাত","সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত","ফাংশন","অন্তরীকরণ","যোগজীকরণ"],
+   "দ্বিতীয় পত্র": ["বাস্তব সংখ্যা ও অসমতা","যোগাশ্রয়ী প্রোগ্রাম","জটিল সংখ্যা","বহুপদী সমীকরণ","দ্বিপদী বিস্তৃতি","কনিক","বিপরীত ত্রিকোণমিতিক ফাংশন ও ত্রিকোণমিতিক সমীকরণ","স্থিতিবিদ্যা","সমতলে বস্তুকণার গতি","বিস্তার পরিমাপ ও সম্ভাব্যতা"]
  }
 };
 
@@ -226,7 +252,7 @@ function openPaper(sub,paper,btn){
  const topics=subjects[sub][paper];
  let html=`<div class='box'><h3>${sub} – ${paper}</h3>
  <button class='allcheck' onclick="confirmAll('${sub}','${paper}')">সবগুলো টিক চিহ্ন দাও</button>
- <button class='uncheck' onclick="confirmUncheck('${sub}','${paper}')">সবগুলো টিক চিহ্ন উঠিয়ে নাও</button>
+ <button class='uncheck' onclick="confirmUncheck('${sub}','${paper}')">সবগুলো টিক চিহ্ন উঠিয়ে নাও</button>
  <div class='progress-bar'><div class='progress' id='progress-${sub}-${paper}'>0%</div></div><ul>`;
  topics.forEach((t,i)=>{ html+=`<li><input type='checkbox' data-id='${i+1}' data-sub='${sub}' data-paper='${paper}'> ${i+1}. ${t} <div class='timestamp' id='timestamp-${sub}-${paper}-${i+1}'></div></li>` });
  html+=`</ul></div>`;
