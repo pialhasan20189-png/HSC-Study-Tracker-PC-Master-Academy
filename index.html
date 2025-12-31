@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
     <style>
         :root {
@@ -23,26 +26,74 @@
             --text-muted: #64748b;
         }
 
+        html { background-color: #f1f5f9; }
+        html.dark { background-color: #0f172a; }
+
         body.dark {
             --bg: #0f172a;
             --card-bg: #1e293b;
             --text-main: #f1f5f9;
             --text-muted: #94a3b8;
         }
+        
+        body.dark .sub-box, body.dark .mini-box { color: #ffffff; }
+        
+        body.dark #paper-perc-text,
+        body.dark #global-perc-text,
+        body.dark .subject-btn,
+        body.dark .leader-row div[style*="color:var(--primary)"] { 
+            color: #ffffff !important; 
+        }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body.dark .summary-item h5 { color: #ffffff !important; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
             font-family: 'Hind Siliguri', 'Poppins', sans-serif; 
             background: var(--bg); 
             color: var(--text-main);
-            transition: 0.3s;
+            transition: 0.2s;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        .hidden { display: none !important; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+        #page-loader {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            z-index: 999999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.6s ease, visibility 0.6s;
+        }
 
-        /* --- Auth Styling --- */
+        .loader {
+            --c: no-repeat linear-gradient(#ef4444 0 0); 
+            background: 
+                var(--c),var(--c),var(--c),
+                var(--c),var(--c),var(--c),
+                var(--c),var(--c),var(--c);
+            background-size: 16px 16px;
+            animation: 
+                l32-1 1s infinite,
+                l32-2 1s infinite;
+        }
+        @keyframes l32-1 {
+            0%,100% {width:45px;height: 45px}
+            35%,65% {width:65px;height: 65px}
+        }
+        @keyframes l32-2 {
+            0%,40%  {background-position: 0 0,0 50%, 0 100%,50% 100%,100% 100%,100% 50%,100% 0,50% 0,  50% 50% }
+            60%,100%{background-position: 0 50%, 0 100%,50% 100%,100% 100%,100% 50%,100% 0,50% 0,0 0,  50% 50% }
+        }
+
+        #app { opacity: 0; transition: opacity 0.5s ease; }
+        #app.visible { opacity: 1; }
+
+        .hidden { display: none !important; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 15px; width: 100%; }
+
         .auth-screen { min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
         .auth-card { 
             background: var(--card-bg); 
@@ -59,14 +110,13 @@
         }
 
         button { 
-            cursor: pointer; border: none; border-radius: 10px; transition: 0.3s; 
+            cursor: pointer; border: none; border-radius: 10px; transition: 0.1s; 
             font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
         }
         .btn-primary { background: var(--primary); color: white; width: 100%; padding: 12px; margin-top: 10px; }
         .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
         .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); width: 100%; padding: 12px; margin-top: 10px; }
 
-        /* --- Master Modal Styles (New Code Integration) --- */
         .modal {
           display: none; 
           position: fixed; 
@@ -74,73 +124,332 @@
           background: rgba(0, 0, 0, 0.8); 
           justify-content: center; align-items: center; 
           z-index: 9999; padding: 20px;
-          display: flex; 
         }
         .modal-content {
           background-color: var(--card-bg);
           padding: 25px;
           border-radius: 12px;
-          width: 100%; max-width: 400px;
+          width: 100%; max-width: 500px;
           text-align: center;
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
           animation: slideIn 0.3s ease;
+          position: relative;
         }
+
+        .summary-modal-content { 
+            max-width: 800px !important; 
+            max-height: 90vh; 
+            overflow-y: auto; 
+            text-align: left; 
+            padding: 50px 20px 20px 20px;
+        }
+
         @keyframes slideIn { 0% { transform: translateY(-50px); } 100% { transform: translateY(0); } }
-        .modal h2 { font-size: 1.8em; margin-bottom: 20px; color: #2563eb; font-weight: 600; }
+        .modal h2 { font-size: 1.2em; margin-bottom: 20px; color: #2563eb; font-weight: 600; }
         .modal input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ccc; font-size: 14px; background: var(--bg); color: var(--text-main); }
         .modal button { padding: 12px; background-color: #2563eb; color: white; border-radius: 6px; width: 100%; margin-top: 15px; }
-        .modal .close-btn { position: absolute; top: 10px; right: 10px; font-size: 28px; cursor: pointer; color: #2563eb; }
 
-        /* --- Rest of Original Styles --- */
         header { 
             background: var(--primary); color: white; padding: 15px 25px; 
             display: flex; justify-content: space-between; align-items: center;
             border-radius: 0 0 20px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-        .nav-btns { display: flex; gap: 10px; }
-        .nav-btns button { padding: 8px 15px; font-size: 14px; border-radius: 8px; background: rgba(255,255,255,0.2); color: white; }
+
+        .header-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .header-profile img {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.8);
+            object-fit: cover;
+        }
+        .header-profile h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            .header-profile h2 { font-size: 0.9rem; }
+            .header-profile img { width: 32px; height: 32px; }
+            header { padding: 12px 15px; }
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .menu-trigger {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 20px;
+            width: 45px;
+            height: 45px;
+        }
+        .menu-trigger:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: var(--card-bg);
+            min-width: 180px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.15);
+            z-index: 1000;
+            border-radius: 12px;
+            margin-top: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .dropdown-content button {
+            color: var(--text-main);
+            padding: 12px 16px;
+            width: 100%;
+            border-radius: 0;
+            background: transparent;
+            justify-content: flex-start;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .dropdown-content button:last-child { border-bottom: none; }
+        .dropdown-content button:hover {
+            background-color: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+        }
+        .dropdown-content .logout-item:hover {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+        .show { display: block !important; }
+
         .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-top: 20px; }
-        @media (max-width: 900px) { .dashboard-grid { grid-template-columns: 1fr; } }
+        
+        @media (max-width: 900px) { 
+            .dashboard-grid { grid-template-columns: 1fr; } 
+            header { flex-direction: row; gap: 15px; text-align: left; }
+        }
+
         .card { background: var(--card-bg); padding: 20px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .subjects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
-        .subject-btn { background: var(--bg); padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; border: 2px solid transparent; transition: 0.3s; position: relative; overflow: hidden; }
-        .subject-btn:hover { border-color: var(--primary); }
-        .subject-btn.active { background: var(--primary); color: white; }
-        .prog-mini-bar { position: absolute; bottom: 0; left: 0; height: 4px; background: var(--accent); transition: 0.5s; }
+        .subjects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
+        
+        .subject-btn { 
+            background: var(--bg); 
+            padding: 12px; 
+            border-radius: 12px; 
+            text-align: center; 
+            cursor: pointer; 
+            border: 2.5px solid var(--primary); 
+            transition: 0.1s; 
+            position: relative; 
+            overflow: hidden; 
+            font-size: 14px;
+            color: var(--text-main);
+        }
+        
+        .subject-btn:hover { background: var(--card-bg); transform: scale(1.02); }
+        .subject-btn.active { background: var(--primary); color: white !important; }
+        .prog-mini-bar { position: absolute; bottom: 0; left: 0; height: 4px; background: var(--accent); transition: 0.1s; }
+        
         .syllabus-area { margin-top: 20px; }
-        .paper-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
-        .tab { padding: 8px 16px; background: var(--bg); border-radius: 8px; cursor: pointer; font-size: 14px; }
-        .tab.active { background: var(--primary); color: white; }
+        .paper-tabs { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+        
+        .tab { 
+            padding: 10px 16px; 
+            background: var(--card-bg); 
+            border: 2.5px solid var(--primary); 
+            border-radius: 10px; 
+            cursor: pointer; 
+            font-size: 13px; 
+            color: var(--text-main);
+            transition: background 0.05s, color 0.05s, transform 0.05s;
+            font-weight: 700;
+            touch-action: manipulation; 
+            user-select: none;
+        }
+        .tab.active { 
+            background: var(--primary) !important; 
+            color: white !important; 
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+            transform: scale(0.98); 
+        }
+
         ul.chapter-list { list-style: none; margin-top: 15px; }
-        ul.chapter-list li { background: var(--bg); padding: 10px 15px; border-radius: 8px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; font-size: 14px; }
-        .timestamp { font-size: 10px; color: var(--text-muted); }
-        .leader-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
+        ul.chapter-list li { 
+            background: var(--bg); 
+            padding: 12px 15px; 
+            border-radius: 8px; 
+            margin-bottom: 8px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            font-size: 14px; 
+            gap: 10px; 
+            flex-wrap: wrap; 
+        }
+
+        .sub-check-group {
+            display: flex;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .sub-box {
+            width: 30px;
+            height: 30px;
+            border: 2.5px solid var(--primary); 
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.05s; 
+            user-select: none;
+            background: var(--card-bg);
+            color: var(--primary);
+            line-height: 0;
+            padding-top: 3px;
+        }
+        .sub-box.checked {
+            background: var(--primary);
+            color: white;
+        }
+        .main-ch-check {
+            transform: scale(1.2);
+            accent-color: var(--success);
+            cursor: pointer;
+        }
+
+        .summary-grid { 
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 15px; 
+        }
+
+        .summary-item { 
+            background: var(--bg); 
+            padding: 15px; 
+            border-radius: 12px; 
+            border: 2px solid var(--primary); 
+            cursor: pointer; 
+            transition: 0.1s;
+            position: relative;
+            width: 100%;
+        }
+        .summary-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .summary-item h5 { font-size: 14px; margin-bottom: 5px; color: var(--primary); }
+        .close-modal { position: absolute; top: 15px; right: 15px; font-size: 24px; cursor: pointer; color: var(--danger); z-index: 10; }
+
+        .chapter-detail-box { 
+            margin-top: 12px; 
+            padding: 10px; 
+            border-top: 1px solid rgba(0,0,0,0.05); 
+            display: none; 
+            background: rgba(255,255,255,0.4);
+            border-radius: 8px;
+        }
+        body.dark .chapter-detail-box { background: rgba(0,0,0,0.2); }
+        
+        .detail-row { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 8px; 
+            padding-bottom: 5px; 
+            border-bottom: 1px solid rgba(0,0,0,0.03); 
+            gap: 10px;
+        }
+        .detail-row:last-child { border-bottom: none; margin-bottom: 0; }
+        
+        .ch-name-small { font-size: 12px; font-weight: 500; flex: 1; line-height: 1.3; }
+        
+        .mini-check-group { display: flex; gap: 3px; }
+
+        .mini-box {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--primary);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            background: var(--card-bg);
+            color: var(--primary);
+            line-height: 0;
+            padding-top: 2px;
+        }
+        .mini-box.active { background: var(--primary); color: white; }
+
+        @media (max-width: 650px) { 
+            .subjects-grid { grid-template-columns: repeat(2, 1fr); }
+            .summary-modal-content { padding: 45px 15px 15px 15px; }
+            .ch-name-small { font-size: 11px; }
+            .mini-box { width: 19px; height: 19px; font-size: 8px; }
+            .tab { padding: 10px 12px; font-size: 12px; flex: 1; text-align: center; } 
+        }
+
+        .leader-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; cursor: pointer; transition: 0.1s; }
+        .leader-row:hover { background: rgba(0,0,0,0.02); }
         .leader-info { display: flex; align-items: center; gap: 10px; }
         .leader-img { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; }
         .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
         .online { background: var(--success); box-shadow: 0 0 5px var(--success); }
         .offline { background: var(--text-muted); }
         .global-progress { margin-bottom: 20px; }
-        .progress-container { background: #e2e8f0; height: 12px; border-radius: 6px; overflow: hidden; margin-top: 8px; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: 0.8s; }
+        .progress-container { background: #e2e8f0; height: 12px; border-radius: 6px; overflow: hidden; margin-top: 8px; position: relative; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: 0.2s; }
         .banned-screen { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.95); z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; }
     </style>
 </head>
 <body>
 
+<div id="page-loader">
+    <div class="loader"></div>
+</div>
+
+<div id="summaryModal" class="modal">
+    <div class="modal-content summary-modal-content">
+        <span class="close-modal" onclick="closeSummary()"><i class="fas fa-times-circle"></i></span>
+        <div id="summary-header"></div>
+        <h4 style="font-size:15px; margin-bottom:12px; color:var(--text-muted)"><i class="fas fa-info-circle"></i> সাবজেক্টে ক্লিক করে বিস্তারিত রিপোর্ট দেখুন</h4>
+        <div id="summary-body" class="summary-grid"></div>
+    </div>
+</div>
+
 <div id="loginModal" class="modal">
   <div class="modal-content">
-    <h2>Login</h2>
+    <h2>Developed by Md. Pial Hasan, Department of CSE, DIU, Batch-70</h2>
     <form id="loginForm">
       <input type="text" id="username" placeholder="Username" required />
       <input type="password" id="password" placeholder="Password" required />
-      <button type="submit">Login</button>
+      <button type="submit">System login</button>
     </form>
   </div>
 </div>
 
+<div id="logoutModal" class="modal">
+    <div class="modal-content" style="max-width: 400px; padding: 30px;">
+        <i class="fas fa-sign-out-alt" style="font-size: 3rem; color: var(--danger); margin-bottom: 15px;"></i>
+        <h2 style="font-size: 1.1rem; margin-bottom: 10px; line-height: 1.5; color: var(--text-main);">আপনি কি স্টাডি ট্রাকার ওয়েবসাইট থেকে লগ আউট করতে চান?</h2>
+        <div style="display: flex; gap: 12px; margin-top: 25px;">
+            <button onclick="handleLogout()" class="btn-primary" style="background:var(--danger); flex:1">YES</button>
+            <button onclick="closeLogoutModal()" class="btn-primary" style="background:#e2e8f0; color:#475569; flex:1">NO</button>
+        </div>
+    </div>
+</div>
+
 <div id="app">
-    <div id="login-page" class="auth-screen">
+    <div id="login-page" class="auth-screen hidden">
         <div class="auth-card">
             <h2><i class="fas fa-user-graduate"></i> লগইন করুন</h2>
             <div class="input-group">
@@ -172,15 +481,17 @@
                 <input type="password" id="reg-pass" placeholder="পাসওয়ার্ড দিন">
             </div>
             <div class="input-group">
-                <label>আপনি কে?</label>
-                <select id="reg-role">
-                    <option value="student">শিক্ষার্থী (Student)</option>
-                    <option value="teacher">শিক্ষক (Teacher)</option>
+                <label>লিঙ্গ (Gender)</label>
+                <select id="reg-gender">
+                    <option value="male">ছেলে (Male)</option>
+                    <option value="female">মেয়ে (Female)</option>
                 </select>
             </div>
             <div class="input-group">
-                <label>প্রোফাইল ছবি (URL)</label>
-                <input type="text" id="reg-img" placeholder="ছবির লিংক দিন">
+                <label>আপনি কে?</label>
+                <select id="reg-role">
+                    <option value="student">শিক্ষার্থী (Student)</option>
+                </select>
             </div>
             <button class="btn-primary" onclick="handleRegister()">অ্যাকাউন্ট তৈরি করুন</button>
             <button class="btn-outline" onclick="showPage('login-page')">লগইন পেজে ফিরুন</button>
@@ -189,21 +500,34 @@
 
     <div id="dashboard-page" class="hidden">
         <header>
-            <div style="display:flex; align-items:center; gap:10px;">
+            <div class="header-profile" id="header-user-info">
                 <i class="fas fa-book-open" style="font-size:1.5rem"></i>
-                <h2 id="welcome-text" style="font-size:1.2rem">ড্যাশবোর্ড</h2>
+                <div id="welcome-text" style="display:flex; align-items:center; gap:10px;">
+                    </div>
             </div>
+            
             <div class="nav-btns">
-                <button onclick="toggleDarkMode()"><i class="fas fa-moon"></i></button>
-                <button onclick="handleLogout()" style="background:var(--danger)"><i class="fas fa-sign-out-alt"></i> লগআউট</button>
+                <div class="dropdown">
+                    <button onclick="toggleMenu()" class="menu-trigger">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div id="dropdown-menu" class="dropdown-content">
+                        <button onclick="toggleDarkMode()">
+                            <i class="fas fa-moon"></i> ডার্ক মোড অন/অফ
+                        </button>
+                        <button onclick="confirmLogout()" class="logout-item">
+                            <i class="fas fa-sign-out-alt"></i> লগআউট করুন
+                        </button>
+                    </div>
+                </div>
             </div>
         </header>
 
         <div class="container">
             <div class="card global-progress">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3><i class="fas fa-chart-line"></i> আমার সার্বিক অগ্রগতি</h3>
-                    <h3 id="global-perc-text" style="color:var(--primary)">0%</h3>
+                    <h3 style="font-size:16px"><i class="fas fa-chart-line"></i> সিলেবাস অগ্রগতি </h3>
+                    <h3 id="global-perc-text" style="color:var(--primary); font-size:18px">0%</h3>
                 </div>
                 <div class="progress-container">
                     <div id="global-progress-fill" class="progress-fill" style="width: 0%"></div>
@@ -213,21 +537,24 @@
             <div class="dashboard-grid">
                 <div class="left-panel">
                     <div class="card" id="student-tracker-card">
-                        <h3 style="margin-bottom:15px">📘 সিলেবাস ট্র্যাকার</h3>
+                        <h3 style="margin-bottom:15px; font-size:16px">📘 ট্র্যাকার বোর্ড</h3>
                         <div class="subjects-grid" id="subject-btns"></div>
 
                         <div id="syllabus-container" class="syllabus-area hidden">
                             <hr style="margin:20px 0; border:0; border-top:1px solid #eee;">
                             <div id="paper-tabs" class="paper-tabs"></div>
-                            <div id="chapter-section" class="box">
-                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                                    <h4 id="active-title">বিষয় নির্বাচন করুন</h4>
-                                    <div>
-                                        <button onclick="bulkCheck(true)" style="font-size:11px; padding:5px 8px; background:var(--success); color:white">সবগুলো শেষ</button>
-                                        <button onclick="bulkCheck(false)" style="font-size:11px; padding:5px 8px; background:var(--text-muted); color:white">সব মুছুন</button>
+                            <div id="chapter-section">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <h4 id="active-title" style="font-size:14px">বিষয় নির্বাচন করুন</h4>
+                                        <span id="paper-perc-text" style="font-size: 12px; font-weight: bold; color: var(--primary); background: var(--bg); padding: 2px 8px; border-radius: 6px;">0%</span>
+                                    </div>
+                                    <div style="display:flex; gap:5px">
+                                        <button onclick="bulkCheck(true)" style="font-size:10px; padding:4px 8px; background:var(--success); color:white">সব শেষ</button>
+                                        <button onclick="bulkCheck(false)" style="font-size:10px; padding:4px 8px; background:var(--text-muted); color:white">সব মুছুন</button>
                                     </div>
                                 </div>
-                                <div class="progress-container" style="height:8px; margin-bottom:10px;">
+                                <div class="progress-container" style="height:8px; margin-bottom:15px;">
                                     <div id="paper-progress-fill" class="progress-fill" style="width:0%"></div>
                                 </div>
                                 <ul id="chapter-list" class="chapter-list"></ul>
@@ -239,15 +566,17 @@
                 <div class="right-panel">
                     <div class="card">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                            <h4>🏆 লিডারবোর্ড</h4>
-                            <button onclick="exportPDF()" style="font-size:12px; padding:5px 10px; background:#64748b; color:white"><i class="fas fa-file-pdf"></i> PDF</button>
+                            <h4 style="font-size:15px">🏆 লিডারবোর্ড</h4>
+                            <div style="display:flex; gap:5px">
+                                <button onclick="exportPDF()" style="font-size:10px; padding:5px 10px; background:#2563eb; color:white; border-radius:6px;"><i class="fas fa-file-pdf"></i> PDF</button>
+                            </div>
                         </div>
                         <div id="leaderboard-list"></div>
                     </div>
 
                     <div id="teacher-panel" class="card hidden">
                         <h4><i class="fas fa-user-shield"></i> অ্যাডমিন কন্ট্রোল</h4>
-                        <p style="font-size:12px; color:var(--text-muted)">শিক্ষক হিসেবে আপনি শিক্ষার্থীদের অগ্রগতি নিয়ন্ত্রণ করতে পারবেন।</p>
+                        <p style="font-size:12px; color:var(--text-muted)">শিক্ষক মোড সক্রিয়।</p>
                     </div>
                 </div>
             </div>
@@ -256,118 +585,184 @@
 
     <div id="banned-screen" class="banned-screen hidden">
         <i class="fas fa-user-slash" style="font-size: 4rem; color: var(--danger);"></i>
-        <h1 style="margin-top:20px">অ্যাকাউন্টটি স্থগিত করা হয়েছে!</h1>
-        <p>অনুগ্রহ করে শিক্ষকের সাথে যোগাযোগ করুন।</p>
-        <button class="btn-primary" onclick="handleLogout()" style="width:200px; margin-top:20px">লগআউট</button>
+        <h1 style="margin-top:20px; font-size:22px">অ্যাকাউন্ট স্থগিত!</h1>
+        <button class="btn-primary" onclick="handleLogout()" style="width:160px; margin-top:20px">লগআউট</button>
     </div>
 </div>
 
 <script>
-    // --- Original Syllabus Data ---
+    const firebaseConfig = {
+        apiKey: "AIzaSyBX6ptP9fHhK-mbJ129bU4xCuojS048QM8",
+        authDomain: "study-trucker-592dd.firebaseapp.com",
+        databaseURL: "https://study-trucker-592dd-default-rtdb.firebaseio.com",
+        projectId: "study-trucker-592dd",
+        storageBucket: "study-trucker-592dd.firebasestorage.app",
+        messagingSenderId: "212811401880",
+        appId: "1:212811401880:web:f1abaf879c4a49f0385eed",
+        measurementId: "G-GFK0WVQGZM"
+    };
+    
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
     const syllabusData = {
-        "Physics": {
-            "1st Paper": ["ভৌত জগৎ ও পরিমাপ","ভেক্টর","গতিবিদ্যা","নিউটনিয়ান বলবিদ্যা","কাজ শক্তি ও ক্ষমতা","মহাকর্ষ ও অভিকর্ষ","পদার্থের গাঠনিক ধর্ম","পর্যায়বৃত্ত গতি","তরঙ্গ","আদর্শ গ্যাস"],
-            "2nd Paper": ["তাপ গতিবিদ্যা","স্থির তড়িৎ","চল তড়িৎ","চৌম্বক ক্রিয়া","তড়িৎ চৌম্বকীয় আবেশ","জ্যামিতিক আলোকবিজ্ঞান","আধুনিক পদার্থবিজ্ঞান","পরমাণুর মডেল","সেমিকন্ডাক্টর"]
+        "পদার্থবিজ্ঞান": {
+            "1st Paper": ["ভৌত জগৎ ও পরিমাপ", "ভেক্টর", "গতিবিদ্যা", "নিউটনিয়ান বলবিদ্যা", "কাজ শক্তি ও ক্ষমতা", "মহাকর্ষ ও অভিকর্ষ", "পদার্থের গাঠনিক ধর্ম", "পর্যায়বৃত্ত গতি", "তরঙ্গ", "আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব"],
+            "2nd Paper": ["তাপ গতিবিদ্যা", "স্থির তড়িৎ", "চল তড়িৎ", "তড়িৎ প্রবাহের চৌম্বক ক্রিয়া ও চুম্বকত্ব", "তড়িৎ চৌম্বকীয় আবেশ", "জ্যামিতিক আলোকবিজ্ঞান", "ভৌতআলোক বিজ্ঞান", "আধুনিক পদার্থবিজ্ঞানের সূচনা", "পরমানুর মডেল", "সেমিকন্ডাক্টর ও ইলেকট্রনিক্স", "জ্যোতির্বিজ্ঞান"]
         },
-        "Chemistry": {
-            "1st Paper": ["ল্যাবরেটরির ব্যবহার","গুণগত রসায়ন","মৌলের পর্যাবৃত্ত ধর্ম","রাসায়নিক পরিবর্তন","কর্মমুখী রসায়ন"],
-            "2nd Paper": ["পরিবেশ রসায়ন","জৈব রসায়ন","পরিমাণগত রসায়ন","তড়িৎ রসায়ন","অর্থনৈতিক রসায়ন"]
+        "রসায়ন": {
+            "1st Paper": ["ল্যাবরেটরির নিরাপদ ব্যবহার", "গুণগত রসায়ন", "মৌলের পর্যবৃত্তধর্ম ও রাসায়নিক বন্ধন", "রাসায়নিক পরিবর্তন", "কর্মমুখী রসায়ন"],
+            "2nd Paper": ["পরিবেশ রসায়ন", "জৈব রসায়ন", "পরিমাণগত রসায়ন", "তড়িৎ রসায়ন", "অর্থনৈতিক রসায়ন"]
         },
-        "Biology": {
-            "1st Paper": ["কোষ ও গঠন","কোষ বিভাজন","কোষ রসায়ন","অনুজীব","শৈবাল ও ছত্রাক","উদ্ভিদ শরীরতত্ত্ব","জীব প্রযুক্তি"],
-            "2nd Paper": ["প্রাণীর বিভিন্নতা","পরিপাক ও শ্বসন","রক্ত সঞ্চালন","বর্জ্য ও নিষ্কাশন","চলন ও অঙ্গ চালনা","জিনতত্ত্ব"]
+        "জীববিজ্ঞান": {
+            "1st Paper": ["কোষ ও এর গঠন", "কোষ বিভাজন", "কোষ রসায়ন", "অনুজীব", "শৈবাল ও ছত্রাক", "ব্রায়োফাইটা ও টেরিডোফাইটা", "নগ্নবীজী ও আবৃতবীজী উদ্ভিদ", "টিস্যু ও টিস্যু তন্ত্র", "উদ্ভিদ শরীরতত্ত্ব", "উদ্ভিদ প্রজনন", "জীব প্রযুক্তি", "জীবের পরিবেশ বিস্তার ও সংরক্ষণ"],
+            "2nd Paper": ["প্রাণীর বিভিন্নতা ও শ্রেণীবিন্যাস", "প্রাণীর পরিচিতি", "মানব শরীর তত্ত্ব : পরিপাক ও শ্বসন", "মানব শরীর তত্ত্ব : রক্ত সঞ্চালন", "মানব শরীর তত্ত্ব : শ্বাসক্রিয়া ও শোষণ", "বজ্র ও নিষ্কাশন", "মানব শরীর তত্ত্ব : চলন ও অঙ্গ চালনা", "সমন্বয় ও নিয়ন্ত্রণ", "মানব জীবনের ধারাবাহিকতা", "মানবদেহের প্রতিরক্ষা", "জিনতত্ত্ব ও বিবর্তন", "প্রাণীর আচরণ"]
         },
-        "Math": {
-            "1st Paper": ["ম্যাট্রিক্স ও নির্ণায়ক","ভেক্টর","সরলরেখা","বৃত্ত","বিন্যাস ও সমাবেশ","ত্রিকোণমিতি","অন্তরীকরণ","যোগজীকরণ"],
-            "2nd Paper": ["বাস্তব সংখ্যা","জটিল সংখ্যা","বহুপদী সমীকরণ","কনিক","বিপরীত ত্রিকোণমিতি","স্থিতিবিদ্যা","গতিবিদ্যা"]
+        "উচ্চতর গণিত": {
+            "1st Paper": ["ম্যাট্রিক্স ও নির্ণায়ক", "ভেক্টর", "সরলরেখা", "বৃত্ত", "বিন্যাস ও সমাবেশ", "ত্রিকোণমিতিক অনুপাত", "সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত", "ফাংশন", "অন্তরীকরণ", "যোগজীকরণ"],
+            "2nd Paper": ["বাস্তব সংখ্যা ও অসমতা", "যোগাশ্রয়ী প্রোগ্রাম", "জটিল সংখ্যা", "বহুপদী সমীকরণ", "দ্বিপদী বিস্তৃতি", "কনিক", "বিপরীত ত্রিকোণমিতিক ফাংশন ও ত্রিকোণমিতিক সমীকরণ", "স্থিতিবিদ্যা", "সমতলে বস্তুকণার গতি", "বিস্তার পরিমাপ ও সম্ভাব্যতা"]
         }
     };
 
-    let users = JSON.parse(localStorage.getItem('hsc_users')) || [];
-    let currentUser = JSON.parse(localStorage.getItem('hsc_currentUser')) || null;
+    let allUsers = {};
+    let currentUser = null;
     let selectedSub = "";
     let selectedPaper = "";
+    let activeSummaryUid = null; 
+    let openedDetails = new Set(); 
+    let subjectStates = JSON.parse(localStorage.getItem('subjectStates')) || {};
 
-    // --- Master Login Functions (New Code Integration) ---
-    const showLoginModal = () => {
-        document.getElementById("loginModal").style.display = "flex";
+    db.ref('users').on('value', (snapshot) => {
+        allUsers = snapshot.val() || {};
+        if(currentUser) currentUser = allUsers[currentUser.id] || currentUser;
+        renderLeaderboard();
+        updateGlobalUI();
+        renderSubjectBtns();
+        if(activeSummaryUid) viewSummary(activeSummaryUid); 
+    });
+
+    const finalizePage = () => {
+        const app = document.getElementById('app');
+        const loader = document.getElementById('page-loader');
+        setTimeout(() => {
+            app.classList.add('visible'); 
+            loader.style.opacity = '0'; 
+            setTimeout(() => loader.style.visibility = 'hidden', 600);
+        }, 1000);
     };
+
+    const showLoginModal = () => { document.getElementById("loginModal").style.display = "flex"; };
 
     document.getElementById("loginForm").onsubmit = function (e) {
         e.preventDefault();
-        const usernameInput = document.getElementById("username").value;
-        const passwordInput = document.getElementById("password").value;
-
-        if (usernameInput === "PC Master Academy" && passwordInput === "www.pcmasteracademy.com") {
-            localStorage.setItem("master_username", usernameInput);
-            localStorage.setItem("master_password", passwordInput);
+        const u = document.getElementById("username").value;
+        const p = document.getElementById("password").value;
+        if (u === "PC Master Academy" && p === "www.pcmasteracademy.com") {
+            localStorage.setItem("master_auth", "true");
             document.getElementById("loginModal").style.display = "none";
-        } else {
-            alert("Incorrect username or password. Please try again.");
-        }
+        } else { alert("ভুল তথ্য!"); }
     };
 
-    // --- Original Logic Functions ---
     function showPage(pageId) {
         document.querySelectorAll('#app > div').forEach(div => div.classList.add('hidden'));
-        document.getElementById(pageId).classList.remove('hidden');
+        const target = document.getElementById(pageId);
+        if(target) target.classList.remove('hidden');
+    }
+
+    function toggleMenu() { document.getElementById("dropdown-menu").classList.toggle("show"); }
+
+    window.onclick = function(event) {
+        if (!event.target.matches('.menu-trigger') && !event.target.closest('.menu-trigger')) {
+            const dropdowns = document.getElementsByClassName("dropdown-content");
+            for (let i = 0; i < dropdowns.length; i++) {
+                if (dropdowns[i].classList.contains('show')) dropdowns[i].classList.remove('show');
+            }
+        }
     }
 
     function handleRegister() {
         const name = document.getElementById('reg-name').value;
-        const email = document.getElementById('reg-email').value;
+        const email = document.getElementById('reg-email').value.replace(/\./g, '_'); 
         const pass = document.getElementById('reg-pass').value;
         const role = document.getElementById('reg-role').value;
-        const img = document.getElementById('reg-img').value || 'https://i.pravatar.cc/150';
+        const gender = document.getElementById('reg-gender').value || 'male'; 
+        
+        const maleAvatar = "https://cdn-icons-png.flaticon.com/512/4140/4140037.png";
+        const femaleAvatar = "https://cdn-icons-png.flaticon.com/512/6997/6997662.png";
+        
+        const img = gender === 'female' ? femaleAvatar : maleAvatar;
 
-        if(!name || !email || !pass) return alert("সবগুলো তথ্য দিন!");
-        if(users.find(u => u.email === email)) return alert("এই ইমেইল দিয়ে আগেই অ্যাকাউন্ট খোলা হয়েছে!");
-
-        const newUser = { id: Date.now(), name, email, pass, role, img, progress: 0, trackerData: {}, isBanned: false, lastSeen: Date.now() };
-        users.push(newUser);
-        saveUsers();
-        alert("রেজিস্ট্রেশন সফল! এখন লগইন করুন।");
-        showPage('login-page');
+        if(!name || !email || !pass) return alert("সব তথ্য দিন!");
+        db.ref('users/' + email).once('value', snapshot => {
+            if(snapshot.exists()) return alert("ইমেইলটি নিবন্ধিত!");
+            const userData = { id: email, name, pass, role, gender, img, progress: 0, trackerData: {}, isBanned: false, lastSeen: Date.now() };
+            db.ref('users/' + email).set(userData).then(() => {
+                alert("সফল!"); showPage('login-page');
+            });
+        });
     }
 
     function handleLogin() {
-        const email = document.getElementById('login-email').value;
+        const loginEmail = document.getElementById('login-email').value;
         const pass = document.getElementById('login-pass').value;
-        const user = users.find(u => u.email === email && u.pass === pass);
-        if(user) {
-            if(user.isBanned) return showPage('banned-screen');
-            currentUser = user;
-            localStorage.setItem('hsc_currentUser', JSON.stringify(currentUser));
+        const emailKey = loginEmail.replace(/\./g, '_');
+
+        // শিক্ষকের জন্য ডিফল্ট লগইন সিস্টেম
+        if (loginEmail === "teacher20189@gmail.com" && pass === "teacher20189@gmail.com") {
+            currentUser = { id: emailKey, name: "Teacher", role: 'teacher', gender: 'male', progress: 0 };
+            localStorage.setItem('hsc_uid', emailKey);
             initDashboard();
-        } else { alert("ভুল ইমেইল বা পাসওয়ার্ড!"); }
+            return;
+        }
+
+        db.ref('users/' + emailKey).once('value', snapshot => {
+            const user = snapshot.val();
+            if(user && user.pass === pass) {
+                if(user.isBanned) return showPage('banned-screen');
+                currentUser = user;
+                localStorage.setItem('hsc_uid', emailKey);
+                initDashboard();
+            } else { alert("ভুল পাসওয়ার্ড!"); }
+        });
     }
 
-    function handleLogout() { localStorage.removeItem('hsc_currentUser'); location.reload(); }
+    function handleLogout() { localStorage.removeItem('hsc_uid'); localStorage.removeItem('master_auth'); location.reload(); }
+    function confirmLogout() { document.getElementById('logoutModal').style.display = 'flex'; }
+    function closeLogoutModal() { document.getElementById('logoutModal').style.display = 'none'; }
 
     function initDashboard() {
         showPage('dashboard-page');
-        document.getElementById('welcome-text').innerHTML = `<img src="${currentUser.img}" class="leader-img" style="width:25px; height:25px"> স্বাগতম, ${currentUser.name}`;
-        if(currentUser.role === 'teacher') {
-            document.getElementById('student-tracker-card').classList.add('hidden');
-            document.getElementById('teacher-panel').classList.remove('hidden');
-        }
-        renderSubjectBtns(); renderLeaderboard(); updateGlobalUI();
-        setInterval(() => {
-            if(currentUser) {
-                const idx = users.findIndex(u => u.id === currentUser.id);
-                users[idx].lastSeen = Date.now();
-                saveUsers(); renderLeaderboard();
+        if(currentUser) {
+            const welcomeBox = document.getElementById('welcome-text');
+            if(welcomeBox) {
+                const avatar = currentUser.gender === 'female' ? 'https://cdn-icons-png.flaticon.com/512/6997/6997662.png' : 'https://cdn-icons-png.flaticon.com/512/4140/4140037.png';
+                welcomeBox.innerHTML = `
+                    <img src="${avatar}" alt="Profile" style="width:35px; height:35px; border-radius:50%; object-fit:cover;">
+                    <span style="font-weight:600; font-size:15px;">${currentUser.name}</span>
+                `;
             }
-        }, 10000);
+            
+            if(currentUser.role === 'teacher') {
+                document.getElementById('student-tracker-card').classList.add('hidden');
+                document.getElementById('teacher-panel').classList.remove('hidden');
+            } else {
+                document.getElementById('student-tracker-card').classList.remove('hidden');
+                document.getElementById('teacher-panel').classList.add('hidden');
+            }
+        }
+        renderSubjectBtns(); updateGlobalUI();
+        setInterval(() => { if(currentUser && currentUser.role !== 'teacher') db.ref('users/' + currentUser.id + '/lastSeen').set(Date.now()); }, 5000); 
     }
 
     function renderSubjectBtns() {
-        const container = document.getElementById('subject-btns'); container.innerHTML = "";
+        const container = document.getElementById('subject-btns'); 
+        if(!container) return;
+        container.innerHTML = "";
         Object.keys(syllabusData).forEach(sub => {
-            const perc = calculateSubjectProgress(sub);
+            const perc = calculateSubjectProgress(sub, currentUser);
             const btn = document.createElement('div');
             btn.className = `subject-btn ${selectedSub === sub ? 'active' : ''}`;
-            btn.innerHTML = `<i class="fas fa-book"></i><br>${sub}<div class="prog-mini-bar" style="width: ${perc}%"></div>`;
+            btn.innerHTML = `<div style="font-weight:bold; font-size:15px; margin-bottom:2px;">${perc.toFixed(0)}%</div><span style="font-size:12px">${sub}</span><div class="prog-mini-bar" style="width: ${perc}%"></div>`;
             btn.onclick = () => selectSubject(sub);
             container.appendChild(btn);
         });
@@ -376,120 +771,363 @@
     function selectSubject(sub) {
         selectedSub = sub; document.getElementById('syllabus-container').classList.remove('hidden');
         renderSubjectBtns();
+        selectedPaper = subjectStates[sub] || "";
         const paperTabs = document.getElementById('paper-tabs'); paperTabs.innerHTML = "";
         Object.keys(syllabusData[sub]).forEach(paper => {
             const tab = document.createElement('div');
             tab.className = `tab ${selectedPaper === paper ? 'active' : ''}`;
-            tab.innerText = paper; tab.onclick = () => selectPaper(paper);
+            const chCount = syllabusData[sub][paper].length;
+            tab.innerText = `${paper} (${chCount}টি অধ্যায়)`; 
+            tab.onclick = () => selectPaper(paper);
             paperTabs.appendChild(tab);
         });
-        if(!selectedPaper || !syllabusData[sub][selectedPaper]) { selectPaper(Object.keys(syllabusData[sub])[0]); } else { renderChapters(); }
+        if(!selectedPaper || !syllabusData[sub][selectedPaper]) selectPaper(Object.keys(syllabusData[sub])[0]); else renderChapters();
     }
 
-    function selectPaper(paper) { selectedPaper = paper; document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.innerText === paper)); renderChapters(); }
+    function selectPaper(paper) { 
+        selectedPaper = paper; 
+        subjectStates[selectedSub] = paper;
+        localStorage.setItem('subjectStates', JSON.stringify(subjectStates));
+        
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(t => {
+            if(t.innerText.includes(paper)) {
+                t.classList.add('active');
+            } else {
+                t.classList.remove('active');
+            }
+        });
+        
+        setTimeout(() => {
+            renderChapters(); 
+        }, 10);
+    }
 
     function renderChapters() {
         const list = document.getElementById('chapter-list'); list.innerHTML = "";
         document.getElementById('active-title').innerText = `${selectedSub} - ${selectedPaper}`;
         const chapters = syllabusData[selectedSub][selectedPaper];
-        const userProgress = currentUser.trackerData[`${selectedSub}-${selectedPaper}`] || [];
+        const subList = ["পদার্থবিজ্ঞান", "রসায়ন", "জীববিজ্ঞান"];
+        const isSpecialSub = subList.includes(selectedSub);
+
         chapters.forEach((ch, i) => {
-            const isChecked = userProgress.some(p => p.index === i && p.done);
-            const time = isChecked ? userProgress.find(p => p.index === i).time : "";
+            const key = `${selectedSub}-${selectedPaper}`;
+            const data = (currentUser.trackerData && currentUser.trackerData[key] && currentUser.trackerData[key][i]) || { done: false, parts: { k: false, kh: false, g: false, gh: false } };
             const li = document.createElement('li');
-            li.innerHTML = `<div><input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleChapter(${i}, this.checked)"> <span>${ch}</span></div><span class="timestamp">${time}</span>`;
-            list.appendChild(li);
+            let html = `<div style="display:flex; align-items:center; gap:8px; flex:1;"><input type="checkbox" class="main-ch-check" ${data.done ? 'checked' : ''} onchange="toggleChapter(${i}, this.checked)"><span style="font-weight:500;">${ch}</span></div>`;
+            if(isSpecialSub) {
+                html += `<div class="sub-check-group">
+                    <div class="sub-box ${data.parts?.k ? 'checked' : ''}" onclick="toggleSubPart(${i}, 'k', this)">ক</div>
+                    <div class="sub-box ${data.parts?.kh ? 'checked' : ''}" onclick="toggleSubPart(${i}, 'kh', this)">খ</div>
+                    <div class="sub-box ${data.parts?.g ? 'checked' : ''}" onclick="toggleSubPart(${i}, 'g', this)">গ</div>
+                    <div class="sub-box ${data.parts?.gh ? 'checked' : ''}" onclick="toggleSubPart(${i}, 'gh', this)">ঘ</div>
+                </div>`;
+            }
+            li.innerHTML = html; list.appendChild(li);
         });
         updatePaperUI();
     }
 
+    function toggleSubPart(index, part, element) {
+        element.classList.toggle('checked');
+        const key = `${selectedSub}-${selectedPaper}`;
+        if(!currentUser.trackerData) currentUser.trackerData = {};
+        if(!currentUser.trackerData[key]) currentUser.trackerData[key] = {};
+        if(!currentUser.trackerData[key][index]) currentUser.trackerData[key][index] = { done: false, parts: { k: false, kh: false, g: false, gh: false } };
+        const currentParts = currentUser.trackerData[key][index].parts || { k: false, kh: false, g: false, gh: false };
+        currentParts[part] = !currentParts[part];
+        currentUser.trackerData[key][index].parts = currentParts;
+        currentUser.trackerData[key][index].done = currentParts.k && currentParts.kh && currentParts.g && currentParts.gh;
+        updateGlobalUI();
+        db.ref('users/' + currentUser.id).update(currentUser).then(() => renderChapters());
+    }
+
     function toggleChapter(index, isDone) {
         const key = `${selectedSub}-${selectedPaper}`;
-        if(!currentUser.trackerData[key]) currentUser.trackerData[key] = [];
-        const existing = currentUser.trackerData[key].findIndex(p => p.index === index);
-        const timeStr = isDone ? "✅ " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : "";
-        if(existing > -1) { currentUser.trackerData[key][existing].done = isDone; currentUser.trackerData[key][existing].time = timeStr; }
-        else { currentUser.trackerData[key].push({index, done: isDone, time: timeStr}); }
-        saveCurrentToGlobal(); updatePaperUI(); updateGlobalUI(); renderSubjectBtns(); renderLeaderboard();
+        if(!currentUser.trackerData) currentUser.trackerData = {};
+        if(!currentUser.trackerData[key]) currentUser.trackerData[key] = {};
+        if(!currentUser.trackerData[key][index]) currentUser.trackerData[key][index] = { done: false, parts: { k: false, kh: false, g: false, gh: false } };
+        currentUser.trackerData[key][index].done = isDone;
+        if(isDone) currentUser.trackerData[key][index].parts = { k: true, kh: true, g: true, gh: true };
+        updateGlobalUI();
+        db.ref('users/' + currentUser.id).update(currentUser).then(() => renderChapters());
     }
 
-    function bulkCheck(status) { const chapters = syllabusData[selectedSub][selectedPaper]; chapters.forEach((_, i) => toggleChapter(i, status)); renderChapters(); }
+    function bulkCheck(status) { 
+        const chapters = syllabusData[selectedSub][selectedPaper]; 
+        const key = `${selectedSub}-${selectedPaper}`;
+        if(!currentUser.trackerData) currentUser.trackerData = {};
+        if(!currentUser.trackerData[key]) currentUser.trackerData[key] = {};
+        chapters.forEach((_, i) => {
+            currentUser.trackerData[key][i] = { done: status, parts: { k: status, kh: status, g: status, gh: status } };
+        });
+        updateGlobalUI();
+        db.ref('users/' + currentUser.id).update(currentUser).then(() => renderChapters());
+    }
 
     function updatePaperUI() {
-        const key = `${selectedSub}-${selectedPaper}`; const total = syllabusData[selectedSub][selectedPaper].length;
-        const done = (currentUser.trackerData[key] || []).filter(p => p.done).length;
-        const perc = Math.round((done/total)*100); document.getElementById('paper-progress-fill').style.width = perc + "%";
+        const key = `${selectedSub}-${selectedPaper}`;
+        if(!syllabusData[selectedSub] || !syllabusData[selectedSub][selectedPaper]) return;
+        const perc = calculatePaperPercentage(selectedSub, selectedPaper, currentUser);
+        const fill = document.getElementById('paper-progress-fill');
+        if(fill) fill.style.width = perc + "%";
+        const percText = document.getElementById('paper-perc-text');
+        if(percText) percText.innerText = (perc % 1 === 0 ? perc.toFixed(0) : perc.toFixed(1)) + "%";
     }
 
-    function calculateSubjectProgress(sub) {
-        let totalCh = 0; let doneCh = 0;
-        Object.keys(syllabusData[sub]).forEach(paper => {
-            totalCh += syllabusData[sub][paper].length; doneCh += (currentUser.trackerData[`${sub}-${paper}`] || []).filter(p => p.done).length;
+    function calculatePaperPercentage(sub, paper, user) {
+        const chapters = syllabusData[sub][paper];
+        const key = `${sub}-${paper}`;
+        const subList = ["পদার্থবিজ্ঞান", "রসায়ন", "জীববিজ্ঞান"];
+        let score = 0;
+        chapters.forEach((_, i) => {
+            const data = (user.trackerData && user.trackerData[key] && user.trackerData[key][i]);
+            if(data) {
+                if(subList.includes(sub)) {
+                    const parts = data.parts || { k: false, kh: false, g: false, gh: false };
+                    if(parts.k) score += 0.25; if(parts.kh) score += 0.25; if(parts.g) score += 0.25; if(parts.gh) score += 0.25;
+                } else if(data.done) score += 1;
+            }
         });
-        return Math.round((doneCh/totalCh)*100) || 0;
+        return (score / chapters.length) * 100 || 0;
+    }
+
+    function calculateSubjectProgress(sub, user) {
+        let totalPerc = 0;
+        const papers = Object.keys(syllabusData[sub]);
+        papers.forEach(p => totalPerc += calculatePaperPercentage(sub, p, user));
+        return totalPerc / papers.length || 0;
     }
 
     function updateGlobalUI() {
+        if(!currentUser) return;
         let totalScore = 0; const subs = Object.keys(syllabusData);
-        subs.forEach(s => totalScore += calculateSubjectProgress(s));
-        const avg = Math.round(totalScore / subs.length);
-        currentUser.progress = avg; document.getElementById('global-perc-text').innerText = avg + "%";
-        document.getElementById('global-progress-fill').style.width = avg + "%"; saveCurrentToGlobal();
+        subs.forEach(s => totalScore += calculateSubjectProgress(s, currentUser));
+        const avgRaw = totalScore / subs.length;
+        currentUser.progress = parseFloat(avgRaw.toFixed(2)); 
+        const globalText = document.getElementById('global-perc-text');
+        if(globalText) globalText.innerText = (avgRaw % 1 === 0 ? avgRaw.toFixed(0) : avgRaw.toFixed(1)) + "%";
+        const globalFill = document.getElementById('global-progress-fill');
+        if(globalFill) globalFill.style.width = avgRaw + "%";
+        const miniBars = document.querySelectorAll('.prog-mini-bar');
+        Object.keys(syllabusData).forEach((sub, idx) => {
+            const subPerc = calculateSubjectProgress(sub, currentUser);
+            if(miniBars[idx]) miniBars[idx].style.width = subPerc + "%";
+        });
     }
 
     function renderLeaderboard() {
-        const list = document.getElementById('leaderboard-list'); list.innerHTML = "";
-        const sorted = [...users].filter(u => u.role === 'student').sort((a, b) => b.progress - a.progress);
+        const list = document.getElementById('leaderboard-list'); if(!list) return;
+        list.innerHTML = "";
+        const userArray = Object.values(allUsers);
+        const sorted = userArray.filter(u => u.role === 'student').sort((a, b) => b.progress - a.progress);
         sorted.forEach((u, idx) => {
             const isOnline = (Date.now() - u.lastSeen) < 15000;
+            const avatar = u.gender === 'female' ? 'https://cdn-icons-png.flaticon.com/512/6997/6997662.png' : 'https://cdn-icons-png.flaticon.com/512/4140/4140037.png';
             const div = document.createElement('div'); div.className = "leader-row";
-            div.innerHTML = `<div class="leader-info"><span style="font-weight:bold; width:20px">${idx+1}.</span><img src="${u.img}" class="leader-img"><div><div style="font-size:14px; font-weight:600">${u.name} ${u.id === currentUser.id ? '(You)' : ''}</div><div style="font-size:10px; display:flex; align-items:center; gap:4px"><span class="status-dot ${isOnline ? 'online' : 'offline'}"></span>${isOnline ? 'Active' : 'Offline'}</div></div></div><div style="text-align:right"><div style="font-weight:bold; color:var(--primary)">${u.progress}%</div>${currentUser.role === 'teacher' ? `<button onclick="toggleBan(${u.id})" style="font-size:9px; color:var(--danger)">${u.isBanned ? 'Unban' : 'Ban'}</button>` : ''}</div>`;
+            div.onclick = () => viewSummary(u.id); 
+            div.innerHTML = `
+                <div class="leader-info">
+                    <span style="font-weight:bold; width:18px; font-size:12px">${idx+1}.</span>
+                    <img src="${avatar}" class="leader-img" style="width:35px; height:35px; border-radius:50%; object-fit:cover;">
+                    <div><div style="font-size:13px; font-weight:600">${u.name} ${currentUser && u.id === currentUser.id ? '(You)' : ''}</div>
+                    <div style="font-size:9px; display:flex; align-items:center; gap:4px">
+                    <span class="status-dot ${isOnline ? 'online' : 'offline'}"></span>${isOnline ? 'Active' : 'Offline'}</div></div></div>
+                <div style="text-align:right"><div style="font-weight:bold; color:var(--primary); font-size:14px">${u.progress}%</div>
+                ${currentUser && currentUser.role === 'teacher' ? `<button onclick="event.stopPropagation(); toggleBan('${u.id}')" style="font-size:9px; color:var(--danger)">${u.isBanned ? 'Unban' : 'Ban'}</button>` : ''}</div>`;
             list.appendChild(div);
         });
     }
 
-    function saveUsers() { localStorage.setItem('hsc_users', JSON.stringify(users)); }
-    function saveCurrentToGlobal() {
-        const idx = users.findIndex(u => u.id === currentUser.id);
-        if(idx > -1) { users[idx] = currentUser; saveUsers(); }
-        localStorage.setItem('hsc_currentUser', JSON.stringify(currentUser));
+    function viewSummary(uid) {
+        activeSummaryUid = uid; 
+        const user = allUsers[uid]; if(!user) return;
+        const modal = document.getElementById('summaryModal');
+        const header = document.getElementById('summary-header');
+        const body = document.getElementById('summary-body');
+        
+        const avatar = user.gender === 'female' ? 'https://cdn-icons-png.flaticon.com/512/6997/6997662.png' : 'https://cdn-icons-png.flaticon.com/512/4140/4140037.png';
+        
+        header.innerHTML = `<div style="display:flex; align-items:center; gap:12px; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:12px;">
+            <img src="${avatar}" style="width:55px; height:55px; border-radius:50%; border:2px solid var(--primary); object-fit:cover;">
+            <div><h3 style="color:var(--text-main); font-size:17px;">${user.name}</h3>
+            <p style="font-size:11px; color:var(--text-muted);">ওভারঅল প্রগ্রেস: <b>${user.progress}%</b></p></div></div>`;
+        
+        body.innerHTML = "";
+        Object.keys(syllabusData).forEach(sub => {
+            Object.keys(syllabusData[sub]).forEach(paper => {
+                const perc = calculatePaperPercentage(sub, paper, user);
+                const item = document.createElement('div');
+                item.className = "summary-item";
+                const safeKey = `${sub.replace(/\s+/g, '')}-${paper.replace(/\s+/g, '')}`;
+                
+                let detailsHtml = "";
+                const key = `${sub}-${paper}`;
+                const chapters = syllabusData[sub][paper];
+                const subList = ["পদার্থবিজ্ঞান", "রসায়ন", "জীববিজ্ঞান"];
+                
+                chapters.forEach((ch, idx) => {
+                    const chData = (user.trackerData && user.trackerData[key] && user.trackerData[key][idx]);
+                    let icon = chData?.done ? '<i class="fas fa-check-circle" style="color:var(--success)"></i>' : '<i class="far fa-circle" style="color:#cbd5e1"></i>';
+                    
+                    let partsBoxes = "";
+                    if(subList.includes(sub)) {
+                        const p = chData?.parts || { k: false, kh: false, g: false, gh: false };
+                        partsBoxes = `<div class="mini-check-group">
+                            <div class="mini-box ${p.k ? 'active' : ''}">ক</div>
+                            <div class="mini-box ${p.kh ? 'active' : ''}">খ</div>
+                            <div class="mini-box ${p.g ? 'active' : ''}">গ</div>
+                            <div class="mini-box ${p.gh ? 'active' : ''}">ঘ</div>
+                        </div>`;
+                    }
+
+                    detailsHtml += `<div class="detail-row"><span class="ch-name-small">${icon} ${ch}</span>${partsBoxes}</div>`;
+                });
+
+                const isOpened = openedDetails.has(safeKey);
+
+                item.innerHTML = `<h5>${sub} (${paper})</h5>
+                    <div class="progress-container" style="height:6px; margin-bottom:5px;"><div class="progress-fill" style="width:${perc}%"></div></div>
+                    <div style="display:flex; justify-content:space-between; font-size:11px;">
+                    <span>সম্পন্ন: ${perc.toFixed(1)}%</span><span>${chapters.length} অধ্যায় <i class="fas ${isOpened ? 'fa-chevron-up' : 'fa-chevron-down'}"></i></span></div>
+                    <div class="chapter-detail-box" id="detail-${safeKey}" style="display: ${isOpened ? 'block' : 'none'}">${detailsHtml}</div>`;
+                
+                item.onclick = (e) => {
+                    const detailBox = item.querySelector('.chapter-detail-box');
+                    const isVisible = detailBox.style.display === "block";
+                    detailBox.style.display = isVisible ? "none" : "block";
+                    const icon = item.querySelector('.fa-chevron-down') || item.querySelector('.fa-chevron-up');
+                    if(isVisible) {
+                        openedDetails.delete(safeKey);
+                        if(icon) icon.className = "fas fa-chevron-down";
+                    } else {
+                        openedDetails.add(safeKey);
+                        if(icon) icon.className = "fas fa-chevron-up";
+                    }
+                };
+                body.appendChild(item);
+            });
+        });
+        modal.style.display = "flex";
     }
-    function toggleDarkMode() { document.body.classList.toggle('dark'); localStorage.setItem('hsc_dark', document.body.classList.contains('dark')); }
-    function toggleBan(id) { const idx = users.findIndex(u => u.id === id); users[idx].isBanned = !users[idx].isBanned; saveUsers(); renderLeaderboard(); }
+
+    function closeSummary() { 
+        document.getElementById('summaryModal').style.display = "none"; 
+        activeSummaryUid = null; 
+        openedDetails.clear(); 
+    }
+    
+    function toggleBan(id) { db.ref('users/' + id).update({ isBanned: !allUsers[id].isBanned }); }
+    function toggleDarkMode() { 
+        document.body.classList.toggle('dark'); document.documentElement.classList.toggle('dark');
+        localStorage.setItem('dark_mode', document.body.classList.contains('dark'));
+    }
+
     async function exportPDF() {
-        const element = document.getElementById('leaderboard-list');
-        const opt = { margin: 1, filename: 'Leaderboard.pdf', html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' } };
-        html2pdf().set(opt).from(element).save();
+        const dateEn = new Date().toLocaleDateString('en-GB');
+        const sorted = Object.values(allUsers).filter(u => u.role === 'student').sort((a, b) => b.progress - a.progress);
+
+        const element = document.createElement('div');
+        element.style.position = 'fixed';
+        element.style.left = '-9999px'; 
+        element.style.top = '0';
+        element.style.width = '800px'; 
+        element.style.padding = '40px';
+        element.style.background = '#ffffff'; 
+        element.style.fontFamily = "'Hind Siliguri', sans-serif";
+        element.style.color = "#000000";
+
+        let html = `
+            <div style="text-align:center; margin-bottom:35px; border-bottom:4px solid #2563eb; padding-bottom:20px;">
+                <h1 style="color:#2563eb; margin:0; font-size:36px; font-weight:bold;">HSC Study Tracker</h1>
+                <p style="margin:5px 0; color:#475569; font-size:18px;">Student Performance Leaderboard</p>
+                <div style="display:inline-block; background:#f1f5f9; padding:5px 15px; border-radius:20px; font-size:14px; color:#64748b; margin-top:10px;">
+                    Date: ${dateEn}
+                </div>
+            </div>
+
+            <table style="width:100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
+                <thead>
+                    <tr style="background:#2563eb; color:#ffffff;">
+                        <th style="padding:15px; text-align:left; font-size:16px; border:1px solid #2563eb;">Rank</th>
+                        <th style="padding:15px; text-align:left; font-size:16px; border:1px solid #2563eb;">Student Name</th>
+                        <th style="padding:15px; text-align:center; font-size:16px; border:1px solid #2563eb;">Total Progress (%)</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+        
+        sorted.forEach((u, i) => {
+            html += `
+                <tr style="background: ${i % 2 === 0 ? '#f8fafc' : '#ffffff'};">
+                    <td style="padding:14px; border:1px solid #e2e8f0; color:#1e293b; font-weight:bold; font-size:15px;"># ${i+1}</td>
+                    <td style="padding:14px; border:1px solid #e2e8f0; color:#1e293b; font-size:15px; font-weight:600;">${u.name}</td>
+                    <td style="padding:14px; border:1px solid #e2e8f0; text-align:center;">
+                        <div style="font-weight:bold; color:#2563eb; font-size:18px;">${u.progress}%</div>
+                        <div style="width:100%; height:6px; background:#e2e8f0; border-radius:3px; margin-top:5px;">
+                            <div style="width:${u.progress}%; height:100%; background:#2563eb; border-radius:3px;"></div>
+                        </div>
+                    </td>
+                </tr>`;
+        });
+
+        html += `</tbody></table>
+            <div style="margin-top:50px; text-align:center; font-size:13px; color:#94a3b8; border-top:1px solid #f1f5f9; padding-top:20px;">
+                <p style="margin:2px 0;">Generated by <strong>HSC Study Tracker Pro</strong></p>
+                <p style="margin:2px 0; color:#2563eb; font-weight:bold;">Developed by Md. Pial Hasan</p>
+                <p style="margin:2px 0; font-style:italic;">© 2025 All Rights Reserved</p>
+            </div>`;
+
+        element.innerHTML = html;
+        document.body.appendChild(element);
+
+        const opt = { 
+            margin: [0.5, 0.3], 
+            filename: `HSC_Leaderboard_${dateEn}.pdf`, 
+            image: { type: 'jpeg', quality: 1 }, 
+            html2canvas: { 
+                scale: 3, 
+                useCORS: true, 
+                letterRendering: true,
+                backgroundColor: '#ffffff',
+                windowWidth: 800 
+            }, 
+            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
+        
+        try {
+            await html2pdf().set(opt).from(element).save();
+        } catch (err) {
+            console.error("PDF Download Error: ", err);
+            alert("পিডিএফ ডাউনলোড করতে সমস্যা হচ্ছে।");
+        } finally {
+            document.body.removeChild(element);
+        }
     }
 
-    // --- Final Initial Load Logic (Sequence Control) ---
-    window.onload = () => {
-        // ১. ডার্ক মোড চেক
-        if(localStorage.getItem('hsc_dark') === 'true') document.body.classList.add('dark');
-
-        // ২. মাস্টার লগইন চেক (দ্বিতীয় কোডের লজিক)
-        const storedMasterUser = localStorage.getItem("master_username");
-        const storedMasterPass = localStorage.getItem("master_password");
-
-        if (storedMasterUser === "PC Master Academy" && storedMasterPass === "www.pcmasteracademy.com") {
-            // মাস্টার লগইন করা থাকলে মূল অ্যাপ লোড হবে
-            document.getElementById("loginModal").style.display = "none";
-            
-            // ৩. স্টুডেন্ট/ইউজার লগইন চেক (প্রথম কোডের লজিক)
-            if(currentUser) {
-                const fresh = users.find(u => u.id === currentUser.id);
-                if(fresh && fresh.isBanned) return showPage('banned-screen');
-                initDashboard();
-            } else {
-                showPage('login-page');
-            }
-        } else {
-            // মাস্টার লগইন করা না থাকলে গেটওয়ে মোডাল দেখাবে
-            showLoginModal();
-            // মোডাল থাকা অবস্থায় পেছনের কন্টেন্ট যেন দেখা না যায় তাই লগইন পেজ অ্যাক্টিভ থাকবে
-            showPage('login-page'); 
+    (function instantLoad() {
+        if (localStorage.getItem('dark_mode') === 'true') {
+            document.body.classList.add('dark'); document.documentElement.classList.add('dark');
         }
-    };
+        const savedUid = localStorage.getItem('hsc_uid');
+        if(savedUid) {
+            // হার্ডকোডেড শিক্ষকের জন্য সেশন রিস্টোর
+            if (savedUid === "teacher20189@gmail_com") {
+                currentUser = { id: savedUid, name: "Teacher", role: 'teacher', gender: 'male', progress: 0 };
+                initDashboard();
+                finalizePage();
+                return;
+            }
+
+            db.ref('users/' + savedUid).once('value', snapshot => {
+                currentUser = snapshot.val();
+                if(currentUser) { if(currentUser.isBanned) showPage('banned-screen'); else initDashboard(); }
+                else { localStorage.removeItem('hsc_uid'); showPage('login-page'); }
+                finalizePage();
+            });
+        } else {
+            showPage('login-page'); if(!localStorage.getItem("master_auth")) showLoginModal(); finalizePage();
+        }
+    })();
 </script>
 
 </body>
