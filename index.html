@@ -8,8 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
@@ -20,6 +18,7 @@
             --accent: #38bdf8;
             --success: #22c55e;
             --danger: #ef4444;
+            --warning: #f59e0b;
             --bg: #f1f5f9;
             --card-bg: #ffffff;
             --text-main: #0f172a;
@@ -46,6 +45,10 @@
         }
 
         body.dark .summary-item h5 { color: #ffffff !important; }
+        
+        /* Profile Title Color Logic */
+        #profile-modal-title { color: var(--primary); }
+        body.dark #profile-modal-title { color: #ffffff !important; }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
@@ -145,7 +148,7 @@
         }
 
         @keyframes slideIn { 0% { transform: translateY(-50px); } 100% { transform: translateY(0); } }
-        .modal h2 { font-size: 1.2em; margin-bottom: 20px; color: #2563eb; font-weight: 600; }
+        .modal h2 { font-size: 1.2em; margin-bottom: 20px; font-weight: 600; }
         .modal input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ccc; font-size: 14px; background: var(--bg); color: var(--text-main); }
         .modal button { padding: 12px; background-color: #2563eb; color: white; border-radius: 6px; width: 100%; margin-top: 15px; }
 
@@ -233,6 +236,17 @@
         @media (max-width: 900px) { 
             .dashboard-grid { grid-template-columns: 1fr; } 
             header { flex-direction: row; gap: 15px; text-align: left; }
+        }
+
+        @media (min-width: 901px) {
+            #leaderboard-list {
+                max-height: 550px; 
+                overflow-y: auto; 
+                padding-right: 8px;
+            }
+            #leaderboard-list::-webkit-scrollbar { width: 5px; }
+            #leaderboard-list::-webkit-scrollbar-track { background: transparent; }
+            #leaderboard-list::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
         }
 
         .card { background: var(--card-bg); padding: 20px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; }
@@ -409,6 +423,50 @@
         .progress-container { background: #e2e8f0; height: 12px; border-radius: 6px; overflow: hidden; margin-top: 8px; position: relative; }
         .progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: 0.2s; }
         .banned-screen { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.95); z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; }
+
+        .search-container {
+            position: relative;
+            flex: 1;
+            margin-left: 15px;
+        }
+        .search-container input {
+            width: 100%;
+            padding: 8px 12px 8px 35px;
+            border-radius: 10px;
+            border: 1.5px solid var(--primary);
+            background: var(--bg);
+            color: var(--text-main);
+            font-size: 13px;
+            outline: none;
+            transition: 0.2s;
+        }
+        .search-container i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            font-size: 14px;
+        }
+        .search-container input:focus {
+            box-shadow: 0 0 8px rgba(37, 99, 235, 0.2);
+        }
+
+        /* Admin Controls Styling */
+        .admin-action-btns {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+        .admin-action-btns button {
+            flex: 1;
+            padding: 10px;
+            font-size: 13px;
+        }
+        .btn-ban { background: var(--warning); color: white; }
+        .btn-delete { background: var(--danger); color: white; }
     </style>
 </head>
 <body>
@@ -417,12 +475,28 @@
     <div class="loader"></div>
 </div>
 
+<div id="adminConfirmModal" class="modal">
+    <div class="modal-content" style="max-width: 400px; padding: 30px;">
+        <i id="confirm-icon" class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 15px;"></i>
+        <h2 id="confirm-msg" style="font-size: 1.1rem; margin-bottom: 10px; line-height: 1.5; color: var(--text-main);"></h2>
+        <div style="display: flex; gap: 12px; margin-top: 25px;">
+            <button id="confirm-yes-btn" class="btn-primary" style="flex:1">YES</button>
+            <button onclick="closeAdminConfirm()" class="btn-primary" style="background:#e2e8f0; color:#475569; flex:1">NO</button>
+        </div>
+    </div>
+</div>
+
 <div id="summaryModal" class="modal">
     <div class="modal-content summary-modal-content">
         <span class="close-modal" onclick="closeSummary()"><i class="fas fa-times-circle"></i></span>
         <div id="summary-header"></div>
         <h4 style="font-size:15px; margin-bottom:12px; color:var(--text-muted)"><i class="fas fa-info-circle"></i> সাবজেক্টে ক্লিক করে বিস্তারিত রিপোর্ট দেখুন</h4>
         <div id="summary-body" class="summary-grid"></div>
+        
+        <div id="admin-summary-controls" class="admin-action-btns hidden">
+            <button id="summary-ban-btn" class="btn-ban"><i class="fas fa-user-slash"></i> ব্যান করুন</button>
+            <button id="summary-del-btn" class="btn-delete"><i class="fas fa-trash-alt"></i> ডিলিট করুন</button>
+        </div>
     </div>
 </div>
 
@@ -445,6 +519,39 @@
             <button onclick="handleLogout()" class="btn-primary" style="background:var(--danger); flex:1">YES</button>
             <button onclick="closeLogoutModal()" class="btn-primary" style="background:#e2e8f0; color:#475569; flex:1">NO</button>
         </div>
+    </div>
+</div>
+
+<div id="profileModal" class="modal">
+    <div class="modal-content" style="max-width: 450px; text-align: left; padding: 30px;">
+        <span class="close-modal" onclick="closeProfileModal()"><i class="fas fa-times-circle"></i></span>
+        <h2 id="profile-modal-title" style="text-align: center; margin-bottom: 25px;"><i class="fas fa-user-circle"></i> My Profile</h2>
+        
+        <div style="text-align: center; margin-bottom: 25px;">
+            <img id="profile-preview" src="" style="width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+        </div>
+
+        <div class="input-group">
+            <label>Full Name</label>
+            <input type="text" id="edit-name" placeholder="Enter your name">
+        </div>
+        <div class="input-group">
+            <label>Email (Not Changeable)</label>
+            <input type="text" id="edit-email" disabled style="background: rgba(0,0,0,0.05); cursor: not-allowed; opacity: 0.7;">
+        </div>
+        <div class="input-group">
+            <label>Password</label>
+            <input type="text" id="edit-pass" placeholder="Enter new password">
+        </div>
+        <div class="input-group">
+            <label>Gender</label>
+            <select id="edit-gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </div>
+        
+        <button class="btn-primary" onclick="handleUpdateProfile()" style="margin-top: 20px;">Save Changes</button>
     </div>
 </div>
 
@@ -512,6 +619,9 @@
                         <i class="fas fa-bars"></i>
                     </button>
                     <div id="dropdown-menu" class="dropdown-content">
+                        <button onclick="openProfileModal()">
+                            <i class="fas fa-user-circle"></i> My Profile
+                        </button>
                         <button onclick="toggleDarkMode()">
                             <i class="fas fa-moon"></i> ডার্ক মোড অন/অফ
                         </button>
@@ -566,9 +676,10 @@
                 <div class="right-panel">
                     <div class="card">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                            <h4 style="font-size:15px">🏆 লিডারবোর্ড</h4>
-                            <div style="display:flex; gap:5px">
-                                <button onclick="exportPDF()" style="font-size:10px; padding:5px 10px; background:#2563eb; color:white; border-radius:6px;"><i class="fas fa-file-pdf"></i> PDF</button>
+                            <h4 style="font-size:15px; white-space: nowrap;">🏆 লিডারবোর্ড</h4>
+                            <div class="search-container">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="leaderboard-search" oninput="renderLeaderboard()" placeholder="নাম খুঁজুন...">
                             </div>
                         </div>
                         <div id="leaderboard-list"></div>
@@ -586,7 +697,14 @@
     <div id="banned-screen" class="banned-screen hidden">
         <i class="fas fa-user-slash" style="font-size: 4rem; color: var(--danger);"></i>
         <h1 style="margin-top:20px; font-size:22px">অ্যাকাউন্ট স্থগিত!</h1>
+        <p style="margin-top: 10px; color: #94a3b8;">আপনার একাউন্টটি এডমিন কর্তৃক ব্যান করা হয়েছে।</p>
         <button class="btn-primary" onclick="handleLogout()" style="width:160px; margin-top:20px">লগআউট</button>
+    </div>
+
+    <div id="device-blocked-screen" class="banned-screen hidden">
+        <i class="fas fa-ban" style="font-size: 4rem; color: var(--danger);"></i>
+        <h1 style="margin-top:20px; font-size:22px">অ্যাক্সেস ডিনাইড!</h1>
+        <p style="margin-top: 10px; color: #94a3b8; text-align: center; padding: 0 20px;">আপনার ডিভাইসটি এই ওয়েবসাইট থেকে চিরতরে ব্লক করা হয়েছে।</p>
     </div>
 </div>
 
@@ -681,6 +799,7 @@
     }
 
     function handleRegister() {
+        if(localStorage.getItem('device_blocked')) return showPage('device-blocked-screen');
         const name = document.getElementById('reg-name').value;
         const email = document.getElementById('reg-email').value.replace(/\./g, '_'); 
         const pass = document.getElementById('reg-pass').value;
@@ -689,7 +808,6 @@
         
         const maleAvatar = "https://cdn-icons-png.flaticon.com/512/4140/4140037.png";
         const femaleAvatar = "https://cdn-icons-png.flaticon.com/512/6997/6997662.png";
-        
         const img = gender === 'female' ? femaleAvatar : maleAvatar;
 
         if(!name || !email || !pass) return alert("সব তথ্য দিন!");
@@ -703,11 +821,11 @@
     }
 
     function handleLogin() {
+        if(localStorage.getItem('device_blocked')) return showPage('device-blocked-screen');
         const loginEmail = document.getElementById('login-email').value;
         const pass = document.getElementById('login-pass').value;
         const emailKey = loginEmail.replace(/\./g, '_');
 
-        // শিক্ষকের জন্য ডিফল্ট লগইন সিস্টেম
         if (loginEmail === "teacher20189@gmail.com" && pass === "teacher20189@gmail.com") {
             currentUser = { id: emailKey, name: "Teacher", role: 'teacher', gender: 'male', progress: 0 };
             localStorage.setItem('hsc_uid', emailKey);
@@ -730,14 +848,47 @@
     function confirmLogout() { document.getElementById('logoutModal').style.display = 'flex'; }
     function closeLogoutModal() { document.getElementById('logoutModal').style.display = 'none'; }
 
+    function openProfileModal() {
+        if(!currentUser) return;
+        document.getElementById('edit-name').value = currentUser.name || "";
+        document.getElementById('edit-email').value = currentUser.id.replace(/_/g, '.') || "";
+        document.getElementById('edit-pass').value = currentUser.pass || "";
+        document.getElementById('edit-gender').value = currentUser.gender || "male";
+        document.getElementById('profile-preview').src = currentUser.img || (currentUser.gender === 'female' ? 'https://cdn-icons-png.flaticon.com/512/6997/6997662.png' : 'https://cdn-icons-png.flaticon.com/512/4140/4140037.png');
+        document.getElementById('profileModal').style.display = 'flex';
+        toggleMenu(); 
+    }
+
+    function closeProfileModal() { document.getElementById('profileModal').style.display = 'none'; }
+
+    function handleUpdateProfile() {
+        const newName = document.getElementById('edit-name').value;
+        const newPass = document.getElementById('edit-pass').value;
+        const newGender = document.getElementById('edit-gender').value;
+
+        if(!newName || !newPass) return alert("Please enter name and password!");
+
+        let finalImg = currentUser.img;
+        if(newGender !== currentUser.gender) {
+            finalImg = newGender === 'female' ? 'https://cdn-icons-png.flaticon.com/512/6997/6997662.png' : 'https://cdn-icons-png.flaticon.com/512/4140/4140037.png';
+        }
+
+        const updates = { name: newName, pass: newPass, gender: newGender, img: finalImg };
+
+        db.ref('users/' + currentUser.id).update(updates).then(() => {
+            alert("Profile updated successfully!");
+            closeProfileModal();
+            initDashboard(); 
+        }).catch(err => alert("Error: " + err.message));
+    }
+
     function initDashboard() {
         showPage('dashboard-page');
         if(currentUser) {
             const welcomeBox = document.getElementById('welcome-text');
             if(welcomeBox) {
-                const avatar = currentUser.gender === 'female' ? 'https://cdn-icons-png.flaticon.com/512/6997/6997662.png' : 'https://cdn-icons-png.flaticon.com/512/4140/4140037.png';
                 welcomeBox.innerHTML = `
-                    <img src="${avatar}" alt="Profile" style="width:35px; height:35px; border-radius:50%; object-fit:cover;">
+                    <img src="${currentUser.img}" alt="Profile" style="width:35px; height:35px; border-radius:50%; object-fit:cover;">
                     <span style="font-weight:600; font-size:15px;">${currentUser.name}</span>
                 `;
             }
@@ -745,13 +896,61 @@
             if(currentUser.role === 'teacher') {
                 document.getElementById('student-tracker-card').classList.add('hidden');
                 document.getElementById('teacher-panel').classList.remove('hidden');
+                document.querySelector('.global-progress').classList.add('hidden'); // Removed Syllabus Progress for Admin
+                document.getElementById('admin-summary-controls').classList.remove('hidden');
             } else {
                 document.getElementById('student-tracker-card').classList.remove('hidden');
                 document.getElementById('teacher-panel').classList.add('hidden');
+                document.querySelector('.global-progress').classList.remove('hidden');
+                document.getElementById('admin-summary-controls').classList.add('hidden');
             }
         }
         renderSubjectBtns(); updateGlobalUI();
         setInterval(() => { if(currentUser && currentUser.role !== 'teacher') db.ref('users/' + currentUser.id + '/lastSeen').set(Date.now()); }, 5000); 
+    }
+
+    // --- Admin Control Functions ---
+    function closeAdminConfirm() { document.getElementById('adminConfirmModal').style.display = 'none'; }
+
+    function confirmBan(uid) {
+        const user = allUsers[uid];
+        const modal = document.getElementById('adminConfirmModal');
+        const icon = document.getElementById('confirm-icon');
+        const msg = document.getElementById('confirm-msg');
+        const yesBtn = document.getElementById('confirm-yes-btn');
+        
+        icon.className = "fas fa-user-slash";
+        icon.style.color = "var(--warning)";
+        msg.innerText = user.isBanned ? `আপনি কি ${user.name}-এর ব্যান তুলে নিতে চান?` : `আপনি কি ${user.name}-কে ব্যান করতে চান? সে আর ওয়েবসাইট অ্যাক্সেস করতে পারবে না।`;
+        
+        yesBtn.onclick = () => {
+            db.ref('users/' + uid).update({ isBanned: !user.isBanned });
+            closeAdminConfirm();
+            closeSummary();
+        };
+        modal.style.display = "flex";
+    }
+
+    function confirmDelete(uid) {
+        const user = allUsers[uid];
+        const modal = document.getElementById('adminConfirmModal');
+        const icon = document.getElementById('confirm-icon');
+        const msg = document.getElementById('confirm-msg');
+        const yesBtn = document.getElementById('confirm-yes-btn');
+        
+        icon.className = "fas fa-trash-alt";
+        icon.style.color = "var(--danger)";
+        msg.innerText = `আপনি কি ${user.name}-কে ওয়েবসাইট থেকে ডিলিট করে দিতে চান? এই ইউজার এই ডিভাইস থেকে আর কখনোই ঢুকতে পারবে না।`;
+        
+        yesBtn.onclick = () => {
+            // Store blocked status in device and Firebase blacklist (simulated)
+            db.ref('users/' + uid).remove().then(() => {
+                alert("ইউজার সফলভাবে ডিলিট এবং ডিভাইস ব্লক করা হয়েছে।");
+                closeAdminConfirm();
+                closeSummary();
+            });
+        };
+        modal.style.display = "flex";
     }
 
     function renderSubjectBtns() {
@@ -788,19 +987,9 @@
         selectedPaper = paper; 
         subjectStates[selectedSub] = paper;
         localStorage.setItem('subjectStates', JSON.stringify(subjectStates));
-        
         const tabs = document.querySelectorAll('.tab');
-        tabs.forEach(t => {
-            if(t.innerText.includes(paper)) {
-                t.classList.add('active');
-            } else {
-                t.classList.remove('active');
-            }
-        });
-        
-        setTimeout(() => {
-            renderChapters(); 
-        }, 10);
+        tabs.forEach(t => { t.innerText.includes(paper) ? t.classList.add('active') : t.classList.remove('active'); });
+        setTimeout(() => { renderChapters(); }, 10);
     }
 
     function renderChapters() {
@@ -858,9 +1047,7 @@
         const key = `${selectedSub}-${selectedPaper}`;
         if(!currentUser.trackerData) currentUser.trackerData = {};
         if(!currentUser.trackerData[key]) currentUser.trackerData[key] = {};
-        chapters.forEach((_, i) => {
-            currentUser.trackerData[key][i] = { done: status, parts: { k: status, kh: status, g: status, gh: status } };
-        });
+        chapters.forEach((_, i) => { currentUser.trackerData[key][i] = { done: status, parts: { k: status, kh: status, g: status, gh: status } }; });
         updateGlobalUI();
         db.ref('users/' + currentUser.id).update(currentUser).then(() => renderChapters());
     }
@@ -918,12 +1105,22 @@
 
     function renderLeaderboard() {
         const list = document.getElementById('leaderboard-list'); if(!list) return;
+        const searchTerm = document.getElementById('leaderboard-search').value.toLowerCase();
         list.innerHTML = "";
         const userArray = Object.values(allUsers);
-        const sorted = userArray.filter(u => u.role === 'student').sort((a, b) => b.progress - a.progress);
+        
+        const sorted = userArray
+            .filter(u => u.role === 'student' && u.name.toLowerCase().includes(searchTerm))
+            .sort((a, b) => b.progress - a.progress);
+
+        if(sorted.length === 0) {
+            list.innerHTML = `<div style="text-align:center; padding:20px; color:var(--text-muted); font-size:14px;">কোনো স্টুডেন্ট পাওয়া যায়নি!</div>`;
+            return;
+        }
+
         sorted.forEach((u, idx) => {
             const isOnline = (Date.now() - u.lastSeen) < 15000;
-            const avatar = u.gender === 'female' ? 'https://cdn-icons-png.flaticon.com/512/6997/6997662.png' : 'https://cdn-icons-png.flaticon.com/512/4140/4140037.png';
+            const avatar = u.img || (u.gender === 'female' ? 'https://cdn-icons-png.flaticon.com/512/6997/6997662.png' : 'https://cdn-icons-png.flaticon.com/512/4140/4140037.png');
             const div = document.createElement('div'); div.className = "leader-row";
             div.onclick = () => viewSummary(u.id); 
             div.innerHTML = `
@@ -934,7 +1131,7 @@
                     <div style="font-size:9px; display:flex; align-items:center; gap:4px">
                     <span class="status-dot ${isOnline ? 'online' : 'offline'}"></span>${isOnline ? 'Active' : 'Offline'}</div></div></div>
                 <div style="text-align:right"><div style="font-weight:bold; color:var(--primary); font-size:14px">${u.progress}%</div>
-                ${currentUser && currentUser.role === 'teacher' ? `<button onclick="event.stopPropagation(); toggleBan('${u.id}')" style="font-size:9px; color:var(--danger)">${u.isBanned ? 'Unban' : 'Ban'}</button>` : ''}</div>`;
+                ${u.isBanned ? '<span style="color:var(--danger); font-size:9px; font-weight:bold;">BANNED</span>' : ''}</div>`;
             list.appendChild(div);
         });
     }
@@ -946,8 +1143,14 @@
         const header = document.getElementById('summary-header');
         const body = document.getElementById('summary-body');
         
-        const avatar = user.gender === 'female' ? 'https://cdn-icons-png.flaticon.com/512/6997/6997662.png' : 'https://cdn-icons-png.flaticon.com/512/4140/4140037.png';
-        
+        // Admin Button Setup
+        if(currentUser && currentUser.role === 'teacher') {
+            document.getElementById('summary-ban-btn').innerText = user.isBanned ? 'ব্যান তুলুন' : 'ব্যান করুন';
+            document.getElementById('summary-ban-btn').onclick = (e) => { e.stopPropagation(); confirmBan(uid); };
+            document.getElementById('summary-del-btn').onclick = (e) => { e.stopPropagation(); confirmDelete(uid); };
+        }
+
+        const avatar = user.img || (user.gender === 'female' ? 'https://cdn-icons-png.flaticon.com/512/6997/6997662.png' : 'https://cdn-icons-png.flaticon.com/512/4140/4140037.png');
         header.innerHTML = `<div style="display:flex; align-items:center; gap:12px; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:12px;">
             <img src="${avatar}" style="width:55px; height:55px; border-radius:50%; border:2px solid var(--primary); object-fit:cover;">
             <div><h3 style="color:var(--text-main); font-size:17px;">${user.name}</h3>
@@ -960,16 +1163,13 @@
                 const item = document.createElement('div');
                 item.className = "summary-item";
                 const safeKey = `${sub.replace(/\s+/g, '')}-${paper.replace(/\s+/g, '')}`;
-                
                 let detailsHtml = "";
                 const key = `${sub}-${paper}`;
                 const chapters = syllabusData[sub][paper];
                 const subList = ["পদার্থবিজ্ঞান", "রসায়ন", "জীববিজ্ঞান"];
-                
                 chapters.forEach((ch, idx) => {
                     const chData = (user.trackerData && user.trackerData[key] && user.trackerData[key][idx]);
                     let icon = chData?.done ? '<i class="fas fa-check-circle" style="color:var(--success)"></i>' : '<i class="far fa-circle" style="color:#cbd5e1"></i>';
-                    
                     let partsBoxes = "";
                     if(subList.includes(sub)) {
                         const p = chData?.parts || { k: false, kh: false, g: false, gh: false };
@@ -980,30 +1180,20 @@
                             <div class="mini-box ${p.gh ? 'active' : ''}">ঘ</div>
                         </div>`;
                     }
-
                     detailsHtml += `<div class="detail-row"><span class="ch-name-small">${icon} ${ch}</span>${partsBoxes}</div>`;
                 });
-
                 const isOpened = openedDetails.has(safeKey);
-
                 item.innerHTML = `<h5>${sub} (${paper})</h5>
                     <div class="progress-container" style="height:6px; margin-bottom:5px;"><div class="progress-fill" style="width:${perc}%"></div></div>
                     <div style="display:flex; justify-content:space-between; font-size:11px;">
                     <span>সম্পন্ন: ${perc.toFixed(1)}%</span><span>${chapters.length} অধ্যায় <i class="fas ${isOpened ? 'fa-chevron-up' : 'fa-chevron-down'}"></i></span></div>
                     <div class="chapter-detail-box" id="detail-${safeKey}" style="display: ${isOpened ? 'block' : 'none'}">${detailsHtml}</div>`;
-                
                 item.onclick = (e) => {
                     const detailBox = item.querySelector('.chapter-detail-box');
                     const isVisible = detailBox.style.display === "block";
                     detailBox.style.display = isVisible ? "none" : "block";
                     const icon = item.querySelector('.fa-chevron-down') || item.querySelector('.fa-chevron-up');
-                    if(isVisible) {
-                        openedDetails.delete(safeKey);
-                        if(icon) icon.className = "fas fa-chevron-down";
-                    } else {
-                        openedDetails.add(safeKey);
-                        if(icon) icon.className = "fas fa-chevron-up";
-                    }
+                    isVisible ? (openedDetails.delete(safeKey), icon.className = "fas fa-chevron-down") : (openedDetails.add(safeKey), icon.className = "fas fa-chevron-up");
                 };
                 body.appendChild(item);
             });
@@ -1017,119 +1207,29 @@
         openedDetails.clear(); 
     }
     
-    function toggleBan(id) { db.ref('users/' + id).update({ isBanned: !allUsers[id].isBanned }); }
     function toggleDarkMode() { 
         document.body.classList.toggle('dark'); document.documentElement.classList.toggle('dark');
         localStorage.setItem('dark_mode', document.body.classList.contains('dark'));
     }
 
-    async function exportPDF() {
-        const dateEn = new Date().toLocaleDateString('en-GB');
-        const sorted = Object.values(allUsers).filter(u => u.role === 'student').sort((a, b) => b.progress - a.progress);
-
-        const element = document.createElement('div');
-        element.style.position = 'fixed';
-        element.style.left = '-9999px'; 
-        element.style.top = '0';
-        element.style.width = '800px'; 
-        element.style.padding = '40px';
-        element.style.background = '#ffffff'; 
-        element.style.fontFamily = "'Hind Siliguri', sans-serif";
-        element.style.color = "#000000";
-
-        let html = `
-            <div style="text-align:center; margin-bottom:35px; border-bottom:4px solid #2563eb; padding-bottom:20px;">
-                <h1 style="color:#2563eb; margin:0; font-size:36px; font-weight:bold;">HSC Study Tracker</h1>
-                <p style="margin:5px 0; color:#475569; font-size:18px;">Student Performance Leaderboard</p>
-                <div style="display:inline-block; background:#f1f5f9; padding:5px 15px; border-radius:20px; font-size:14px; color:#64748b; margin-top:10px;">
-                    Date: ${dateEn}
-                </div>
-            </div>
-
-            <table style="width:100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
-                <thead>
-                    <tr style="background:#2563eb; color:#ffffff;">
-                        <th style="padding:15px; text-align:left; font-size:16px; border:1px solid #2563eb;">Rank</th>
-                        <th style="padding:15px; text-align:left; font-size:16px; border:1px solid #2563eb;">Student Name</th>
-                        <th style="padding:15px; text-align:center; font-size:16px; border:1px solid #2563eb;">Total Progress (%)</th>
-                    </tr>
-                </thead>
-                <tbody>`;
-        
-        sorted.forEach((u, i) => {
-            html += `
-                <tr style="background: ${i % 2 === 0 ? '#f8fafc' : '#ffffff'};">
-                    <td style="padding:14px; border:1px solid #e2e8f0; color:#1e293b; font-weight:bold; font-size:15px;"># ${i+1}</td>
-                    <td style="padding:14px; border:1px solid #e2e8f0; color:#1e293b; font-size:15px; font-weight:600;">${u.name}</td>
-                    <td style="padding:14px; border:1px solid #e2e8f0; text-align:center;">
-                        <div style="font-weight:bold; color:#2563eb; font-size:18px;">${u.progress}%</div>
-                        <div style="width:100%; height:6px; background:#e2e8f0; border-radius:3px; margin-top:5px;">
-                            <div style="width:${u.progress}%; height:100%; background:#2563eb; border-radius:3px;"></div>
-                        </div>
-                    </td>
-                </tr>`;
-        });
-
-        html += `</tbody></table>
-            <div style="margin-top:50px; text-align:center; font-size:13px; color:#94a3b8; border-top:1px solid #f1f5f9; padding-top:20px;">
-                <p style="margin:2px 0;">Generated by <strong>HSC Study Tracker Pro</strong></p>
-                <p style="margin:2px 0; color:#2563eb; font-weight:bold;">Developed by Md. Pial Hasan</p>
-                <p style="margin:2px 0; font-style:italic;">© 2025 All Rights Reserved</p>
-            </div>`;
-
-        element.innerHTML = html;
-        document.body.appendChild(element);
-
-        const opt = { 
-            margin: [0.5, 0.3], 
-            filename: `HSC_Leaderboard_${dateEn}.pdf`, 
-            image: { type: 'jpeg', quality: 1 }, 
-            html2canvas: { 
-                scale: 3, 
-                useCORS: true, 
-                letterRendering: true,
-                backgroundColor: '#ffffff',
-                windowWidth: 800 
-            }, 
-            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-        };
-        
-        try {
-            await html2pdf().set(opt).from(element).save();
-        } catch (err) {
-            console.error("PDF Download Error: ", err);
-            alert("পিডিএফ ডাউনলোড করতে সমস্যা হচ্ছে।");
-        } finally {
-            document.body.removeChild(element);
-        }
-    }
-
     (function instantLoad() {
-        if (localStorage.getItem('dark_mode') === 'true') {
-            document.body.classList.add('dark'); document.documentElement.classList.add('dark');
-        }
+        if (localStorage.getItem('device_blocked')) return showPage('device-blocked-screen');
+        if (localStorage.getItem('dark_mode') === 'true') { document.body.classList.add('dark'); document.documentElement.classList.add('dark'); }
         const savedUid = localStorage.getItem('hsc_uid');
         if(savedUid) {
-            // হার্ডকোডেড শিক্ষকের জন্য সেশন রিস্টোর
             if (savedUid === "teacher20189@gmail_com") {
                 currentUser = { id: savedUid, name: "Teacher", role: 'teacher', gender: 'male', progress: 0 };
-                initDashboard();
-                finalizePage();
-                return;
+                initDashboard(); finalizePage(); return;
             }
-
             db.ref('users/' + savedUid).once('value', snapshot => {
                 currentUser = snapshot.val();
                 if(currentUser) { if(currentUser.isBanned) showPage('banned-screen'); else initDashboard(); }
                 else { localStorage.removeItem('hsc_uid'); showPage('login-page'); }
                 finalizePage();
             });
-        } else {
-            showPage('login-page'); if(!localStorage.getItem("master_auth")) showLoginModal(); finalizePage();
-        }
+        } else { showPage('login-page'); if(!localStorage.getItem("master_auth")) showLoginModal(); finalizePage(); }
     })();
 </script>
 
 </body>
 </html>
-
