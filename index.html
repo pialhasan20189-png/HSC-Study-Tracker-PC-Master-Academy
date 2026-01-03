@@ -33,17 +33,17 @@
         body.dark #paper-perc-text,
         body.dark #global-perc-text,
         body.dark .subject-btn,
-        body.dark .leader-row div[style*="color:var(--primary)"] { 
-            color: #ffffff !important; 
+        body.dark .leader-row div[style*="color:var(--primary)"] {
+            color: #ffffff !important;
         }
         body.dark .summary-item h5 { color: #ffffff !important; }
         #profile-modal-title { color: var(--primary); }
         body.dark #profile-modal-title { color: #ffffff !important; }
-        #timer-subject-name { 
-            font-size: 1.8rem; 
-            font-weight: 700; 
-            margin-bottom: 25px; 
-            color: var(--primary); 
+        #timer-subject-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--primary);
             transition: 0.3s;
         }
         body.dark #timer-subject-name { color: #ffffff !important; }
@@ -51,9 +51,9 @@
             #timer-subject-name { font-size: 1.5rem; }
         }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { 
-            font-family: 'Hind Siliguri', 'Poppins', sans-serif; 
-            background: var(--bg); 
+        body {
+            font-family: 'Hind Siliguri', 'Poppins', sans-serif;
+            background: var(--bg);
             color: var(--text-main);
             transition: 0.2s;
             line-height: 1.6;
@@ -70,13 +70,13 @@
             transition: opacity 0.6s ease, visibility 0.6s;
         }
         .loader {
-            --c: no-repeat linear-gradient(#ef4444 0 0); 
-            background: 
+            --c: no-repeat linear-gradient(#ef4444 0 0);
+            background:
                 var(--c),var(--c),var(--c),
                 var(--c),var(--c),var(--c),
                 var(--c),var(--c),var(--c);
             background-size: 16px 16px;
-            animation: 
+            animation:
                 l32-1 1s infinite,
                 l32-2 1s infinite;
         }
@@ -93,32 +93,32 @@
         .hidden { display: none !important; }
         .container { max-width: 1100px; margin: 0 auto; padding: 15px; width: 100%; }
         .auth-screen { min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
-        .auth-card { 
-            background: var(--card-bg); 
-            padding: 40px; 
-            border-radius: 20px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+        .auth-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             width: 100%; max-width: 450px; text-align: center;
         }
         .auth-card h2 { margin-bottom: 25px; color: var(--primary); font-size: 1.8rem; }
         .input-group { text-align: left; margin-bottom: 15px; }
         .input-group label { display: block; font-size: 14px; margin-bottom: 5px; font-weight: 600; }
-        .input-group input, .input-group select { 
+        .input-group input, .input-group select {
             width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; outline: none; background: var(--card-bg); color: var(--text-main);
         }
-        button { 
-            cursor: pointer; border: none; border-radius: 10px; transition: 0.1s; 
+        button {
+            cursor: pointer; border: none; border-radius: 10px; transition: 0.1s;
             font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
         }
         .btn-primary { background: var(--primary); color: white; width: 100%; padding: 12px; margin-top: 10px; }
         .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
         .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); width: 100%; padding: 12px; margin-top: 10px; }
         .modal {
-          display: none; 
-          position: fixed; 
-          top: 0; left: 0; width: 100%; height: 100%; 
-          background: rgba(0, 0, 0, 0.8); 
-          justify-content: center; align-items: center; 
+          display: none;
+          position: fixed;
+          top: 0; left: 0; width: 100%; height: 100%;
+          background: rgba(0, 0, 0, 0.8);
+          justify-content: center; align-items: center;
           z-index: 9999; padding: 20px;
         }
         .modal-content {
@@ -131,19 +131,19 @@
           animation: slideIn 0.3s ease;
           position: relative;
         }
-        .summary-modal-content { 
-            max-width: 800px !important; 
-            max-height: 90vh; 
-            overflow-y: auto; 
-            text-align: left; 
+        .summary-modal-content {
+            max-width: 800px !important;
+            max-height: 90vh;
+            overflow-y: auto;
+            text-align: left;
             padding: 50px 20px 20px 20px;
         }
         @keyframes slideIn { 0% { transform: translateY(-50px); } 100% { transform: translateY(0); } }
         .modal h2 { font-size: 1.2em; margin-bottom: 20px; font-weight: 600; }
         .modal input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ccc; font-size: 14px; background: var(--bg); color: var(--text-main); }
         .modal button { padding: 12px; background-color: #2563eb; color: white; border-radius: 6px; width: 100%; margin-top: 15px; }
-        header { 
-            background: var(--primary); color: white; padding: 15px 25px; 
+        header {
+            background: var(--primary); color: white; padding: 15px 25px;
             display: flex; justify-content: space-between; align-items: center;
             border-radius: 0 0 20px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
@@ -229,14 +229,14 @@
         }
         .show { display: block !important; }
         .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-top: 20px; }
-        @media (max-width: 900px) { 
-            .dashboard-grid { grid-template-columns: 1fr; } 
+        @media (max-width: 900px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
             header { flex-direction: row; gap: 15px; text-align: left; }
         }
         @media (min-width: 901px) {
             #leaderboard-list {
-                max-height: 550px; 
-                overflow-y: auto; 
+                max-height: 550px;
+                overflow-y: auto;
                 padding-right: 8px;
             }
             #leaderboard-list::-webkit-scrollbar { width: 5px; }
@@ -245,25 +245,25 @@
         }
         .card { background: var(--card-bg); padding: 20px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; }
         .subjects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
-        .subject-btn { 
-            background: var(--bg); 
-            padding: 12px; 
-            border-radius: 12px; 
-            text-align: center; 
-            cursor: pointer; 
-            border: 2.5px solid var(--primary); 
-            transition: 0.1s; 
-            position: relative; 
-            overflow: hidden; 
+        .subject-btn {
+            background: var(--bg);
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            border: 2.5px solid var(--primary);
+            transition: 0.1s;
+            position: relative;
+            overflow: hidden;
             font-size: 14px;
             color: var(--text-main);
             backface-visibility: hidden;
             transform: translateZ(0);
         }
-        .profile-boxes-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
-            gap: 15px; 
+        .profile-boxes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
         }
         .profile-card {
             background: var(--bg);
@@ -332,43 +332,43 @@
         .prog-mini-bar { position: absolute; bottom: 0; left: 0; height: 4px; background: var(--accent); transition: 0.1s; }
         .syllabus-area { margin-top: 20px; }
         .paper-tabs { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
-        .tab { 
-            padding: 10px 16px; 
-            background: var(--card-bg); 
-            border: 2.5px solid var(--primary); 
-            border-radius: 10px; 
-            cursor: pointer; 
-            font-size: 13px; 
+        .tab {
+            padding: 10px 16px;
+            background: var(--card-bg);
+            border: 2.5px solid var(--primary);
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
             color: var(--text-main);
             transition: background 0.05s, color 0.05s, transform 0.05s;
             font-weight: 700;
-            touch-action: manipulation; 
+            touch-action: manipulation;
             user-select: none;
         }
-        .tab.active { 
-            background: var(--primary) !important; 
-            color: white !important; 
+        .tab.active {
+            background: var(--primary) !important;
+            color: white !important;
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
-            transform: scale(0.98); 
+            transform: scale(0.98);
         }
         ul.chapter-list { list-style: none; margin-top: 15px; }
-        ul.chapter-list li { 
-            background: var(--bg); 
-            padding: 12px 15px; 
-            border-radius: 8px; 
-            margin-bottom: 8px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            font-size: 14px; 
-            gap: 10px; 
-            flex-wrap: wrap; 
+        ul.chapter-list li {
+            background: var(--bg);
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 14px;
+            gap: 10px;
+            flex-wrap: wrap;
         }
         .sub-check-group { display: flex; gap: 4px; flex-shrink: 0; }
         .sub-box {
             width: 30px;
             height: 30px;
-            border: 2.5px solid var(--primary); 
+            border: 2.5px solid var(--primary);
             border-radius: 6px;
             display: flex;
             align-items: center;
@@ -376,7 +376,7 @@
             font-size: 13px;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.05s; 
+            transition: 0.05s;
             user-select: none;
             background: var(--card-bg);
             color: var(--primary);
@@ -386,33 +386,33 @@
         .sub-box.checked { background: var(--primary); color: white; }
         .main-ch-check { transform: scale(1.2); accent-color: var(--success); cursor: pointer; }
         .summary-grid { display: flex; flex-direction: column; gap: 15px; margin-top: 15px; }
-        .summary-item { 
-            background: var(--bg); 
-            padding: 15px; 
-            border-radius: 12px; 
-            border: 2px solid var(--primary); 
-            cursor: pointer; 
+        .summary-item {
+            background: var(--bg);
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid var(--primary);
+            cursor: pointer;
             position: relative;
             width: 100%;
         }
         .summary-item h5 { font-size: 14px; margin-bottom: 5px; color: var(--primary); }
         .close-modal { position: absolute; top: 15px; right: 15px; font-size: 24px; cursor: pointer; color: var(--danger); z-index: 10; }
-        .chapter-detail-box { 
-            margin-top: 12px; 
-            padding: 10px; 
-            border-top: 1px solid rgba(0,0,0,0.05); 
-            display: none; 
+        .chapter-detail-box {
+            margin-top: 12px;
+            padding: 10px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            display: none;
             background: rgba(255,255,255,0.4);
             border-radius: 8px;
         }
         body.dark .chapter-detail-box { background: rgba(0,0,0,0.2); }
-        .detail-row { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 8px; 
-            padding-bottom: 5px; 
-            border-bottom: 1px solid rgba(0,0,0,0.03); 
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid rgba(0,0,0,0.03);
             gap: 10px;
         }
         .detail-row:last-child { border-bottom: none; margin-bottom: 0; }
@@ -428,12 +428,12 @@
             line-height: 0; padding-top: 2px;
         }
         .mini-box.active { background: var(--primary); color: white; }
-        @media (max-width: 650px) { 
+        @media (max-width: 650px) {
             .subjects-grid { grid-template-columns: repeat(2, 1fr); }
             .summary-modal-content { padding: 45px 15px 15px 15px; }
             .ch-name-small { font-size: 11px; }
             .mini-box { width: 19px; height: 19px; font-size: 8px; }
-            .tab { padding: 10px 12px; font-size: 12px; flex: 1; text-align: center; } 
+            .tab { padding: 10px 12px; font-size: 12px; flex: 1; text-align: center; }
         }
         .leader-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; cursor: pointer; transition: 0.1s; }
         .leader-row:hover { background: rgba(0,0,0,0.02); }
@@ -508,14 +508,45 @@
         .danger-mode .timer-center { animation: blink-danger 0.5s infinite; }
         .danger-mode .timer-progress { stroke: var(--danger) !important; }
         .danger-overlay {
-            position: fixed; inset: 0; background: rgba(239, 68, 68, 0.4); 
-            z-index: 99999; display: none; flex-direction: column; 
-            justify-content: center; align-items: center; color: white; 
+            position: fixed; inset: 0; background: rgba(239, 68, 68, 0.4);
+            z-index: 99999; display: none; flex-direction: column;
+            justify-content: center; align-items: center; color: white;
             font-weight: 800; font-size: 4rem; text-shadow: 0 5px 15px rgba(0,0,0,0.5);
             pointer-events: none;
         }
         .danger-text-blink { animation: opacity-blink 0.4s infinite alternate; }
         @keyframes opacity-blink { from { opacity: 1; } to { opacity: 0.3; } }
+
+        /* New Styles for Time Filter Buttons */
+        .time-filter-container {
+            display: none; /* Hidden by default in normal mode */
+            flex-direction: row;
+            gap: 5px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            background: var(--bg);
+            padding: 5px;
+            border-radius: 8px;
+        }
+        .time-filter-btn {
+            flex: 1;
+            font-size: 10px;
+            padding: 6px 4px;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            background: transparent;
+            color: var(--primary);
+            text-align: center;
+            white-space: nowrap;
+        }
+        .time-filter-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
@@ -764,6 +795,13 @@
                                 <input type="text" id="leaderboard-search" oninput="renderLeaderboard()" placeholder="নাম খুঁজুন...">
                             </div>
                         </div>
+                        <!-- New Time Filter Buttons -->
+                        <div class="time-filter-container" id="time-filter-container">
+                            <button class="time-filter-btn" onclick="setLeaderboardFilter('24h', this)">24 Hours</button>
+                            <button class="time-filter-btn" onclick="setLeaderboardFilter('7d', this)">7 Days</button>
+                            <button class="time-filter-btn" onclick="setLeaderboardFilter('1m', this)">1 Month</button>
+                            <button class="time-filter-btn active" onclick="setLeaderboardFilter('lifetime', this)">Lifetime</button>
+                        </div>
                         <div id="leaderboard-list"></div>
                     </div>
                     <div id="teacher-panel" class="card hidden">
@@ -821,15 +859,16 @@ const firebaseConfig = {
     let currentUser = null;
     let selectedSub = "";
     let selectedPaper = "";
-    let activeSummaryUid = null; 
-    let openedDetails = new Set(); 
+    let activeSummaryUid = null;
+    let openedDetails = new Set();
     let subjectStates = JSON.parse(localStorage.getItem('subjectStates')) || {};
-    let isStudyMode = false; 
+    let isStudyMode = false;
     let timerInterval = null;
     let studySeconds = 0;
     let isTimerRunning = false;
     let targetAlarmSeconds = 0;
     let isDangerAlertActive = false;
+    let currentLeaderboardFilter = 'lifetime'; // New variable for filter
     db.ref('users').on('value', (snapshot) => {
         allUsers = snapshot.val() || {};
         if(currentUser) currentUser = allUsers[currentUser.id] || currentUser;
@@ -842,15 +881,15 @@ const firebaseConfig = {
         renderLeaderboard();
         updateGlobalUI();
         renderSubjectBtns();
-        if(isStudyMode) renderStudyModeProfiles(); 
-        if(activeSummaryUid) viewSummary(activeSummaryUid); 
+        if(isStudyMode) renderStudyModeProfiles();
+        if(activeSummaryUid) viewSummary(activeSummaryUid);
     });
     const finalizePage = () => {
         const app = document.getElementById('app');
         const loader = document.getElementById('page-loader');
         setTimeout(() => {
-            app.classList.add('visible'); 
-            loader.style.opacity = '0'; 
+            app.classList.add('visible');
+            loader.style.opacity = '0';
             setTimeout(() => loader.style.visibility = 'hidden', 600);
         }, 1000);
     };
@@ -869,9 +908,9 @@ const firebaseConfig = {
         const target = document.getElementById(pageId);
         if(target) target.classList.remove('hidden');
     }
-    function toggleMenu() { 
+    function toggleMenu() {
         if(isTimerRunning) return alert("পড়া চলাকালীন মেনু ওপেন করা যাবে না। দয়া করে টাইমার স্টপ করুন।");
-        document.getElementById("dropdown-menu").classList.toggle("show"); 
+        document.getElementById("dropdown-menu").classList.toggle("show");
     }
     window.onclick = function(event) {
         if (!event.target.matches('.menu-trigger') && !event.target.closest('.menu-trigger')) {
@@ -889,17 +928,22 @@ const firebaseConfig = {
         const trackerCard = document.getElementById('student-tracker-card');
         const studyCard = document.getElementById('study-mode-container');
         const globalProgress = document.querySelector('.global-progress');
+        const timeFilterContainer = document.getElementById('time-filter-container');
         if(isStudyMode) {
             trackerCard.classList.add('hidden');
             globalProgress.classList.add('hidden');
             studyCard.classList.remove('hidden');
+            timeFilterContainer.style.display = 'flex'; // Show time filter buttons in study mode
             renderStudyModeProfiles();
         } else {
             trackerCard.classList.remove('hidden');
             globalProgress.classList.remove('hidden');
             studyCard.classList.add('hidden');
-            document.getElementById('study-subjects-section').classList.add('hidden'); 
+            timeFilterContainer.style.display = 'none'; // Hide time filter buttons in normal mode
+            document.getElementById('study-subjects-section').classList.add('hidden');
         }
+        // Re-render leaderboard to switch between Time and Percent
+        renderLeaderboard();
         const dropdown = document.getElementById("dropdown-menu");
         if(dropdown.classList.contains('show')) dropdown.classList.remove('show');
     }
@@ -932,15 +976,18 @@ const firebaseConfig = {
         resetStudyTimerUI();
         const savedStartTime = localStorage.getItem('timer_start_timestamp');
         if(savedStartTime) startTimerProcess(parseInt(savedStartTime));
+        // Update leaderboard when entering a subject
+        renderLeaderboard();
     }
     function exitStudyTimer() {
         if(isTimerRunning) return alert("ঘড়ি বন্ধ না করে আপনি এই সাবজেক্ট থেকে বের হতে পারবেন না!");
         document.getElementById('study-timer-view').classList.add('hidden');
         document.getElementById('study-main-content').classList.remove('hidden');
-        localStorage.removeItem('active_study_subject'); 
+        localStorage.removeItem('active_study_subject');
         localStorage.removeItem('timer_start_timestamp');
         localStorage.removeItem('timer_target_alarm');
         stopDangerAlert();
+        renderLeaderboard();
     }
     function resetStudyTimerUI() {
         studySeconds = 0; updateTimerDisplay();
@@ -959,33 +1006,42 @@ const firebaseConfig = {
     // সংশোধিত হ্যান্ডেল লগইন ফাংশন (লগইন সমস্যার সমাধান এখানে)
     function handleLogin() {
         if(localStorage.getItem('device_blocked')) return showPage('device-blocked-screen');
-        
+
         // ইনপুট থেকে স্পেস সরানো এবং ছোট হাতের অক্ষর নিশ্চিত করা
         const loginEmail = document.getElementById('login-email').value.trim().toLowerCase();
         const pass = document.getElementById('login-pass').value.trim();
-        
+
         const emailKey = loginEmail.replace(/\./g, '_');
-        
+
         // এডমিন লগইন চেক
         if (loginEmail === "teacher20189@gmail.com" && pass === "teacher20189@gmail.com") {
             currentUser = { id: emailKey, name: "Teacher", role: 'teacher', gender: 'male', progress: 0, isApproved: true };
-            localStorage.setItem('hsc_uid', emailKey); 
-            initDashboard(); 
+            localStorage.setItem('hsc_uid', emailKey);
+            initDashboard();
             return;
         }
-        
+
         // সাধারণ ইউজার লগইন চেক
         db.ref('users/' + emailKey).once('value', snapshot => {
             const user = snapshot.val();
             if(user && user.pass === pass) {
                 if(user.isBanned) return showPage('banned-screen');
                 if(user.role === 'student' && user.isApproved === false) return showPage('waiting-room-screen');
-                currentUser = user; 
-                localStorage.setItem('hsc_uid', emailKey); 
+                currentUser = user;
+                localStorage.setItem('hsc_uid', emailKey);
                 initDashboard();
-            } else { 
-                alert("ভুল পাসওয়ার্ড!"); 
+            } else {
+                alert("ভুল পাসওয়ার্ড!");
             }
+        });
+    }
+
+    // Helper function to save study time to Firebase
+    function saveStudyTimeToFirebase(subject, seconds) {
+        if (!currentUser || seconds <= 0) return;
+        const userRef = db.ref('users/' + currentUser.id + '/studyTime/' + subject);
+        userRef.transaction(currentTime => {
+            return (currentTime || 0) + seconds;
         });
     }
 
@@ -998,6 +1054,12 @@ const firebaseConfig = {
             localStorage.setItem('timer_target_alarm', targetAlarmSeconds);
             startTimerProcess(startTimestamp);
         } else {
+            // Stopping timer - save the time
+            const currentSubject = localStorage.getItem('active_study_subject');
+            if (currentSubject) {
+                saveStudyTimeToFirebase(currentSubject, studySeconds);
+            }
+
             clearInterval(timerInterval); isTimerRunning = false;
             localStorage.removeItem('timer_start_timestamp');
             localStorage.removeItem('timer_target_alarm');
@@ -1005,6 +1067,14 @@ const firebaseConfig = {
             document.getElementById('timer-main-btn').innerHTML = '<i class="fas fa-play"></i> স্টার্ট করুন';
             document.getElementById('timer-main-btn').style.background = "var(--primary)";
             stopDangerAlert();
+
+            // Reset local session seconds
+            studySeconds = 0;
+            updateTimerDisplay();
+            document.getElementById('timer-progress-bar').style.strokeDashoffset = "848";
+
+            // Refresh leaderboard to show updated time
+            renderLeaderboard();
         }
     }
     function startTimerProcess(startTime) {
@@ -1037,15 +1107,15 @@ const firebaseConfig = {
     function handleRegister() {
         if(localStorage.getItem('device_blocked')) return showPage('device-blocked-screen');
         const name = document.getElementById('reg-name').value;
-        const email = document.getElementById('reg-email').value.trim().toLowerCase().replace(/\./g, '_'); 
+        const email = document.getElementById('reg-email').value.trim().toLowerCase().replace(/\./g, '_');
         const pass = document.getElementById('reg-pass').value;
         const role = document.getElementById('reg-role').value;
-        const gender = document.getElementById('reg-gender').value || 'male'; 
+        const gender = document.getElementById('reg-gender').value || 'male';
         const img = gender === 'female' ? "https://cdn-icons-png.flaticon.com/512/6997/6997662.png" : "https://cdn-icons-png.flaticon.com/512/4140/4140037.png";
         if(!name || !email || !pass) return alert("সব তথ্য দিন!");
         db.ref('users/' + email).once('value', snapshot => {
             if(snapshot.exists()) return alert("ইমেইলটি নিবন্ধিত!");
-            const userData = { id: email, name, pass, role, gender, img, progress: 0, trackerData: {}, isBanned: false, isApproved: false, lastSeen: Date.now() };
+            const userData = { id: email, name, pass, role, gender, img, progress: 0, trackerData: {}, isBanned: false, isApproved: false, lastSeen: Date.now(), studyTime: {} };
             db.ref('users/' + email).set(userData).then(() => {
                 alert("রেজিস্ট্রেশন সফল! অ্যাডমিন অনুমোদন দিলেই আপনি লগইন করতে পারবেন।"); showPage('login-page');
             });
@@ -1053,9 +1123,9 @@ const firebaseConfig = {
     }
 
     function handleLogout() { localStorage.removeItem('hsc_uid'); localStorage.removeItem('master_auth'); localStorage.removeItem('active_study_subject'); localStorage.removeItem('timer_start_timestamp'); location.reload(); }
-    function confirmLogout() { 
+    function confirmLogout() {
         if(isTimerRunning) return alert("পড়া চলাকালীন লগআউট করা যাবে না।");
-        document.getElementById('logoutModal').style.display = 'flex'; 
+        document.getElementById('logoutModal').style.display = 'flex';
     }
     function closeLogoutModal() { document.getElementById('logoutModal').style.display = 'none'; }
     function openProfileModal() {
@@ -1066,7 +1136,7 @@ const firebaseConfig = {
         document.getElementById('edit-pass').value = currentUser.pass || "";
         document.getElementById('edit-gender').value = currentUser.gender || "male";
         document.getElementById('profile-preview').src = currentUser.img || (currentUser.gender === 'female' ? 'https://cdn-icons-png.flaticon.com/512/6997/6997662.png' : 'https://cdn-icons-png.flaticon.com/512/4140/4140037.png');
-        document.getElementById('profileModal').style.display = 'flex'; toggleMenu(); 
+        document.getElementById('profileModal').style.display = 'flex'; toggleMenu();
     }
     function closeProfileModal() { document.getElementById('profileModal').style.display = 'none'; }
     function handleUpdateProfile() {
@@ -1078,7 +1148,7 @@ const firebaseConfig = {
         if(newGender !== currentUser.gender) finalImg = newGender === 'female' ? 'https://cdn-icons-png.flaticon.com/512/6997/6997662.png' : 'https://cdn-icons-png.flaticon.com/512/4140/4140037.png';
         const updates = { name: newName, pass: newPass, gender: newGender, img: finalImg };
         db.ref('users/' + currentUser.id).update(updates).then(() => {
-            alert("Profile updated successfully!"); closeProfileModal(); initDashboard(); 
+            alert("Profile updated successfully!"); closeProfileModal(); initDashboard();
         }).catch(err => alert("Error: " + err.message));
     }
     function initDashboard() {
@@ -1089,9 +1159,9 @@ const firebaseConfig = {
             if(currentUser.role === 'teacher') {
                 document.getElementById('student-tracker-card').classList.add('hidden');
                 document.getElementById('teacher-panel').classList.remove('hidden');
-                document.querySelector('.global-progress').classList.add('hidden'); 
+                document.querySelector('.global-progress').classList.add('hidden');
                 document.getElementById('admin-summary-controls').classList.remove('hidden');
-                document.getElementById('notif-btn').classList.remove('hidden'); 
+                document.getElementById('notif-btn').classList.remove('hidden');
             } else {
                 document.getElementById('student-tracker-card').classList.remove('hidden');
                 document.getElementById('teacher-panel').classList.add('hidden');
@@ -1106,7 +1176,7 @@ const firebaseConfig = {
             }
         }
         renderSubjectBtns(); updateGlobalUI();
-        setInterval(() => { if(currentUser && currentUser.role !== 'teacher') db.ref('users/' + currentUser.id + '/lastSeen').set(Date.now()); }, 5000); 
+        setInterval(() => { if(currentUser && currentUser.role !== 'teacher') db.ref('users/' + currentUser.id + '/lastSeen').set(Date.now()); }, 5000);
     }
     function openApprovalModal() { document.getElementById('approvalModal').style.display = 'flex'; }
     function closeApprovalModal() { document.getElementById('approvalModal').style.display = 'none'; }
@@ -1160,7 +1230,7 @@ const firebaseConfig = {
         });
         if(!selectedPaper || !syllabusData[sub][selectedPaper]) selectPaper(Object.keys(syllabusData[sub])[0]); else renderChapters();
     }
-    function selectPaper(paper) { 
+    function selectPaper(paper) {
         selectedPaper = paper; subjectStates[selectedSub] = paper;
         localStorage.setItem('subjectStates', JSON.stringify(subjectStates));
         document.querySelectorAll('.tab').forEach(t => { t.innerText.includes(paper) ? t.classList.add('active') : t.classList.remove('active'); });
@@ -1201,7 +1271,7 @@ const firebaseConfig = {
         if(isDone) currentUser.trackerData[key][index].parts = { k: true, kh: true, g: true, gh: true };
         updateGlobalUI(); db.ref('users/' + currentUser.id).update(currentUser).then(() => renderChapters());
     }
-    function bulkCheck(status) { 
+    function bulkCheck(status) {
         const chapters = syllabusData[selectedSub][selectedPaper]; const key = `${selectedSub}-${selectedPaper}`;
         if(!currentUser.trackerData) currentUser.trackerData = {};
         if(!currentUser.trackerData[key]) currentUser.trackerData[key] = {};
@@ -1237,7 +1307,7 @@ const firebaseConfig = {
         if(!currentUser) return;
         let totalScore = 0; const subs = Object.keys(syllabusData);
         subs.forEach(s => totalScore += calculateSubjectProgress(s, currentUser));
-        const avgRaw = totalScore / subs.length; currentUser.progress = parseFloat(avgRaw.toFixed(2)); 
+        const avgRaw = totalScore / subs.length; currentUser.progress = parseFloat(avgRaw.toFixed(2));
         const globalText = document.getElementById('global-perc-text'); if(globalText) globalText.innerText = (avgRaw % 1 === 0 ? avgRaw.toFixed(0) : avgRaw.toFixed(1)) + "%";
         const globalFill = document.getElementById('global-progress-fill'); if(globalFill) globalFill.style.width = avgRaw + "%";
         const miniBars = document.querySelectorAll('.prog-mini-bar');
@@ -1245,17 +1315,72 @@ const firebaseConfig = {
             const subPerc = calculateSubjectProgress(sub, currentUser); if(miniBars[idx]) miniBars[idx].style.width = subPerc + "%";
         });
     }
+
+    // Filter button click handler
+    function setLeaderboardFilter(filterType, btnElement) {
+        currentLeaderboardFilter = filterType;
+        // Update button active state
+        document.querySelectorAll('.time-filter-btn').forEach(btn => btn.classList.remove('active'));
+        if(btnElement) btnElement.classList.add('active');
+
+        renderLeaderboard();
+    }
+
+    function formatTime(totalSeconds) {
+        if (!totalSeconds) return "00:00:00";
+        const h = Math.floor(totalSeconds / 3600).toString().padStart(2, '0');
+        const m = Math.floor((totalSeconds % 3600) / 60).toString().padStart(2, '0');
+        const s = (totalSeconds % 60).toString().padStart(2, '0');
+        return `${h}:${m}:${s}`;
+    }
+
     function renderLeaderboard() {
         const list = document.getElementById('leaderboard-list'); if(!list) return;
         const searchTerm = document.getElementById('leaderboard-search').value.toLowerCase();
         list.innerHTML = ""; const userArray = Object.values(allUsers);
-        const sorted = userArray.filter(u => u.role === 'student' && u.name.toLowerCase().includes(searchTerm) && u.isApproved !== false).sort((a, b) => b.progress - a.progress);
+
+        // Check if in Study Mode
+        const activeSubject = localStorage.getItem('active_study_subject');
+        const showStudyTime = isStudyMode && activeSubject;
+
+        const sorted = userArray.filter(u => u.role === 'student' && u.name.toLowerCase().includes(searchTerm) && u.isApproved !== false);
+
+        if (showStudyTime) {
+            // Sort by time for the active subject
+            sorted.sort((a, b) => {
+                const timeA = (a.studyTime && a.studyTime[activeSubject]) ? a.studyTime[activeSubject] : 0;
+                const timeB = (b.studyTime && b.studyTime[activeSubject]) ? b.studyTime[activeSubject] : 0;
+                return timeB - timeA;
+            });
+        } else {
+            // Normal sort by progress
+            sorted.sort((a, b) => b.progress - a.progress);
+        }
+
         if(sorted.length === 0) { list.innerHTML = `<div style="text-align:center; padding:20px; color:var(--text-muted); font-size:14px;">কোনো স্টুডেন্ট পাওয়া যায়নি!</div>`; return; }
         sorted.forEach((u, idx) => {
             const isOnline = (Date.now() - u.lastSeen) < 15000;
             const avatar = u.img || (u.gender === 'female' ? 'https://cdn-icons-png.flaticon.com/512/6997/6997662.png' : 'https://cdn-icons-png.flaticon.com/512/4140/4140037.png');
-            const div = document.createElement('div'); div.className = "leader-row"; div.onclick = () => viewSummary(u.id); 
-            div.innerHTML = `<div class="leader-info"><span style="font-weight:bold; width:18px; font-size:12px">${idx+1}.</span><img src="${avatar}" class="leader-img" style="width:35px; height:35px; border-radius:50%; object-fit:cover;"><div><div style="font-size:13px; font-weight:600">${u.name} ${currentUser && u.id === currentUser.id ? '(You)' : ''}</div><div style="font-size:9px; display:flex; align-items:center; gap:4px"><span class="status-dot ${isOnline ? 'online' : 'offline'}"></span>${isOnline ? 'Active' : 'Offline'}</div></div></div><div style="text-align:right"><div style="font-weight:bold; color:var(--primary); font-size:14px">${u.progress}%</div>${u.isBanned ? '<span style="color:var(--danger); font-size:9px; font-weight:bold;">BANNED</span>' : ''}</div>`;
+
+            let displayValue = "";
+            let valueStyle = "";
+
+            if (showStudyTime) {
+                const timeSec = (u.studyTime && u.studyTime[activeSubject]) ? u.studyTime[activeSubject] : 0;
+                // Add current session time if it's the current user and timer is running
+                let displayTime = timeSec;
+                if (currentUser && u.id === currentUser.id && isTimerRunning) {
+                    displayTime += studySeconds;
+                }
+                displayValue = formatTime(displayTime);
+                valueStyle = "font-weight:bold; color:var(--primary); font-size:14px";
+            } else {
+                displayValue = `${u.progress}%`;
+                valueStyle = "font-weight:bold; color:var(--primary); font-size:14px";
+            }
+
+            const div = document.createElement('div'); div.className = "leader-row"; div.onclick = () => viewSummary(u.id);
+            div.innerHTML = `<div class="leader-info"><span style="font-weight:bold; width:18px; font-size:12px">${idx+1}.</span><img src="${avatar}" class="leader-img" style="width:35px; height:35px; border-radius:50%; object-fit:cover;"><div><div style="font-size:13px; font-weight:600">${u.name} ${currentUser && u.id === currentUser.id ? '(You)' : ''}</div><div style="font-size:9px; display:flex; align-items:center; gap:4px"><span class="status-dot ${isOnline ? 'online' : 'offline'}"></span>${isOnline ? 'Active' : 'Offline'}</div></div></div><div style="text-align:right"><div style="${valueStyle}">${displayValue}</div>${u.isBanned ? '<span style="color:var(--danger); font-size:9px; font-weight:bold;">BANNED</span>' : ''}</div>`;
             list.appendChild(div);
         });
     }
@@ -1301,7 +1426,7 @@ const firebaseConfig = {
         modal.style.display = "flex";
     }
     function closeSummary() { document.getElementById('summaryModal').style.display = "none"; activeSummaryUid = null; openedDetails.clear(); }
-    function toggleDarkMode() { 
+    function toggleDarkMode() {
         document.body.classList.toggle('dark'); document.documentElement.classList.toggle('dark');
         localStorage.setItem('dark_mode', document.body.classList.contains('dark'));
     }
@@ -1311,9 +1436,9 @@ const firebaseConfig = {
         const savedUid = localStorage.getItem('hsc_uid');
         if(savedUid) {
             // সেভ করা ইউডি দিয়ে টিচার আইডি ডিটেক্ট করা
-            if (savedUid === "teacher20189@gmail_com") { 
-                currentUser = { id: savedUid, name: "Teacher", role: 'teacher', gender: 'male', progress: 0, isApproved: true }; 
-                initDashboard(); finalizePage(); return; 
+            if (savedUid === "teacher20189@gmail_com") {
+                currentUser = { id: savedUid, name: "Teacher", role: 'teacher', gender: 'male', progress: 0, isApproved: true };
+                initDashboard(); finalizePage(); return;
             }
             db.ref('users/' + savedUid).once('value', snapshot => {
                 currentUser = snapshot.val();
