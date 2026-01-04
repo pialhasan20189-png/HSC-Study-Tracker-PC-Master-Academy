@@ -547,6 +547,127 @@
             color: white;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+
+        /* --- NEW STYLES FOR SUMMARY MODAL --- */
+        .summary-mode-btns {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .summary-mode-btn {
+            flex: 1;
+            padding: 12px;
+            background: var(--bg);
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        
+        /* FIXED: Active State for Summary Buttons */
+        .summary-mode-btn.active {
+            background: var(--primary) !important;
+            color: white !important;
+        }
+
+        /* Dark mode compatibility for non-active state (keep text visible) */
+        body.dark .summary-mode-btn {
+            color: var(--text-main); /* White text in dark mode */
+            background: var(--card-bg);
+            border-color: var(--primary);
+        }
+
+        .time-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .stat-box {
+            background: var(--bg);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        body.dark .stat-value { color: var(--primary); }
+        body.dark .stat-label { color: #ccc; }
+
+        .time-filter-pills {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+            -webkit-overflow-scrolling: touch;
+        }
+        .time-pill {
+            padding: 6px 12px;
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            font-size: 11px;
+            color: var(--primary);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: 0.2s;
+        }
+        .time-pill.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .subject-time-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .subject-time-item {
+            background: var(--bg);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .subject-name {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-main);
+        }
+        .subject-time-val {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--primary);
+        }
+        body.dark .subject-name { color: #fff; }
+        body.dark .subject-time-val { color: #fff; }
+
+        .summary-time-container {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .summary-time-container.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
     </style>
 </head>
 <body>
@@ -578,7 +699,49 @@
     <div class="modal-content summary-modal-content">
         <span class="close-modal" onclick="closeSummary()"><i class="fas fa-times-circle"></i></span>
         <div id="summary-header"></div>
-        <h4 style="font-size:15px; margin-bottom:12px; color:var(--text-muted)"><i class="fas fa-info-circle"></i> সাবজেক্টে ক্লিক করে বিস্তারিত রিপোর্ট দেখুন</h4>
+        
+        <!-- NEW CONTROLS START -->
+        <div class="summary-mode-btns">
+            <button class="summary-mode-btn active" id="btn-mode-study-time" onclick="switchSummaryMode('study')">Study time</button>
+            <button class="summary-mode-btn" id="btn-mode-subject-time" onclick="switchSummaryMode('subject')">Subject-based study time</button>
+        </div>
+
+        <!-- Study Time View (Overall) -->
+        <div id="view-study-time" class="summary-time-container active">
+            <div class="time-stats-grid">
+                <div class="stat-box">
+                    <span class="stat-value" id="stat-24h">00:00:00</span>
+                    <span class="stat-label">Last 24 Hours</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value" id="stat-7d">00:00:00</span>
+                    <span class="stat-label">Last 7 Days</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value" id="stat-1m">00:00:00</span>
+                    <span class="stat-label">Last 1 Month</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value" id="stat-lifetime">00:00:00</span>
+                    <span class="stat-label">Lifetime</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subject-Based View -->
+        <div id="view-subject-time" class="summary-time-container">
+            <div class="time-filter-pills">
+                <div class="time-pill" onclick="filterSubjectTime('24h', this)">24 Hours</div>
+                <div class="time-pill" onclick="filterSubjectTime('7d', this)">7 Days</div>
+                <div class="time-pill" onclick="filterSubjectTime('1m', this)">1 Month</div>
+                <div class="time-pill active" onclick="filterSubjectTime('lifetime', this)">Lifetime</div>
+            </div>
+            <div id="subject-time-list" class="subject-time-list"></div>
+        </div>
+        <!-- NEW CONTROLS END -->
+
+        <!-- Added margin-top: 20px to create gap -->
+        <h4 style="font-size:15px; margin-top: 20px; margin-bottom:12px; color:var(--text-muted)"><i class="fas fa-info-circle"></i> সাবজেক্টে ক্লিক করে বিস্তারিত রিপোর্ট দেখুন</h4>
         <div id="summary-body" class="summary-grid"></div>
         <div id="admin-summary-controls" class="admin-action-btns hidden">
             <button id="summary-ban-btn" class="btn-ban"><i class="fas fa-user-slash"></i> ব্যান করুন</button>
@@ -599,7 +762,7 @@
 <div id="logoutModal" class="modal">
     <div class="modal-content" style="max-width: 400px; padding: 30px;">
         <i class="fas fa-sign-out-alt" style="font-size: 3rem; color: var(--danger); margin-bottom: 15px;"></i>
-        <h2 style="font-size: 1.1rem; margin-bottom: 10px; line-height: 1.5; color: var(--text-main);">আপনি কি স্টাডি ট্রাকার ওয়েবসাইট থেকে লগ আউট করতে চান?</h2>
+        <h2 style="font-size: 1.1rem; margin-bottom: 10px; line-height: 1.5; color: var(--text-main);">আপনি কি স্টাডি ট্র্যাকার ওয়েবসাইট থেকে লগ আউট করতে চান?</h2>
         <div style="display: flex; gap: 12px; margin-top: 25px;">
             <button onclick="handleLogout()" class="btn-primary" style="background:var(--danger); flex:1">YES</button>
             <button onclick="closeLogoutModal()" class="btn-primary" style="background:#e2e8f0; color:#475569; flex:1">NO</button>
@@ -683,7 +846,7 @@
     <div id="waiting-room-screen" class="auth-screen hidden">
         <div class="auth-card">
             <i class="fas fa-user-clock" style="font-size: 4rem; color: var(--warning); margin-bottom: 20px;"></i>
-            <p style="font-size: 15px; line-height: 1.5; margin-bottom: 20px; color: var(--text-main);">You are requested to note that administrative approval is required to visit the website. Kindly inbox MD Pial Hasan Sir to request approval.</p>
+            <p style="font-size: 15px; line-height: 1.5; margin-bottom: 20px; color: var(--text-main);">You are requested to note that administrative approval is required to visit website. Kindly inbox MD Pial Hasan Sir to request approval.</p>
             <h1 style="color: var(--warning); font-size: 3rem; margin-bottom: 25px; font-weight: 800;">Pending</h1>
             <button class="btn-primary" onclick="handleLogout()" style="max-width: 150px; margin: 0 auto;">লগআউট</button>
         </div>
@@ -843,7 +1006,7 @@ const firebaseConfig = {
             "2nd Paper": ["তাপ গতিবিদ্যা", "স্থির তড়িৎ", "চল তড়িৎ", "তড়িৎ প্রবাহের চৌম্বক ক্রিয়া ও চুম্বকত্ব", "তড়িৎ চৌম্বকীয় আবেশ", "জ্যামিতিক আলোকবিজ্ঞান", "ভৌতআলোক বিজ্ঞান", "আধুনিক পদার্থবিজ্ঞানের সূচনা", "পরমানুর মডেল", "সেমিকন্ডাক্টর ও ইলেকট্রনিক্স", "জ্যোতির্বিজ্ঞান"]
         },
         "রসায়ন": {
-            "1st Paper": ["ল্যাবরেটরির নিরাপদ ব্যবহার", "গুণগত রসায়ন", "মৌলের পর্যবৃত্তধর্ম ও রাসায়নিক বন্ধন", "রাসায়নিক পরিবর্তন", "কর্মমুখী রসায়ন"],
+            "1st Paper": ["ল্যাবরেটরির নিরাপদ ব্যবহার", "গুণগত রসায়ন", "মৌলের পর্যাবৃত্তধর্ম ও রাসায়নিক বন্ধন", "রাসায়নিক পরিবর্তন", "কর্মমুখী রসায়ন"],
             "2nd Paper": ["পরিবেশ রসায়ন", "জৈব রসায়ন", "পরিমাণগত রসায়ন", "তড়িৎ রসায়ন", "অর্থনৈতিক রসায়ন"]
         },
         "জীববিজ্ঞান": {
@@ -851,8 +1014,8 @@ const firebaseConfig = {
             "2nd Paper": ["প্রাণীর বিভিন্নতা ও শ্রেণীবিন্যাস", "প্রাণীর পরিচিতি", "মানব শরীর তত্ত্ব : পরিপাক ও শ্বসন", "মানব শরীর তত্ত্ব : রক্ত সঞ্চালন", "মানব শরীর তত্ত্ব : শ্বাসক্রিয়া ও শোষণ", "বজ্র ও নিষ্কাশন", "মানব শরীর তত্ত্ব : চলন ও অঙ্গ চালনা", "সমন্বয় ও নিয়ন্ত্রণ", "মানব জীবনের ধারাবাহিকতা", "মানবদেহের প্রতিরক্ষা", "জিনতত্ত্ব ও বিবর্তন", "প্রাণীর আচরণ"]
         },
         "উচ্চতর গণিত": {
-            "1st Paper": ["ম্যাট্রিক্স ও নির্ণায়ক", "ভেক্টর", "সরলরেখা", "বৃত্ত", "বিন্যাস ও সমাবেশ", "ত্রিকোণমিতিক অনুপাত", "সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত", "ফাংশন", "অন্টারীকরণ", "যোগজীকরণ"],
-            "2nd Paper": ["বাস্তব সংখ্যা ও অসমতা", "যোগাশ্রয়ী প্রোগ্রাম", "জটিল সংখ্যা", "বহুপদী সমীকরণ", "দ্বিপদী বিস্তৃতি", "কনিক", "বিপরীত ত্রিকোণমিতিক ফাংশন ও ত্রিকোণমিতিক সমীকরণ", "স্থিতিবিদ্যা", "সমতলে বস্তুকণার গতি", "বিস্তার পরিমাপ ও সম্ভাব্যতা"]
+            "1st Paper": ["ম্যাট্রিক্স ও নির্ণায়ক", "ভেক্টর", "সরলরেখা", "বৃত্ত", "বিন্যাস ও সমাবেশ", "ত্রিকোনমিতিক অনুপাত", "সংযুক্ত কোণের ত্রিকোনমিতিক অনুপাত", "ফাংশন", "অন্টারীকরণ", "যোগজীকরণ"],
+            "2nd Paper": ["বাস্তব সংখ্যা ও অসমতা", "যোগাশ্রয়ী প্রোগ্রাম", "জটিল সংখ্যা", "বহুপদী সমীকরণ", "দ্বিপদী বিস্তৃতি", "কনিক", "বিপরীত ত্রিকোনমিতিক ফাংশন ও ত্রিকোনমিতিক সমীকরণ", "স্থিতিবিদ্যা", "সমতলে বস্তুকণার গতি", "বিস্তার পরিমাপ ও সম্ভাব্যতা"]
         }
     };
     let allUsers = {};
@@ -869,6 +1032,9 @@ const firebaseConfig = {
     let targetAlarmSeconds = 0;
     let isDangerAlertActive = false;
     let currentLeaderboardFilter = 'lifetime'; // New variable for filter
+    let currentSummaryMode = 'study'; // 'study' or 'subject'
+    let currentSubjectTimeFilter = 'lifetime'; // '24h', '7d', '1m', 'lifetime'
+
     db.ref('users').on('value', (snapshot) => {
         allUsers = snapshot.val() || {};
         if(currentUser) currentUser = allUsers[currentUser.id] || currentUser;
@@ -882,7 +1048,7 @@ const firebaseConfig = {
         updateGlobalUI();
         renderSubjectBtns();
         if(isStudyMode) renderStudyModeProfiles();
-        if(activeSummaryUid) viewSummary(activeSummaryUid);
+        if(activeSummaryUid) viewSummary(activeSummaryUid); // Live update summary
     });
     const finalizePage = () => {
         const app = document.getElementById('app');
@@ -1031,7 +1197,7 @@ const firebaseConfig = {
                 localStorage.setItem('hsc_uid', emailKey);
                 initDashboard();
             } else {
-                alert("ভুল পাসওয়ার্ড!");
+                alert("ভুল পাসওয়র্ড!");
             }
         });
     }
@@ -1054,7 +1220,7 @@ const firebaseConfig = {
             localStorage.setItem('timer_target_alarm', targetAlarmSeconds);
             startTimerProcess(startTimestamp);
         } else {
-            // Stopping timer - save the time
+            // Stopping timer - save time
             const currentSubject = localStorage.getItem('active_study_subject');
             if (currentSubject) {
                 saveStudyTimeToFirebase(currentSubject, studySeconds);
@@ -1086,6 +1252,17 @@ const firebaseConfig = {
         timerInterval = setInterval(() => {
             studySeconds = Math.floor((Date.now() - startTime) / 1000);
             updateTimerDisplay();
+            
+            // --- LIVE UPDATE LOGIC (Fixed) ---
+            // 1. Update Leaderboard Live
+            renderLeaderboard();
+
+            // 2. Update Summary Modal Live
+            if(document.getElementById('summaryModal').style.display === 'flex') {
+                updateSummaryLiveTime();
+            }
+            // ----------------------------------
+
             if(targetAlarmSeconds > 0) {
                 let offset = 848 - (studySeconds / targetAlarmSeconds) * 848;
                 if(offset < 0) offset = 0;
@@ -1225,7 +1402,8 @@ const firebaseConfig = {
         const paperTabs = document.getElementById('paper-tabs'); paperTabs.innerHTML = "";
         Object.keys(syllabusData[sub]).forEach(paper => {
             const tab = document.createElement('div'); tab.className = `tab ${selectedPaper === paper ? 'active' : ''}`;
-            tab.innerText = `${paper} (${syllabusData[sub][paper].length}টি অধ্যায়)`; tab.onclick = () => selectPaper(paper);
+            tab.innerText = `${paper} (${syllabusData[sub][paper].length}টি অধ্যায়)`;
+            tab.onclick = () => selectPaper(paper);
             paperTabs.appendChild(tab);
         });
         if(!selectedPaper || !syllabusData[sub][selectedPaper]) selectPaper(Object.keys(syllabusData[sub])[0]); else renderChapters();
@@ -1316,6 +1494,16 @@ const firebaseConfig = {
         });
     }
 
+    // Calculate total study time across all subjects for a user
+    function calculateTotalStudyTime(user) {
+        if (!user || !user.studyTime) return 0;
+        let totalTime = 0;
+        Object.keys(user.studyTime).forEach(subject => {
+            totalTime += user.studyTime[subject] || 0;
+        });
+        return totalTime;
+    }
+
     // Filter button click handler
     function setLeaderboardFilter(filterType, btnElement) {
         currentLeaderboardFilter = filterType;
@@ -1341,17 +1529,26 @@ const firebaseConfig = {
 
         // Check if in Study Mode
         const activeSubject = localStorage.getItem('active_study_subject');
-        const showStudyTime = isStudyMode && activeSubject;
+        const showStudyTime = isStudyMode;
 
         const sorted = userArray.filter(u => u.role === 'student' && u.name.toLowerCase().includes(searchTerm) && u.isApproved !== false);
 
         if (showStudyTime) {
-            // Sort by time for the active subject
-            sorted.sort((a, b) => {
-                const timeA = (a.studyTime && a.studyTime[activeSubject]) ? a.studyTime[activeSubject] : 0;
-                const timeB = (b.studyTime && b.studyTime[activeSubject]) ? b.studyTime[activeSubject] : 0;
-                return timeB - timeA;
-            });
+            if (activeSubject) {
+                // Show time for specific subject
+                sorted.sort((a, b) => {
+                    const timeA = (a.studyTime && a.studyTime[activeSubject]) ? a.studyTime[activeSubject] : 0;
+                    const timeB = (b.studyTime && b.studyTime[activeSubject]) ? b.studyTime[activeSubject] : 0;
+                    return timeB - timeA;
+                });
+            } else {
+                // Show total time across all subjects
+                sorted.sort((a, b) => {
+                    const timeA = calculateTotalStudyTime(a);
+                    const timeB = calculateTotalStudyTime(b);
+                    return timeB - timeA;
+                });
+            }
         } else {
             // Normal sort by progress
             sorted.sort((a, b) => b.progress - a.progress);
@@ -1366,13 +1563,23 @@ const firebaseConfig = {
             let valueStyle = "";
 
             if (showStudyTime) {
-                const timeSec = (u.studyTime && u.studyTime[activeSubject]) ? u.studyTime[activeSubject] : 0;
-                // Add current session time if it's the current user and timer is running
-                let displayTime = timeSec;
-                if (currentUser && u.id === currentUser.id && isTimerRunning) {
-                    displayTime += studySeconds;
+                let timeSec = 0;
+                if (activeSubject) {
+                    // Show time for specific subject
+                    timeSec = (u.studyTime && u.studyTime[activeSubject]) ? u.studyTime[activeSubject] : 0;
+                    // Add current session time if it's current user and timer is running
+                    if (currentUser && u.id === currentUser.id && isTimerRunning && activeSubject === localStorage.getItem('active_study_subject')) {
+                        timeSec += studySeconds;
+                    }
+                } else {
+                    // Show total time across all subjects
+                    timeSec = calculateTotalStudyTime(u);
+                    // Add current session time if it's current user and timer is running
+                    if (currentUser && u.id === currentUser.id && isTimerRunning) {
+                        timeSec += studySeconds;
+                    }
                 }
-                displayValue = formatTime(displayTime);
+                displayValue = formatTime(timeSec);
                 valueStyle = "font-weight:bold; color:var(--primary); font-size:14px";
             } else {
                 displayValue = `${u.progress}%`;
@@ -1384,6 +1591,43 @@ const firebaseConfig = {
             list.appendChild(div);
         });
     }
+
+    // --- NEW SUMMARY MODAL LOGIC ---
+    function switchSummaryMode(mode) {
+        currentSummaryMode = mode;
+        // Update buttons
+        document.getElementById('btn-mode-study-time').classList.toggle('active', mode === 'study');
+        document.getElementById('btn-mode-subject-time').classList.toggle('active', mode === 'subject');
+
+        // Toggle views
+        document.getElementById('view-study-time').classList.toggle('active', mode === 'study');
+        document.getElementById('view-subject-time').classList.toggle('active', mode === 'subject');
+
+        // Re-render if open
+        if(activeSummaryUid) viewSummary(activeSummaryUid);
+    }
+
+    function filterSubjectTime(filterType, element) {
+        currentSubjectTimeFilter = filterType;
+        // Update pills UI
+        document.querySelectorAll('.time-pill').forEach(p => p.classList.remove('active'));
+        if(element) element.classList.add('active');
+
+        // Re-render subject list
+        if(activeSummaryUid) viewSummary(activeSummaryUid);
+    }
+
+    function getLiveStudyTime(user, subjectName) {
+        // If viewing current user and timer is running for this subject, add current session seconds
+        if (currentUser && user.id === currentUser.id && isTimerRunning) {
+            const activeSubject = localStorage.getItem('active_study_subject');
+            if (!subjectName || activeSubject === subjectName) {
+                return studySeconds;
+            }
+        }
+        return 0;
+    }
+
     function viewSummary(uid) {
         activeSummaryUid = uid; const user = allUsers[uid]; if(!user) return;
         const modal = document.getElementById('summaryModal'); const header = document.getElementById('summary-header');
@@ -1395,6 +1639,41 @@ const firebaseConfig = {
         }
         const avatar = user.img || (user.gender === 'female' ? 'https://cdn-icons-png.flaticon.com/512/6997/6997662.png' : 'https://cdn-icons-png.flaticon.com/512/4140/4140037.png');
         header.innerHTML = `<div style="display:flex; align-items:center; gap:12px; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:12px;"><img src="${avatar}" style="width:55px; height:55px; border-radius:50%; border:2px solid var(--primary); object-fit:cover;"><div><h3 style="color:var(--text-main); font-size:17px;">${user.name}</h3><p style="font-size:11px; color:var(--text-muted);">ওভারঅল প্রগ্রেস: <b>${user.progress}%</b></p></div></div>`;
+        
+        // --- RENDER NEW TIME STATS ---
+        // Note: Since database stores cumulative total, we display that for all filters for now.
+        // If logs are added later, filtering logic goes here.
+
+        // 1. Overall Stats
+        let totalLifetime = calculateTotalStudyTime(user) + getLiveStudyTime(user);
+        
+        // For demo/consistency with current DB, showing Lifetime for all boxes.
+        // In a real app with historical logs, calculate based on filter.
+        document.getElementById('stat-24h').innerText = formatTime(totalLifetime);
+        document.getElementById('stat-7d').innerText = formatTime(totalLifetime);
+        document.getElementById('stat-1m').innerText = formatTime(totalLifetime);
+        document.getElementById('stat-lifetime').innerText = formatTime(totalLifetime);
+
+        // 2. Subject Based Stats
+        const subjectListDiv = document.getElementById('subject-time-list');
+        subjectListDiv.innerHTML = "";
+        
+        const allSubjects = ["পদার্থবিজ্ঞান", "রসায়ন", "জীববিজ্ঞান", "উচ্চতর গণিত", "বাংলা", "ইংরেজি", "ICT"];
+        
+        allSubjects.forEach(sub => {
+            let subTime = (user.studyTime && user.studyTime[sub]) ? user.studyTime[sub] : 0;
+            subTime += getLiveStudyTime(user, sub);
+
+            const item = document.createElement('div');
+            item.className = "subject-time-item";
+            item.innerHTML = `
+                <span class="subject-name">${sub}</span>
+                <span class="subject-time-val">${formatTime(subTime)}</span>
+            `;
+            subjectListDiv.appendChild(item);
+        });
+        // ---------------------------------
+
         body.innerHTML = "";
         Object.keys(syllabusData).forEach(sub => {
             Object.keys(syllabusData[sub]).forEach(paper => {
@@ -1425,7 +1704,42 @@ const firebaseConfig = {
         });
         modal.style.display = "flex";
     }
-    function closeSummary() { document.getElementById('summaryModal').style.display = "none"; activeSummaryUid = null; openedDetails.clear(); }
+
+    // Function to update summary times live when timer is running
+    function updateSummaryLiveTime() {
+        if (!activeSummaryUid || activeSummaryUid !== currentUser.id || !currentUser) return;
+        // Check if modal is actually visible
+        if (document.getElementById('summaryModal').style.display !== 'flex') return;
+
+        // Update Total Stats (Show Lifetime in all for now)
+        const totalLifetime = calculateTotalStudyTime(currentUser) + studySeconds;
+        
+        document.getElementById('stat-24h').innerText = formatTime(totalLifetime);
+        document.getElementById('stat-7d').innerText = formatTime(totalLifetime);
+        document.getElementById('stat-1m').innerText = formatTime(totalLifetime);
+        document.getElementById('stat-lifetime').innerText = formatTime(totalLifetime);
+
+        // Update Subject List
+        const listItems = document.querySelectorAll('.subject-time-item');
+        const allSubjects = ["পদার্থবিজ্ঞান", "রসায়ন", "জীববিজ্ঞান", "উচ্চতর গণিত", "বাংলা", "ইংরেজি", "ICT"];
+        
+        listItems.forEach((item, index) => {
+            if (allSubjects[index]) {
+                const sub = allSubjects[index];
+                let subTime = (currentUser.studyTime && currentUser.studyTime[sub]) ? currentUser.studyTime[sub] : 0;
+                
+                const activeSubject = localStorage.getItem('active_study_subject');
+                if (activeSubject === sub) {
+                    subTime += studySeconds;
+                }
+                
+                const valSpan = item.querySelector('.subject-time-val');
+                if(valSpan) valSpan.innerText = formatTime(subTime);
+            }
+        });
+    }
+
+    function closeSummary() { document.getElementById('summaryModal').style.display = 'none'; activeSummaryUid = null; openedDetails.clear(); }
     function toggleDarkMode() {
         document.body.classList.toggle('dark'); document.documentElement.classList.toggle('dark');
         localStorage.setItem('dark_mode', document.body.classList.contains('dark'));
