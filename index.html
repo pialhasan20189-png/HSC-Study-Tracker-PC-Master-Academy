@@ -612,7 +612,7 @@
         body.dark .stat-label { color: #ccc; }
 
         .time-filter-pills {
-            display: flex;
+            display: flex,
             gap: 5px;
             margin-bottom: 15px;
             overflow-x: auto;
@@ -635,8 +635,8 @@
         }
         
         .subject-time-list {
-            display: flex;
-            flex-direction: column;
+            display: flex,
+            flex-direction: column,
             gap: 10px;
         }
         .subject-time-item {
@@ -1031,9 +1031,97 @@ const firebaseConfig = {
     let isTimerRunning = false;
     let targetAlarmSeconds = 0;
     let isDangerAlertActive = false;
-    let currentLeaderboardFilter = 'lifetime'; // New variable for filter
-    let currentSummaryMode = 'study'; // 'study' or 'subject'
-    let currentSubjectTimeFilter = 'lifetime'; // '24h', '7d', '1m', 'lifetime'
+    let currentLeaderboardFilter = 'lifetime';
+    let currentSummaryMode = 'study';
+    let currentSubjectTimeFilter = 'lifetime';
+
+    // Helper function to get today's start time (12:00 AM)
+    function getTodayStartTime() {
+        const now = new Date();
+        const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
+        return todayStart.getTime();
+    }
+
+    // Helper function to get time filter start time
+    function getTimeFilterStartTime(filterType) {
+        const now = new Date();
+        let startTime;
+        
+        switch(filterType) {
+            case '24h':
+                // From today 12:00 AM
+                startTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
+                break;
+            case '7d':
+                // From 7 days ago 12:00 AM
+                startTime = new Date(now.getTime() - 6 * 24 * 60 * 60 * 1000);
+                startTime.setHours(0, 0, 0, 0);
+                break;
+            case '1m':
+                // From 30 days ago 12:00 AM
+                startTime = new Date(now.getTime() - 29 * 24 * 60 * 60 * 1000);
+                startTime.setHours(0, 0, 0, 0);
+                break;
+            case 'lifetime':
+            default:
+                return 0;
+        }
+        
+        return startTime.getTime();
+    }
+
+    // FIXED: Calculate study time - use studyLogs for time filters, fallback to studyTime
+    function calculateStudyTime(user, subject, filterType = 'lifetime') {
+        if (!user) return 0;
+        
+        let totalTime = 0;
+        const startTime = getTimeFilterStartTime(filterType);
+        
+        // First try to calculate from studyLogs (new system with timestamps)
+        if (user.studyLogs && Object.keys(user.studyLogs).length > 0) {
+            Object.keys(user.studyLogs).forEach(logKey => {
+                const log = user.studyLogs[logKey];
+                
+                if (filterType === 'lifetime') {
+                    // For lifetime, use all logs
+                    if (subject) {
+                        if (log.subject === subject) {
+                            totalTime += log.duration || 0;
+                        }
+                    } else {
+                        totalTime += log.duration || 0;
+                    }
+                } else {
+                    // For time filters, check if log is within range
+                    if (log.timestamp >= startTime) {
+                        if (subject) {
+                            if (log.subject === subject) {
+                                totalTime += log.duration || 0;
+                            }
+                        } else {
+                            totalTime += log.duration || 0;
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Fallback: If no studyLogs or total is 0 and filter is lifetime, use old studyTime
+        // This ensures old data is preserved and shown
+        if (totalTime === 0 && filterType === 'lifetime') {
+            if (user.studyTime) {
+                if (subject) {
+                    totalTime = user.studyTime[subject] || 0;
+                } else {
+                    Object.keys(user.studyTime).forEach(sub => {
+                        totalTime += user.studyTime[sub] || 0;
+                    });
+                }
+            }
+        }
+        
+        return totalTime;
+    }
 
     db.ref('users').on('value', (snapshot) => {
         allUsers = snapshot.val() || {};
@@ -1048,7 +1136,7 @@ const firebaseConfig = {
         updateGlobalUI();
         renderSubjectBtns();
         if(isStudyMode) renderStudyModeProfiles();
-        if(activeSummaryUid) viewSummary(activeSummaryUid); // Live update summary
+        if(activeSummaryUid) viewSummary(activeSummaryUid);
     });
     const finalizePage = () => {
         const app = document.getElementById('app');
@@ -1099,16 +1187,15 @@ const firebaseConfig = {
             trackerCard.classList.add('hidden');
             globalProgress.classList.add('hidden');
             studyCard.classList.remove('hidden');
-            timeFilterContainer.style.display = 'flex'; // Show time filter buttons in study mode
+            timeFilterContainer.style.display = 'flex';
             renderStudyModeProfiles();
         } else {
             trackerCard.classList.remove('hidden');
             globalProgress.classList.remove('hidden');
             studyCard.classList.add('hidden');
-            timeFilterContainer.style.display = 'none'; // Hide time filter buttons in normal mode
+            timeFilterContainer.style.display = 'none';
             document.getElementById('study-subjects-section').classList.add('hidden');
         }
-        // Re-render leaderboard to switch between Time and Percent
         renderLeaderboard();
         const dropdown = document.getElementById("dropdown-menu");
         if(dropdown.classList.contains('show')) dropdown.classList.remove('show');
@@ -1141,8 +1228,12 @@ const firebaseConfig = {
         localStorage.setItem('active_study_subject', subject);
         resetStudyTimerUI();
         const savedStartTime = localStorage.getItem('timer_start_timestamp');
-        if(savedStartTime) startTimerProcess(parseInt(savedStartTime));
-        // Update leaderboard when entering a subject
+        const savedSubject = localStorage.getItem('active_study_subject');
+        if (savedStartTime && savedSubject === subject) {
+            // If there's a saved timer start time, start timer from that point
+            const startTime = parseInt(savedStartTime);
+            startTimerProcess(startTime);
+        }
         renderLeaderboard();
     }
     function exitStudyTimer() {
@@ -1169,17 +1260,14 @@ const firebaseConfig = {
         document.getElementById('timer-digital').innerText = `${hrs}:${mins}:${secs}`;
     }
 
-    // সংশোধিত হ্যান্ডেল লগইন ফাংশন (লগইন সমস্যার সমাধান এখানে)
     function handleLogin() {
         if(localStorage.getItem('device_blocked')) return showPage('device-blocked-screen');
 
-        // ইনপুট থেকে স্পেস সরানো এবং ছোট হাতের অক্ষর নিশ্চিত করা
         const loginEmail = document.getElementById('login-email').value.trim().toLowerCase();
         const pass = document.getElementById('login-pass').value.trim();
 
         const emailKey = loginEmail.replace(/\./g, '_');
 
-        // এডমিন লগইন চেক
         if (loginEmail === "teacher20189@gmail.com" && pass === "teacher20189@gmail.com") {
             currentUser = { id: emailKey, name: "Teacher", role: 'teacher', gender: 'male', progress: 0, isApproved: true };
             localStorage.setItem('hsc_uid', emailKey);
@@ -1187,7 +1275,6 @@ const firebaseConfig = {
             return;
         }
 
-        // সাধারণ ইউজার লগইন চেক
         db.ref('users/' + emailKey).once('value', snapshot => {
             const user = snapshot.val();
             if(user && user.pass === pass) {
@@ -1202,13 +1289,29 @@ const firebaseConfig = {
         });
     }
 
-    // Helper function to save study time to Firebase
+    // Helper function to save study time to Firebase (cumulative)
     function saveStudyTimeToFirebase(subject, seconds) {
         if (!currentUser || seconds <= 0) return;
         const userRef = db.ref('users/' + currentUser.id + '/studyTime/' + subject);
         userRef.transaction(currentTime => {
             return (currentTime || 0) + seconds;
         });
+    }
+
+    // NEW: Save study session log to Firebase (with timestamp for filtering)
+    function saveStudySessionLog(subject, duration, startTime) {
+        if (!currentUser || duration <= 0) return;
+        
+        const logData = {
+            subject: subject,
+            duration: duration,
+            timestamp: startTime,
+            endTime: Date.now()
+        };
+        
+        const userLogsRef = db.ref('users/' + currentUser.id + '/studyLogs');
+        const newLogKey = userLogsRef.push().key;
+        userLogsRef.child(newLogKey).set(logData);
     }
 
     function toggleTimer() {
@@ -1220,10 +1323,14 @@ const firebaseConfig = {
             localStorage.setItem('timer_target_alarm', targetAlarmSeconds);
             startTimerProcess(startTimestamp);
         } else {
-            // Stopping timer - save time
             const currentSubject = localStorage.getItem('active_study_subject');
-            if (currentSubject) {
+            if (currentSubject && studySeconds > 0) {
+                // Save to cumulative studyTime (preserves old data)
                 saveStudyTimeToFirebase(currentSubject, studySeconds);
+                
+                // Save session log (new system for time filters)
+                const startTime = parseInt(localStorage.getItem('timer_start_timestamp')) || (Date.now() - studySeconds * 1000);
+                saveStudySessionLog(currentSubject, studySeconds, startTime);
             }
 
             clearInterval(timerInterval); isTimerRunning = false;
@@ -1234,12 +1341,10 @@ const firebaseConfig = {
             document.getElementById('timer-main-btn').style.background = "var(--primary)";
             stopDangerAlert();
 
-            // Reset local session seconds
             studySeconds = 0;
             updateTimerDisplay();
             document.getElementById('timer-progress-bar').style.strokeDashoffset = "848";
 
-            // Refresh leaderboard to show updated time
             renderLeaderboard();
         }
     }
@@ -1253,15 +1358,12 @@ const firebaseConfig = {
             studySeconds = Math.floor((Date.now() - startTime) / 1000);
             updateTimerDisplay();
             
-            // --- LIVE UPDATE LOGIC (Fixed) ---
-            // 1. Update Leaderboard Live
+            // LIVE UPDATE
             renderLeaderboard();
 
-            // 2. Update Summary Modal Live
             if(document.getElementById('summaryModal').style.display === 'flex') {
                 updateSummaryLiveTime();
             }
-            // ----------------------------------
 
             if(targetAlarmSeconds > 0) {
                 let offset = 848 - (studySeconds / targetAlarmSeconds) * 848;
@@ -1292,14 +1394,14 @@ const firebaseConfig = {
         if(!name || !email || !pass) return alert("সব তথ্য দিন!");
         db.ref('users/' + email).once('value', snapshot => {
             if(snapshot.exists()) return alert("ইমেইলটি নিবন্ধিত!");
-            const userData = { id: email, name, pass, role, gender, img, progress: 0, trackerData: {}, isBanned: false, isApproved: false, lastSeen: Date.now(), studyTime: {} };
+            const userData = { id: email, name, pass, role, gender, img, progress: 0, trackerData: {}, isBanned: false, isApproved: false, lastSeen: Date.now(), studyTime: {}, studyLogs: {} };
             db.ref('users/' + email).set(userData).then(() => {
                 alert("রেজিস্ট্রেশন সফল! অ্যাডমিন অনুমোদন দিলেই আপনি লগইন করতে পারবেন।"); showPage('login-page');
             });
         });
     }
 
-    function handleLogout() { localStorage.removeItem('hsc_uid'); localStorage.removeItem('master_auth'); localStorage.removeItem('active_study_subject'); localStorage.removeItem('timer_start_timestamp'); location.reload(); }
+    function handleLogout() { localStorage.removeItem('hsc_uid'); localStorage.removeItem('master_auth'); localStorage.removeItem('active_study_subject'); localStorage.removeItem('timer_start_timestamp'); localStorage.removeItem('timer_target_alarm'); location.reload(); }
     function confirmLogout() {
         if(isTimerRunning) return alert("পড়া চলাকালীন লগআউট করা যাবে না।");
         document.getElementById('logoutModal').style.display = 'flex';
@@ -1347,8 +1449,12 @@ const firebaseConfig = {
                 document.getElementById('notif-btn').classList.add('hidden');
                 if(localStorage.getItem('study_mode_persistent') === 'true') {
                     isStudyMode = false; toggleStudyMode();
+                    // Check if there was a running timer and restore it
                     const savedSubject = localStorage.getItem('active_study_subject');
-                    if(savedSubject) enterStudySession(savedSubject);
+                    const savedStartTime = localStorage.getItem('timer_start_timestamp');
+                    if(savedSubject && savedStartTime) {
+                        enterStudySession(savedSubject);
+                    }
                 }
             }
         }
@@ -1494,7 +1600,6 @@ const firebaseConfig = {
         });
     }
 
-    // Calculate total study time across all subjects for a user
     function calculateTotalStudyTime(user) {
         if (!user || !user.studyTime) return 0;
         let totalTime = 0;
@@ -1504,10 +1609,8 @@ const firebaseConfig = {
         return totalTime;
     }
 
-    // Filter button click handler
     function setLeaderboardFilter(filterType, btnElement) {
         currentLeaderboardFilter = filterType;
-        // Update button active state
         document.querySelectorAll('.time-filter-btn').forEach(btn => btn.classList.remove('active'));
         if(btnElement) btnElement.classList.add('active');
 
@@ -1527,30 +1630,33 @@ const firebaseConfig = {
         const searchTerm = document.getElementById('leaderboard-search').value.toLowerCase();
         list.innerHTML = ""; const userArray = Object.values(allUsers);
 
-        // Check if in Study Mode
         const activeSubject = localStorage.getItem('active_study_subject');
         const showStudyTime = isStudyMode;
 
         const sorted = userArray.filter(u => u.role === 'student' && u.name.toLowerCase().includes(searchTerm) && u.isApproved !== false);
 
         if (showStudyTime) {
-            if (activeSubject) {
-                // Show time for specific subject
-                sorted.sort((a, b) => {
-                    const timeA = (a.studyTime && a.studyTime[activeSubject]) ? a.studyTime[activeSubject] : 0;
-                    const timeB = (b.studyTime && b.studyTime[activeSubject]) ? b.studyTime[activeSubject] : 0;
-                    return timeB - timeA;
-                });
-            } else {
-                // Show total time across all subjects
-                sorted.sort((a, b) => {
-                    const timeA = calculateTotalStudyTime(a);
-                    const timeB = calculateTotalStudyTime(b);
-                    return timeB - timeA;
-                });
-            }
+            sorted.sort((a, b) => {
+                let timeA, timeB;
+                
+                if (activeSubject) {
+                    timeA = calculateStudyTime(a, activeSubject, currentLeaderboardFilter);
+                    timeB = calculateStudyTime(b, activeSubject, currentLeaderboardFilter);
+                } else {
+                    timeA = calculateStudyTime(a, null, currentLeaderboardFilter);
+                    timeB = calculateStudyTime(b, null, currentLeaderboardFilter);
+                }
+                
+                // Add current session time for current user if timer is running
+                if (currentUser && a.id === currentUser.id && isTimerRunning) {
+                    if (!activeSubject || activeSubject === localStorage.getItem('active_study_subject')) {
+                        timeA += studySeconds;
+                    }
+                }
+                
+                return timeB - timeA;
+            });
         } else {
-            // Normal sort by progress
             sorted.sort((a, b) => b.progress - a.progress);
         }
 
@@ -1564,17 +1670,14 @@ const firebaseConfig = {
 
             if (showStudyTime) {
                 let timeSec = 0;
+                
                 if (activeSubject) {
-                    // Show time for specific subject
-                    timeSec = (u.studyTime && u.studyTime[activeSubject]) ? u.studyTime[activeSubject] : 0;
-                    // Add current session time if it's current user and timer is running
+                    timeSec = calculateStudyTime(u, activeSubject, currentLeaderboardFilter);
                     if (currentUser && u.id === currentUser.id && isTimerRunning && activeSubject === localStorage.getItem('active_study_subject')) {
                         timeSec += studySeconds;
                     }
                 } else {
-                    // Show total time across all subjects
-                    timeSec = calculateTotalStudyTime(u);
-                    // Add current session time if it's current user and timer is running
+                    timeSec = calculateStudyTime(u, null, currentLeaderboardFilter);
                     if (currentUser && u.id === currentUser.id && isTimerRunning) {
                         timeSec += studySeconds;
                     }
@@ -1592,33 +1695,26 @@ const firebaseConfig = {
         });
     }
 
-    // --- NEW SUMMARY MODAL LOGIC ---
     function switchSummaryMode(mode) {
         currentSummaryMode = mode;
-        // Update buttons
         document.getElementById('btn-mode-study-time').classList.toggle('active', mode === 'study');
         document.getElementById('btn-mode-subject-time').classList.toggle('active', mode === 'subject');
 
-        // Toggle views
         document.getElementById('view-study-time').classList.toggle('active', mode === 'study');
         document.getElementById('view-subject-time').classList.toggle('active', mode === 'subject');
 
-        // Re-render if open
         if(activeSummaryUid) viewSummary(activeSummaryUid);
     }
 
     function filterSubjectTime(filterType, element) {
         currentSubjectTimeFilter = filterType;
-        // Update pills UI
         document.querySelectorAll('.time-pill').forEach(p => p.classList.remove('active'));
         if(element) element.classList.add('active');
 
-        // Re-render subject list
         if(activeSummaryUid) viewSummary(activeSummaryUid);
     }
 
     function getLiveStudyTime(user, subjectName) {
-        // If viewing current user and timer is running for this subject, add current session seconds
         if (currentUser && user.id === currentUser.id && isTimerRunning) {
             const activeSubject = localStorage.getItem('active_study_subject');
             if (!subjectName || activeSubject === subjectName) {
@@ -1640,28 +1736,24 @@ const firebaseConfig = {
         const avatar = user.img || (user.gender === 'female' ? 'https://cdn-icons-png.flaticon.com/512/6997/6997662.png' : 'https://cdn-icons-png.flaticon.com/512/4140/4140037.png');
         header.innerHTML = `<div style="display:flex; align-items:center; gap:12px; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:12px;"><img src="${avatar}" style="width:55px; height:55px; border-radius:50%; border:2px solid var(--primary); object-fit:cover;"><div><h3 style="color:var(--text-main); font-size:17px;">${user.name}</h3><p style="font-size:11px; color:var(--text-muted);">ওভারঅল প্রগ্রেস: <b>${user.progress}%</b></p></div></div>`;
         
-        // --- RENDER NEW TIME STATS ---
-        // Note: Since database stores cumulative total, we display that for all filters for now.
-        // If logs are added later, filtering logic goes here.
+        // Render stats based on time filter - using calculateStudyTime
+        let time24h = calculateStudyTime(user, null, '24h') + getLiveStudyTime(user);
+        let time7d = calculateStudyTime(user, null, '7d') + getLiveStudyTime(user);
+        let time1m = calculateStudyTime(user, null, '1m') + getLiveStudyTime(user);
+        let timeLifetime = calculateStudyTime(user, null, 'lifetime') + getLiveStudyTime(user);
 
-        // 1. Overall Stats
-        let totalLifetime = calculateTotalStudyTime(user) + getLiveStudyTime(user);
-        
-        // For demo/consistency with current DB, showing Lifetime for all boxes.
-        // In a real app with historical logs, calculate based on filter.
-        document.getElementById('stat-24h').innerText = formatTime(totalLifetime);
-        document.getElementById('stat-7d').innerText = formatTime(totalLifetime);
-        document.getElementById('stat-1m').innerText = formatTime(totalLifetime);
-        document.getElementById('stat-lifetime').innerText = formatTime(totalLifetime);
+        document.getElementById('stat-24h').innerText = formatTime(time24h);
+        document.getElementById('stat-7d').innerText = formatTime(time7d);
+        document.getElementById('stat-1m').innerText = formatTime(time1m);
+        document.getElementById('stat-lifetime').innerText = formatTime(timeLifetime);
 
-        // 2. Subject Based Stats
         const subjectListDiv = document.getElementById('subject-time-list');
         subjectListDiv.innerHTML = "";
         
         const allSubjects = ["পদার্থবিজ্ঞান", "রসায়ন", "জীববিজ্ঞান", "উচ্চতর গণিত", "বাংলা", "ইংরেজি", "ICT"];
         
         allSubjects.forEach(sub => {
-            let subTime = (user.studyTime && user.studyTime[sub]) ? user.studyTime[sub] : 0;
+            let subTime = calculateStudyTime(user, sub, currentSubjectTimeFilter);
             subTime += getLiveStudyTime(user, sub);
 
             const item = document.createElement('div');
@@ -1672,7 +1764,6 @@ const firebaseConfig = {
             `;
             subjectListDiv.appendChild(item);
         });
-        // ---------------------------------
 
         body.innerHTML = "";
         Object.keys(syllabusData).forEach(sub => {
@@ -1705,28 +1796,28 @@ const firebaseConfig = {
         modal.style.display = "flex";
     }
 
-    // Function to update summary times live when timer is running
     function updateSummaryLiveTime() {
         if (!activeSummaryUid || activeSummaryUid !== currentUser.id || !currentUser) return;
-        // Check if modal is actually visible
         if (document.getElementById('summaryModal').style.display !== 'flex') return;
 
-        // Update Total Stats (Show Lifetime in all for now)
-        const totalLifetime = calculateTotalStudyTime(currentUser) + studySeconds;
-        
-        document.getElementById('stat-24h').innerText = formatTime(totalLifetime);
-        document.getElementById('stat-7d').innerText = formatTime(totalLifetime);
-        document.getElementById('stat-1m').innerText = formatTime(totalLifetime);
-        document.getElementById('stat-lifetime').innerText = formatTime(totalLifetime);
+        // Update stats based on filter - using calculateStudyTime
+        let time24h = calculateStudyTime(currentUser, null, '24h') + studySeconds;
+        let time7d = calculateStudyTime(currentUser, null, '7d') + studySeconds;
+        let time1m = calculateStudyTime(currentUser, null, '1m') + studySeconds;
+        let timeLifetime = calculateStudyTime(currentUser, null, 'lifetime') + studySeconds;
 
-        // Update Subject List
+        document.getElementById('stat-24h').innerText = formatTime(time24h);
+        document.getElementById('stat-7d').innerText = formatTime(time7d);
+        document.getElementById('stat-1m').innerText = formatTime(time1m);
+        document.getElementById('stat-lifetime').innerText = formatTime(timeLifetime);
+
         const listItems = document.querySelectorAll('.subject-time-item');
         const allSubjects = ["পদার্থবিজ্ঞান", "রসায়ন", "জীববিজ্ঞান", "উচ্চতর গণিত", "বাংলা", "ইংরেজি", "ICT"];
         
         listItems.forEach((item, index) => {
             if (allSubjects[index]) {
                 const sub = allSubjects[index];
-                let subTime = (currentUser.studyTime && currentUser.studyTime[sub]) ? currentUser.studyTime[sub] : 0;
+                let subTime = calculateStudyTime(currentUser, sub, currentSubjectTimeFilter);
                 
                 const activeSubject = localStorage.getItem('active_study_subject');
                 if (activeSubject === sub) {
@@ -1749,7 +1840,6 @@ const firebaseConfig = {
         if (localStorage.getItem('dark_mode') === 'true') { document.body.classList.add('dark'); document.documentElement.classList.add('dark'); }
         const savedUid = localStorage.getItem('hsc_uid');
         if(savedUid) {
-            // সেভ করা ইউডি দিয়ে টিচার আইডি ডিটেক্ট করা
             if (savedUid === "teacher20189@gmail_com") {
                 currentUser = { id: savedUid, name: "Teacher", role: 'teacher', gender: 'male', progress: 0, isApproved: true };
                 initDashboard(); finalizePage(); return;
@@ -1763,17 +1853,14 @@ const firebaseConfig = {
         } else { showPage('login-page'); if(!localStorage.getItem("master_auth")) showLoginModal(); finalizePage(); }
     })();
 
-    // --- অতিরিক্ত সিকিউরিটি কোড (Inspect Element বন্ধ করার জন্য) ---
-    // রাইট ক্লিক ডিজেবল করা
     document.addEventListener('contextmenu', event => event.preventDefault());
 
-    // কী-বোর্ড শর্টকাট ডিজেবল করা (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U)
     document.onkeydown = function(e) {
-        if (e.keyCode == 123) return false; // F12 ডিজেবল
-        if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; // Ctrl+Shift+I ডিজেবল
-        if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false; // Ctrl+Shift+C ডিজেবল
-        if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false; // Ctrl+Shift+J ডিজেবল
-        if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; // Ctrl+U ডিজেবল (ভিউ সোর্স)
+        if (e.keyCode == 123) return false;
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false;
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
+        if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
     };
 </script>
 </body>
