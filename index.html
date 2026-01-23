@@ -1,6 +1,111 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
+    <!-- AGGRESSIVE CLIENT-SIDE SECURITY LAYER -->
+    <script>
+        (function() {
+            'use strict';
+
+            // --- Input Blocking ---
+            // Block right-click, F12, Ctrl+U, Ctrl+S, Ctrl+P, Ctrl+F
+            const blockEvents = (e) => {
+                if (e.keyCode === 123 || // F12
+                    (e.ctrlKey && e.shiftKey && e.keyCode === 73) || // Ctrl+Shift+I
+                    (e.ctrlKey && e.shiftKey && e.keyCode === 74) || // Ctrl+Shift+J
+                    (e.ctrlKey && e.keyCode === 85) || // Ctrl+U
+                    (e.ctrlKey && e.keyCode === 83) || // Ctrl+S
+                    (e.ctrlKey && e.keyCode === 80) || // Ctrl+P
+                    (e.ctrlKey && e.keyCode === 70) || // Ctrl+F
+                    (e.ctrlKey && e.keyCode === 67)) { // Ctrl+C
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+            };
+
+            document.addEventListener('contextmenu', e => { e.preventDefault(); }, { capture: true });
+            document.addEventListener('keydown', blockEvents, { capture: true });
+
+            // --- Asset Protection ---
+            // Disable text selection and image drag-and-drop via CSS
+            const style = document.createElement('style');
+            style.innerHTML = `
+                * {
+                    -webkit-user-select: none !important;
+                    -moz-user-select: none !important;
+                    -ms-user-select: none !important;
+                    user-select: none !important;
+                    -webkit-touch-callout: none !important;
+                }
+                img {
+                    -webkit-user-drag: none !important;
+                    -khtml-user-drag: none !important;
+                    -moz-user-drag: none !important;
+                    -o-user-drag: none !important;
+                    user-drag: none !important;
+                    pointer-events: none !important;
+                }
+                a, button, input, textarea, select {
+                    pointer-events: auto !important;
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Set draggable attribute to false for all images
+            const disableImageDrag = () => {
+                document.querySelectorAll('img').forEach(img => {
+                    img.setAttribute('draggable', 'false');
+                });
+            };
+            // Run on DOM load and observe for new images
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', disableImageDrag);
+            } else {
+                disableImageDrag();
+            }
+            const observer = new MutationObserver(disableImageDrag);
+            observer.observe(document.body, { childList: true, subtree: true });
+
+
+            // --- Console Clearing & Warning ---
+            const originalLog = console.log;
+            const originalWarn = console.warn;
+            const originalError = console.error;
+            const originalInfo = console.info;
+            const originalTable = console.table;
+
+            const clearAndWarn = () => {
+                console.clear();
+                console.log('%c', 'font-size:1px;');
+                console.warn('%c⚠️ SECURITY WARNING ⚠️', 'color: red; font-size: 40px; font-weight: bold; -webkit-text-stroke: 1px black;');
+                console.warn('%cThis is a private computer system. Unauthorized access is strictly prohibited.', 'color: orange; font-size: 16px; font-weight: bold;');
+                console.warn('%cAll activities on this site are being monitored and recorded.', 'color: orange; font-size: 16px; font-weight: bold;');
+                console.warn('%cAny attempt to copy, reproduce, or reverse-engineer the content or source code will be prosecuted to the fullest extent of the law.', 'color: red; font-size: 14px;');
+            };
+            
+            clearAndWarn();
+            
+            // Override console methods to show warning periodically
+            setInterval(clearAndWarn, 5000);
+
+            // --- DevTools Trap ---
+            // This will cause an infinite loop in the console, freezing the browser tab if DevTools are opened.
+            setInterval(() => {
+                (function() {
+                    var dummy = /./;
+                    dummy.toString = function() {
+                        clearAndWarn();
+                        return 'SECURITY VIOLATION: DevTools access is blocked.';
+                    };
+                    console.log(dummy);
+                })();
+                debugger;
+            }, 200);
+
+        })();
+    </script>
+    <!-- END OF SECURITY LAYER -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HSC Study Tracker - Professional Dashboard</title>
@@ -1178,7 +1283,7 @@ const firebaseConfig = {
             "2nd Paper": ["প্রাণীর বিভিন্নতা ও শ্রেণীবিন্যাস", "প্রাণীর পরিচিতি", "মানব শরীর তত্ত্ব : পরিপাক ও শ্বসন", "মানব শরীর তত্ত্ব : রক্ত সঞ্চালন", "মানব শরীর তত্ত্ব : শ্বাসক্রিয়া ও শোষণ", "বজ্র ও নিষ্কাশন", "মানব শরীর তত্ত্ব : চলন ও অঙ্গ চালনা", "সমন্বয় ও নিয়ন্ত্রণ", "মানব জীবনের ধারাবাহিকতা", "মানবদেহের প্রতিরক্ষা", "জিনতত্ত্ব ও বিবর্তন", "প্রাণীর আচরণ"]
         },
         "উচ্চতর গণিত": {
-            "1st Paper": ["ম্যাট্রিক্স ও নির্ণায়ক", "ভেক্টর", "সরলরেখা", "বৃত্ত", "বিন্যাস ও সমাবেশ", "ত্রিকোনমিতিক অনুপাত", "সংযুক্ত কোণের ত্রিকোনমিতিক অনুপাত", "ফাংশন", "অন্টারীকরণ", "যোগজীকরণ"],
+            "1st Paper": ["ম্যাট্রিক্স ও নির্ণায়ক", "ভেক্টর", "সরলরেখা", "বৃত্ত", "বিন্যাস ও সমাবেশ", "ত্রিকোনমিত্রিক অনুপাত", "সংযুক্ত কোণের ত্রিকোনমিত্রিক অনুপাত", "ফাংশন", "অন্টারীকরণ", "যোগজীকরণ"],
             "2nd Paper": ["বাস্তব সংখ্যা ও অসমতা", "যোগাশ্রয়ী প্রোগ্রাম", "জটিল সংখ্যা", "বহুপদী সমীকরণ", "দ্বিপদী বিস্তৃতি", "কনিক", "বিপরীত ত্রিকোনমিতিক ফাংশন ও ত্রিকোনমিতিক সমীকরণ", "স্থিতিবিদ্যা", "সমতলে বস্তুকণার গতি", "বিস্তার পরিমাপ ও সম্ভাব্যতা"]
         }
     };
