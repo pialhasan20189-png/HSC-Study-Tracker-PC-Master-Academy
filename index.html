@@ -3758,6 +3758,991 @@
                 font-size: 0.8rem;
             }
         }
+
+        /* Study DNA Modal Styles */
+        .dna-modal-content {
+            max-width: 800px !important;
+            max-height: 90vh;
+            overflow-y: auto;
+            text-align: left;
+            padding: 30px !important;
+            background: var(--card-bg);
+        }
+
+        /* Header */
+        .dna-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .dna-header h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .dna-subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* DNA Score Section */
+        .dna-score-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 25px;
+        }
+
+        .dna-score-circle {
+            position: relative;
+            width: 180px;
+            height: 180px;
+        }
+
+        .dna-score-svg {
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
+        }
+
+        .dna-score-bg {
+            fill: none;
+            stroke: var(--bg);
+            stroke-width: 12;
+        }
+
+        .dna-score-progress {
+            fill: none;
+            stroke: var(--primary);
+            stroke-width: 12;
+            stroke-linecap: round;
+            stroke-dasharray: 534;
+            stroke-dashoffset: 534;
+            transition: stroke-dashoffset 1.5s ease;
+        }
+
+        .dna-score-inner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .dna-score-value {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+            line-height: 1;
+        }
+
+        .dna-score-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Score Details */
+        .dna-score-details {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .dna-metric {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .metric-label {
+            min-width: 100px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .metric-bar {
+            flex: 1;
+            height: 10px;
+            background: var(--bg);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .metric-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 5px;
+            width: 0%;
+            transition: width 1.5s ease;
+        }
+
+        .metric-value {
+            min-width: 45px;
+            text-align: right;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+
+        /* Tabs */
+        .dna-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            background: var(--bg);
+            padding: 8px;
+            border-radius: 12px;
+        }
+
+        .dna-tab {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .dna-tab:hover {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+        }
+
+        .dna-tab.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Tab Panels */
+        .dna-tab-content {
+            min-height: 400px;
+        }
+
+        .dna-tab-panel {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .dna-tab-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Study Rhythm Tab */
+        .rhythm-header,
+        .subject-dna-header,
+        .power-header,
+        .recommend-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .rhythm-header h4,
+        .subject-dna-header h4,
+        .power-header h4,
+        .recommend-header h4 {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .rhythm-desc,
+        .subject-dna-header p,
+        .power-header p,
+        .recommend-header p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Heatmap */
+        .rhythm-heatmap {
+            background: var(--bg);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .heatmap-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 4px;
+        }
+
+        .heatmap-cell {
+            aspect-ratio: 1;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s;
+            position: relative;
+        }
+
+        .heatmap-cell:hover {
+            transform: scale(1.1);
+            z-index: 1;
+        }
+
+        .heatmap-cell.low {
+            background: rgba(239, 68, 68, 0.3);
+        }
+
+        .heatmap-cell.moderate {
+            background: rgba(245, 158, 11, 0.5);
+        }
+
+        .heatmap-cell.high {
+            background: rgba(34, 197, 94, 0.7);
+        }
+
+        .heatmap-cell.peak {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Rhythm Insights */
+        .rhythm-insights {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .insight-card {
+            background: var(--bg);
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .insight-card.peak-card {
+            border-color: var(--success);
+        }
+
+        .insight-card.peak-card:hover {
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .insight-card.low-card {
+            border-color: var(--danger);
+        }
+
+        .insight-card.low-card:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .insight-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .insight-content h5 {
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+            color: var(--text-main);
+        }
+
+        .insight-content p {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .insight-stat {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Weekly Pattern */
+        .weekly-pattern {
+            background: var(--bg);
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .weekly-pattern h4 {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+
+        .week-bars {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            align-items: flex-end;
+            height: 150px;
+        }
+
+        .week-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .week-bar-fill {
+            width: 100%;
+            background: linear-gradient(180deg, var(--primary), var(--accent));
+            border-radius: 6px 6px 0 0;
+            transition: height 0.5s ease;
+            min-height: 4px;
+        }
+
+        .week-bar-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* Subject Grid */
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .subject-card {
+            background: var(--bg);
+            padding: 18px;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+        }
+
+        .subject-card.high {
+            border-color: var(--success);
+        }
+
+        .subject-card.medium {
+            border-color: var(--warning);
+        }
+
+        .subject-card.low {
+            border-color: var(--danger);
+        }
+
+        .subject-card h5 {
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .subject-metrics {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .subject-metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+
+        .sm-label {
+            color: var(--text-muted);
+        }
+
+        .sm-value {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .subject-efficiency-bar {
+            height: 6px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .subject-efficiency-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 1s ease;
+        }
+
+        /* Subject Insights */
+        .subject-insights {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .subject-strength-section,
+        .subject-weak-section {
+            padding: 18px;
+            border-radius: 12px;
+        }
+
+        .subject-strength-section {
+            background: rgba(34, 197, 94, 0.1);
+            border: 2px solid var(--success);
+        }
+
+        .subject-weak-section {
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid var(--danger);
+        }
+
+        .subject-strength-section h5,
+        .subject-weak-section h5 {
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            color: var(--text-main);
+        }
+
+        .subject-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            font-size: 0.85rem;
+        }
+
+        .subject-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .sli-name {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .sli-score {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* AI Insight */
+        .ai-insight-box {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(56, 189, 248, 0.1));
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid var(--primary);
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .ai-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .ai-content h5 {
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .ai-content p {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Power Hours */
+        .power-hours-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .power-hour-item {
+            background: var(--bg);
+            padding: 20px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-left: 5px solid var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .power-hour-item:hover {
+            transform: translateX(5px);
+        }
+
+        .power-hour-item.primary {
+            border-left-color: var(--primary);
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(56, 189, 248, 0.1));
+        }
+
+        .power-hour-item.secondary {
+            border-left-color: var(--warning);
+        }
+
+        .power-hour-item.tertiary {
+            border-left-color: var(--success);
+        }
+
+        .ph-rank {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .ph-info {
+            flex: 1;
+        }
+
+        .ph-info h5 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .ph-info p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .ph-stat {
+            text-align: center;
+            min-width: 70px;
+        }
+
+        .ph-percent {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+            line-height: 1;
+        }
+
+        .ph-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .ph-recommend {
+            background: var(--card-bg);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+        }
+
+        /* Power Alarm */
+        .power-alarm-section {
+            background: var(--bg);
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .alarm-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .alarm-label {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 26px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: var(--primary);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(24px);
+        }
+
+        .alarm-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Recommendations Timeline */
+        .recommend-timeline {
+            margin-bottom: 25px;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            background: var(--bg);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .timeline-item.morning {
+            border-left-color: var(--accent);
+        }
+
+        .timeline-item.afternoon {
+            border-left-color: var(--warning);
+        }
+
+        .timeline-item.evening {
+            border-left-color: var(--primary);
+        }
+
+        .timeline-time {
+            min-width: 120px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .timeline-content h5 {
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .timeline-content p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Daily Challenge */
+        .daily-challenge {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(56, 189, 248, 0.1));
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid var(--primary);
+        }
+
+        .daily-challenge h4 {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+
+        .challenge-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .challenge-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+        }
+
+        .challenge-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .challenge-item label {
+            cursor: pointer;
+            color: var(--text-main);
+            flex: 1;
+        }
+
+        .challenge-progress {
+            margin-top: 15px;
+        }
+
+        .challenge-progress .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* Badges Section */
+        .dna-badges-section {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 2px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .dna-badges-section h4 {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: var(--text-main);
+            text-align: center;
+        }
+
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .badge-item {
+            background: var(--bg);
+            padding: 15px 10px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .badge-item.earned {
+            border-color: var(--success);
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .badge-item.earned:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+
+        .badge-item.locked {
+            opacity: 0.5;
+            filter: grayscale(1);
+        }
+
+        .badge-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .badge-name {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* Footer Stats */
+        .dna-footer-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 2px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .footer-stat {
+            text-align: center;
+            padding: 15px;
+            background: var(--bg);
+            border-radius: 12px;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Dark Mode */
+        body.dark .dna-header h2 {
+            color: var(--primary);
+        }
+
+        body.dark .dna-score-value {
+            color: var(--primary);
+        }
+
+        body.dark .insight-card,
+        body.dark .subject-card,
+        body.dark .power-hour-item,
+        body.dark .timeline-item,
+        body.dark .footer-stat {
+            background: rgba(30, 41, 59, 0.8);
+        }
+
+        body.dark .metric-bar,
+        body.dark .subject-efficiency-bar,
+        body.dark .week-bar-fill {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 600px) {
+            .dna-modal-content {
+                padding: 20px !important;
+                max-height: 95vh;
+            }
+
+            .dna-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .dna-score-circle {
+                width: 150px;
+                height: 150px;
+            }
+
+            .dna-score-value {
+                font-size: 2.2rem;
+            }
+
+            .dna-tabs {
+                flex-direction: column;
+            }
+
+            .dna-tab {
+                min-width: auto;
+            }
+
+            .rhythm-insights,
+            .subject-insights {
+                grid-template-columns: 1fr;
+            }
+
+            .subject-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .badges-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dna-footer-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .heatmap-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+
+            .heatmap-cell {
+                font-size: 0.6rem;
+            }
+
+            .power-hour-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .ph-recommend {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .timeline-item {
+                flex-direction: column;
+            }
+
+            .timeline-time {
+                min-width: auto;
+            }
+        }
     </style>
 </head>
 
@@ -4027,6 +5012,8 @@
                         <div id="dropdown-menu" class="dropdown-content">
                             <button onclick="toggleStudyMode()"><i class="fas fa-graduation-cap"></i> স্টাডি
                                 মোড</button>
+                            <button id="study-dna-btn" onclick="openStudyDNA()"><i class="fas fa-dna"></i> Study
+                                DNA</button>
                             <button onclick="openProfileModal()"><i class="fas fa-user-circle"></i> My Profile</button>
                             <button onclick="toggleDarkMode()"><i class="fas fa-moon"></i> ডার্ক মোড অন/অফ</button>
                             <button onclick="confirmLogout()" class="logout-item"><i class="fas fa-sign-out-alt"></i>
@@ -5012,6 +5999,225 @@
             };
             let allUsers = {};
             let currentUser = null;
+
+            // Study DNA Functions (Moved to top for resilience)
+            window.openStudyDNA = function () {
+                console.log("Opening Study DNA...");
+                const modal = document.getElementById('studyDNAModal');
+                if (modal) {
+                    modal.style.display = 'flex';
+                    modal.style.zIndex = '100000';
+
+                    // Close the dropdown menu if it's open
+                    const menu = document.getElementById('dropdown-menu');
+                    if (menu) menu.classList.remove('show');
+
+                    try {
+                        loadStudyDNA();
+                    } catch (e) {
+                        console.error("Error loading Study DNA:", e);
+                        alert("Study DNA লোড করতে সমস্যা হয়েছে। দয়া করে কনসোল চেক করুন।");
+                    }
+                } else {
+                    console.error("Study DNA Modal not found!");
+                    alert("Study DNA Modal পাওয়া যায়নি!");
+                }
+            };
+
+            window.closeStudyDNA = function () {
+                const modal = document.getElementById('studyDNAModal');
+                if (modal) modal.style.display = 'none';
+            };
+
+            window.switchDNATab = function (tabName) {
+                document.querySelectorAll('.dna-tab-panel').forEach(panel => panel.classList.remove('active'));
+                document.querySelectorAll('.dna-tab').forEach(btn => btn.classList.remove('active'));
+
+                const activePanel = document.getElementById(tabName + 'Tab');
+                if (activePanel) activePanel.classList.add('active');
+
+                const activeBtn = Array.from(document.querySelectorAll('.dna-tab')).find(btn =>
+                    btn.getAttribute('onclick')?.includes(tabName)
+                );
+                if (activeBtn) activeBtn.classList.add('active');
+
+                const evt = window.event || event;
+                if (evt && evt.target && evt.target.closest) {
+                    const btn = evt.target.closest('.dna-tab');
+                    if (btn) btn.classList.add('active');
+                }
+            };
+
+            window.loadStudyDNA = function () {
+                if (!currentUser) {
+                    console.warn("No currentUser found for Study DNA");
+                    return;
+                }
+
+                const dnaData = calculateDNAData(currentUser);
+                animateDNAScore(dnaData.score);
+
+                const setElStyle = (id, prop, val) => { const el = document.getElementById(id); if (el) el.style[prop] = val; };
+                const setElText = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+
+                setElStyle('consistencyBar', 'width', dnaData.consistency + '%');
+                setElText('consistencyValue', dnaData.consistency + '%');
+                setElStyle('efficiencyBar', 'width', dnaData.efficiency + '%');
+                setElText('efficiencyValue', dnaData.efficiency + '%');
+                setElStyle('powerHourBar', 'width', dnaData.powerHourUtil + '%');
+                setElText('powerHourValue', dnaData.powerHourUtil + '%');
+
+                renderStudyRhythm(dnaData.hourlyData);
+                renderSubjectDNA(dnaData.subjectData);
+                renderPowerHours(dnaData.powerHours);
+                renderWeeklyPattern(dnaData.weeklyData);
+
+                setElText('totalStudyTime_DNA', formatTime_DNA(calculateTotalStudyTime(currentUser)));
+                setElText('currentRank_DNA', '#' + getUserRank_DNA());
+                setElText('streakDays_DNA', calculateStreak_DNA());
+                setElText('activeDays_DNA', calculateActiveDays_DNA());
+            };
+
+            // Helper functions for DNA (Declarations)
+            function calculateDNAData(user) {
+                const hourlyData = new Array(24).fill(0);
+                const weeklyData = new Array(7).fill(0);
+                const subjectData = {};
+                const subjects = ['পদার্থবিজ্ঞান', 'রসায়ন', 'জীববিজ্ঞান', 'উচ্চতর গণিত', 'বাংলা', 'ইংরেজি', 'ICT'];
+
+                subjects.forEach(sub => { subjectData[sub] = { time: 0, progress: 0, efficiency: 0 }; });
+
+                let totalStudyTime = 0;
+                let studyDays = new Set();
+
+                if (user.studyLogs) {
+                    Object.values(user.studyLogs).forEach(log => {
+                        const date = new Date(log.timestamp);
+                        hourlyData[date.getHours()] += log.duration || 0;
+                        weeklyData[date.getDay()] += log.duration || 0;
+                        studyDays.add(date.toDateString());
+                        totalStudyTime += log.duration || 0;
+                        if (log.subject && subjectData[log.subject]) subjectData[log.subject].time += log.duration || 0;
+                    });
+                }
+
+                if (user.studyTime) {
+                    Object.keys(user.studyTime).forEach(sub => {
+                        if (subjectData[sub]) {
+                            subjectData[sub].time += user.studyTime[sub] || 0;
+                            totalStudyTime += user.studyTime[sub] || 0;
+                        }
+                    });
+                }
+
+                subjects.forEach(sub => {
+                    subjectData[sub].progress = typeof calculateSubjectProgress === 'function' ? calculateSubjectProgress(sub, user) : 0;
+                    const timeInHours = subjectData[sub].time / 3600;
+                    subjectData[sub].efficiency = timeInHours > 0 ? Math.min(100, Math.round((subjectData[sub].progress / timeInHours) * 10)) : 0;
+                });
+
+                const sortedHours = hourlyData.map((time, hour) => ({ hour, time })).sort((a, b) => b.time - a.time);
+                const powerHours = sortedHours.slice(0, 3);
+                const consistency = totalStudyTime > 0 ? Math.min(100, Math.round((studyDays.size / 30) * 100)) : 0;
+                const avgEfficiency = subjects.reduce((sum, sub) => sum + subjectData[sub].efficiency, 0) / subjects.length;
+                const powerHourUtil = totalStudyTime > 0 ? Math.round((powerHours[0]?.time || 0) / totalStudyTime * 100) : 0;
+
+                return { score: Math.round((consistency * 0.3) + (avgEfficiency * 0.4) + (powerHourUtil * 0.3)), consistency, efficiency: Math.round(avgEfficiency), powerHourUtil, hourlyData, weeklyData, subjectData, powerHours, totalStudyTime, activeDays: studyDays.size };
+            }
+
+            function animateDNAScore(score) {
+                const ring = document.getElementById('dnaScoreRing');
+                const valueEl = document.getElementById('dnaScoreValue');
+                if (!ring || !valueEl) return;
+                const circumference = 534;
+                const offset = circumference - (score / 100) * circumference;
+                ring.style.strokeDashoffset = offset;
+                let current = 0;
+                const timer = setInterval(() => {
+                    current += score / 50;
+                    if (current >= score) { current = score; clearInterval(timer); }
+                    valueEl.textContent = Math.round(current);
+                }, 30);
+            }
+
+            function renderStudyRhythm(hourlyData) {
+                const grid = document.getElementById('heatmapGrid');
+                if (!grid) return;
+                grid.innerHTML = '';
+                const total = hourlyData.reduce((sum, val) => sum + val, 0);
+                hourlyData.forEach((time, hour) => {
+                    const percentage = total > 0 ? (time / total * 100) : 0;
+                    let level = percentage >= 20 ? 'peak' : percentage >= 10 ? 'high' : percentage >= 5 ? 'moderate' : 'low';
+                    const cell = document.createElement('div');
+                    cell.className = `heatmap-cell ${level}`;
+                    cell.textContent = hour;
+                    cell.title = `${hour}:00: ${formatTime_DNA(time)}`;
+                    grid.appendChild(cell);
+                });
+                const sorted = hourlyData.map((time, hour) => ({ hour, time })).sort((a, b) => b.time - a.time);
+                document.getElementById('peakTimeText').textContent = `${formatHour_DNA(sorted[0].hour)}:00 - ${formatHour_DNA(sorted[0].hour + 1)}:00`;
+                document.getElementById('peakTimeStat').textContent = `${total > 0 ? Math.round(sorted[0].time / total * 100) : 0}% সময় ব্যয়`;
+            }
+
+            function renderSubjectDNA(subjectData) {
+                const grid = document.getElementById('subjectGrid');
+                if (!grid) return;
+                grid.innerHTML = '';
+                const subjects = Object.keys(subjectData)
+                    .filter(s => subjectData[s].time > 0 || subjectData[s].progress > 0)
+                    .sort((a, b) => subjectData[b].efficiency - subjectData[a].efficiency);
+                (subjects.length > 0 ? subjects : Object.keys(subjectData)).forEach(subject => {
+                    const data = subjectData[subject];
+                    let level = data.efficiency >= 70 ? 'high' : data.efficiency >= 50 ? 'medium' : 'low';
+                    const card = document.createElement('div');
+                    card.className = `subject-card ${level}`;
+                    card.innerHTML = `<h5>${subject}</h5><div class="subject-metrics"><div class="subject-metric-row"><span>সময়</span><span>${formatTime_DNA(data.time)}</span></div><div class="subject-metric-row"><span>প্রগ্রেস</span><span>${data.progress.toFixed(1)}%</span></div><div class="subject-metric-row"><span>দক্ষতা</span><span>${data.efficiency}%</span></div><div class="subject-efficiency-bar"><div class="subject-efficiency-fill ${level}" style="width: ${data.efficiency}%"></div></div></div>`;
+                    grid.appendChild(card);
+                });
+                // Update strength/weak lists and AI insights
+                const sortedEff = Object.keys(subjectData).sort((a, b) => subjectData[b].efficiency - subjectData[a].efficiency);
+                document.getElementById('strengthSubjects').innerHTML = sortedEff.slice(0, 2).map(s => `<div class="subject-list-item"><span>${s}</span><span>${subjectData[s].efficiency}%</span></div>`).join('');
+                document.getElementById('weakSubjects').innerHTML = sortedEff.slice(-2).map(s => `<div class="subject-list-item"><span>${s}</span><span>${subjectData[s].efficiency}%</span></div>`).join('');
+
+                const best = sortedEff[0];
+                document.getElementById('aiInsightText').textContent = subjectData[best].time > 0 ? `আপনি ${best} এ ${subjectData[best].efficiency}% দক্ষতার সাথে পড়ছেন। এটি আপনার শক্তির জায়গা।` : "পড়ার প্যাটার্ন বিশ্লেষণ করার জন্য আরও ডেটা প্রয়োজন।";
+            }
+
+            function renderPowerHours(powerHours) {
+                if (!powerHours[0]) return;
+                document.getElementById('primaryPHTime').textContent = `${formatHour_DNA(powerHours[0].hour)}:00 - ${formatHour_DNA(powerHours[0].hour + 1)}:00`;
+                if (powerHours[1]) document.getElementById('secondaryPHTime').textContent = `${formatHour_DNA(powerHours[1].hour)}:00 - ${formatHour_DNA(powerHours[1].hour + 1)}:00`;
+            }
+
+            function renderWeeklyPattern(weeklyData) {
+                const container = document.getElementById('weekBars');
+                if (!container) return;
+                container.innerHTML = '';
+                const days = ['রবি', 'সোম', 'মঙ্গল', 'বুধ', 'বৃহঃ', 'শুক্র', 'শনি'];
+                const max = Math.max(...weeklyData) || 1;
+                weeklyData.forEach((time, i) => {
+                    const bar = document.createElement('div');
+                    bar.className = 'week-bar';
+                    bar.innerHTML = `<div class="week-bar-fill" style="height: ${(time / max) * 100}%"></div><span class="week-bar-label">${days[i]}</span>`;
+                    container.appendChild(bar);
+                });
+            }
+
+            function formatHour_DNA(h) { return h === 0 ? '১২' : (h <= 12 ? h : h - 12); }
+            function formatTime_DNA(s) { const h = Math.floor(s / 3600); const m = Math.floor((s % 3600) / 60); return `${h}h ${m}m`; }
+            function getUserRank_DNA() {
+                const userArray = Object.values(allUsers).filter(u => u.role === 'student');
+                const sorted = userArray.sort((a, b) => (typeof calculateTotalStudyTime === 'function' ? calculateTotalStudyTime(b) : 0) - (typeof calculateTotalStudyTime === 'function' ? calculateTotalStudyTime(a) : 0));
+                return (sorted.findIndex(u => u.id === currentUser.id) + 1) || '-';
+            }
+            function calculateStreak_DNA() {
+                if (!currentUser.studyLogs) return 0;
+                let streak = 0, date = new Date();
+                while (Object.values(currentUser.studyLogs).some(l => new Date(l.timestamp).toDateString() === date.toDateString())) { streak++; date.setDate(date.getDate() - 1); }
+                return streak;
+            }
+            function calculateActiveDays_DNA() { return currentUser.studyLogs ? new Set(Object.values(currentUser.studyLogs).map(l => new Date(l.timestamp).toDateString())).size : 0; }
+
             let selectedSub = "";
             let selectedPaper = "";
             let activeSummaryUid = null;
@@ -5594,6 +6800,7 @@
                 return (score / chapters.length) * 100 || 0;
             }
             function calculateSubjectProgress(sub, user) {
+                if (!syllabusData[sub]) return 0;
                 let totalPerc = 0; const papers = Object.keys(syllabusData[sub]);
                 papers.forEach(p => totalPerc += calculatePaperPercentage(sub, p, user));
                 return totalPerc / papers.length || 0;
@@ -6976,5 +8183,315 @@
                 if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
             };
         </script>
+        <!-- Study DNA Modal -->
+        <div id="studyDNAModal" class="modal">
+            <div class="modal-content dna-modal-content">
+                <span class="close-modal" onclick="closeStudyDNA()"><i class="fas fa-times-circle"></i></span>
+
+                <!-- Header -->
+                <div class="dna-header">
+                    <h2><i class="fas fa-dna" style="margin-right: 10px;"></i>Study DNA</h2>
+                    <p class="dna-subtitle">আপনার পড়ার ধরণ বিশ্লেষণ ও উন্নতির পথ</p>
+                </div>
+
+                <!-- DNA Score Section -->
+                <div class="dna-score-section">
+                    <div class="dna-score-circle">
+                        <div class="dna-score-ring">
+                            <svg class="dna-score-svg" viewBox="0 0 200 200">
+                                <circle class="dna-score-bg" cx="100" cy="100" r="85"></circle>
+                                <circle class="dna-score-progress" cx="100" cy="100" r="85" id="dnaScoreRing"></circle>
+                            </svg>
+                            <div class="dna-score-inner">
+                                <span class="dna-score-value" id="dnaScoreValue">0</span>
+                                <span class="dna-score-label">DNA Score</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dna-score-details">
+                        <div class="dna-metric">
+                            <span class="metric-label">নিয়মিততা</span>
+                            <div class="metric-bar">
+                                <div class="metric-fill" id="consistencyBar"></div>
+                            </div>
+                            <span class="metric-value" id="consistencyValue">0%</span>
+                        </div>
+                        <div class="dna-metric">
+                            <span class="metric-label">সময় দক্ষতা</span>
+                            <div class="metric-bar">
+                                <div class="metric-fill" id="efficiencyBar"></div>
+                            </div>
+                            <span class="metric-value" id="efficiencyValue">0%</span>
+                        </div>
+                        <div class="dna-metric">
+                            <span class="metric-label">পাওয়ার আওয়ার</span>
+                            <div class="metric-bar">
+                                <div class="metric-fill" id="powerHourBar"></div>
+                            </div>
+                            <span class="metric-value" id="powerHourValue">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabs Navigation -->
+                <div class="dna-tabs">
+                    <button class="dna-tab active" onclick="switchDNATab('rhythm')">
+                        <i class="fas fa-clock"></i> Study Rhythm
+                    </button>
+                    <button class="dna-tab" onclick="switchDNATab('subject')">
+                        <i class="fas fa-book"></i> Subject DNA
+                    </button>
+                    <button class="dna-tab" onclick="switchDNATab('power')">
+                        <i class="fas fa-bolt"></i> Power Hours
+                    </button>
+                    <button class="dna-tab" onclick="switchDNATab('recommend')">
+                        <i class="fas fa-lightbulb"></i> Tips
+                    </button>
+                </div>
+
+                <!-- Tab Contents -->
+                <div class="dna-tab-content">
+                    <!-- Study Rhythm Tab -->
+                    <div id="rhythmTab" class="dna-tab-panel active">
+                        <div class="rhythm-header">
+                            <h4>⏰ 24 ঘন্টার স্টাডি প্যাটার্ন</h4>
+                            <p class="rhythm-desc">কোন সময়ে আপনি বেশি পড়াশোনা করেন</p>
+                        </div>
+
+                        <div class="rhythm-heatmap">
+                            <div class="heatmap-grid" id="heatmapGrid"></div>
+                        </div>
+
+                        <div class="rhythm-insights">
+                            <div class="insight-card peak-card">
+                                <div class="insight-icon">🔥</div>
+                                <div class="insight-content">
+                                    <h5>আপনার সোনালী সময়</h5>
+                                    <p id="peakTimeText">রাত ১০টা - ১২টা</p>
+                                    <span class="insight-stat" id="peakTimeStat">৪২% সময় ব্যয়</span>
+                                </div>
+                            </div>
+                            <div class="insight-card low-card">
+                                <div class="insight-icon">⚠️</div>
+                                <div class="insight-content">
+                                    <h5>উপেক্ষিত সময়</h5>
+                                    <p id="lowTimeText">সকাল ৮টা - ১০টা</p>
+                                    <span class="insight-stat" id="lowTimeStat">মাত্র ৫% ব্যবহার</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="weekly-pattern">
+                            <h4>📅 সাপ্তাহিক প্যাটার্ন</h4>
+                            <div class="week-bars" id="weekBars"></div>
+                        </div>
+                    </div>
+
+                    <!-- Subject DNA Tab -->
+                    <div id="subjectTab" class="dna-tab-panel">
+                        <div class="subject-dna-header">
+                            <h4>📚 সাবজেক্ট DNA ম্যাট্রিক্স</h4>
+                            <p>কোন সাবজেক্টে আপনি শক্তিশালী</p>
+                        </div>
+
+                        <div class="subject-grid" id="subjectGrid"></div>
+
+                        <div class="subject-insights">
+                            <div class="subject-strength-section">
+                                <h5>🏆 শক্তির জায়গা</h5>
+                                <div id="strengthSubjects"></div>
+                            </div>
+                            <div class="subject-weak-section">
+                                <h5>📉 উন্নতি প্রয়োজন</h5>
+                                <div id="weakSubjects"></div>
+                            </div>
+                        </div>
+
+                        <div class="ai-insight-box">
+                            <div class="ai-icon">🤖</div>
+                            <div class="ai-content">
+                                <h5>AI Insight</h5>
+                                <p id="aiInsightText">আপনার পড়ার প্যাটার্ন বিশ্লেষণ করা হচ্ছে...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Power Hours Tab -->
+                    <div id="powerTab" class="dna-tab-panel">
+                        <div class="power-header">
+                            <h4>⚡ পাওয়ার আওয়ার</h4>
+                            <p>আপনার সবচেয়ে প্রোডাক্টিভ সময়</p>
+                        </div>
+
+                        <div class="power-hours-list">
+                            <div class="power-hour-item primary">
+                                <div class="ph-rank">১</div>
+                                <div class="ph-info">
+                                    <h5 id="primaryPHTime">রাত ১০:০০ - ১২:০০</h5>
+                                    <p>প্রাইমারি পাওয়ার আওয়ার</p>
+                                </div>
+                                <div class="ph-stat">
+                                    <span class="ph-percent" id="primaryPHPercent">৪২%</span>
+                                    <span class="ph-label">সময় ব্যবহার</span>
+                                </div>
+                                <div class="ph-recommend">
+                                    <span class="ph-rec-icon">📖</span>
+                                    <span id="primaryPHRec">পদার্থবিজ্ঞান</span>
+                                </div>
+                            </div>
+
+                            <div class="power-hour-item secondary">
+                                <div class="ph-rank">২</div>
+                                <div class="ph-info">
+                                    <h5 id="secondaryPHTime">দুপুর ১:০০ - ৩:০০</h5>
+                                    <p>সেকেন্ডারি পাওয়ার আওয়ার</p>
+                                </div>
+                                <div class="ph-stat">
+                                    <span class="ph-percent" id="secondaryPHPercent">২৮%</span>
+                                    <span class="ph-label">সময় ব্যবহার</span>
+                                </div>
+                                <div class="ph-recommend">
+                                    <span class="ph-rec-icon">📖</span>
+                                    <span id="secondaryPHRec">গণিত</span>
+                                </div>
+                            </div>
+
+                            <div class="power-hour-item tertiary">
+                                <div class="ph-rank">৩</div>
+                                <div class="ph-info">
+                                    <h5 id="tertiaryPHTime">সকাল ৬:০০ - ৮:০০</h5>
+                                    <p>টার্শিয়ারি পাওয়ার আওয়ার</p>
+                                </div>
+                                <div class="ph-stat">
+                                    <span class="ph-percent" id="tertiaryPHPercent">১৫%</span>
+                                    <span class="ph-label">সময় ব্যবহার</span>
+                                </div>
+                                <div class="ph-recommend">
+                                    <span class="ph-rec-icon">📖</span>
+                                    <span id="tertiaryPHRec">বাংলা</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="power-alarm-section">
+                            <div class="alarm-toggle">
+                                <span class="alarm-label">🔔 পাওয়ার আওয়ার অ্যালার্ম</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="powerAlarmToggle">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <p class="alarm-desc">পাওয়ার আওয়ার শুরু হলে নোটিফিকেশন পান</p>
+                        </div>
+                    </div>
+
+                    <!-- Recommendations Tab -->
+                    <div id="recommendTab" class="dna-tab-panel">
+                        <div class="recommend-header">
+                            <h4>💡 স্মার্ট রিকমেন্ডেশন</h4>
+                            <p>আপনার জন্য কাস্টম পরিকল্পনা</p>
+                        </div>
+
+                        <div class="recommend-timeline">
+                            <div class="timeline-item morning">
+                                <div class="timeline-time">🌅 সকাল ৮:০০ - ১০:০০</div>
+                                <div class="timeline-content">
+                                    <h5 id="morningRec">বাংলা/ইংরেজি পড়ুন</h5>
+                                    <p>আপনার এই সময়টা ব্যবহার হয় না, হালকা সাবজেক্ট দিয়ে শুরু করুন</p>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item afternoon">
+                                <div class="timeline-time">🌞 দুপুর ১:০০ - ৩:০০</div>
+                                <div class="timeline-content">
+                                    <h5 id="afternoonRec">গণিত/রসায়ন</h5>
+                                    <p>এটি আপনার সেকেন্ডারি পাওয়ার আওয়ার</p>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item evening">
+                                <div class="timeline-time">🌃 রাত ১০:০০ - ১২:০০</div>
+                                <div class="timeline-content">
+                                    <h5 id="eveningRec">পদার্থবিজ্ঞান/জীববিজ্ঞান</h5>
+                                    <p>আপনার প্রাইমারি পাওয়ার আওয়ার - কঠিন সাবজেক্ট পড়ুন</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="daily-challenge">
+                            <h4>🎯 আজকের চ্যালেঞ্জ</h4>
+                            <div class="challenge-list" id="challengeList">
+                                <div class="challenge-item">
+                                    <input type="checkbox" id="challenge1">
+                                    <label for="challenge1">সকাল ৮-১০টায় ৩০ মিনিট পড়ুন (+৩০ pts)</label>
+                                </div>
+                                <div class="challenge-item">
+                                    <input type="checkbox" id="challenge2">
+                                    <label for="challenge2">ইংরেজিতে ১ ঘন্টা দিন (+৫০ pts)</label>
+                                </div>
+                                <div class="challenge-item">
+                                    <input type="checkbox" id="challenge3">
+                                    <label for="challenge3">পাওয়ার আওয়ারে পড়ুন (+৪০ pts)</label>
+                                </div>
+                            </div>
+                            <div class="challenge-progress">
+                                <div class="progress-label">
+                                    <span>পয়েন্ট সংগ্রহ</span>
+                                    <span id="challengePoints">0/120</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="challengeProgress"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Badges Section -->
+                <div class="dna-badges-section">
+                    <h4>🏅 আপনার ব্যাজ</h4>
+                    <div class="badges-grid" id="badgesGrid">
+                        <div class="badge-item earned">
+                            <div class="badge-icon">🎖️</div>
+                            <span class="badge-name">Week Warrior</span>
+                        </div>
+                        <div class="badge-item earned">
+                            <div class="badge-icon">💪</div>
+                            <span class="badge-name">Dedicated</span>
+                        </div>
+                        <div class="badge-item locked">
+                            <div class="badge-icon">🔒</div>
+                            <span class="badge-name">Month Master</span>
+                        </div>
+                        <div class="badge-item locked">
+                            <div class="badge-icon">🔒</div>
+                            <span class="badge-name">Legend</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Stats -->
+                <div class="dna-footer-stats">
+                    <div class="footer-stat">
+                        <span class="stat-value" id="totalStudyTime_DNA">0h</span>
+                        <span class="stat-label">মোট স্টাডি</span>
+                    </div>
+                    <div class="footer-stat">
+                        <span class="stat-value" id="currentRank_DNA">#-</span>
+                        <span class="stat-label">র্যাংক</span>
+                    </div>
+                    <div class="footer-stat">
+                        <span class="stat-value" id="streakDays_DNA">0</span>
+                        <span class="stat-label">স্ট্রিক</span>
+                    </div>
+                    <div class="footer-stat">
+                        <span class="stat-value" id="activeDays_DNA">0</span>
+                        <span class="stat-label">এক্টিভ দিন</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 </body>
+
 </html>
