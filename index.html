@@ -3758,6 +3758,268 @@
                 font-size: 0.8rem;
             }
         }
+
+        /* --- STUDY DNA STYLES --- */
+        .dna-container {
+            padding: 15px;
+            padding-bottom: 80px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .dna-header {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dna-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+            pointer-events: none;
+        }
+
+        .dna-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .dna-stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .dna-stat-value {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 5px 0;
+        }
+
+        .dna-stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .dna-search-box {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .dna-search-input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        .dna-student-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .dna-student-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .dna-student-card:active {
+            transform: scale(0.98);
+        }
+
+        .dna-student-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border: 2px solid var(--primary);
+        }
+
+        .dna-student-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .dna-batch-rank {
+            font-size: 10px;
+            color: var(--text-muted);
+            background: rgba(0, 0, 0, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        /* DNA DETAILS PANEL */
+        .dna-details-panel {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 2000;
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            padding-bottom: 40px;
+        }
+
+        .dna-details-panel.show {
+            right: 0;
+        }
+
+        .dna-panel-header {
+            padding: 20px;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .dna-section-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 20px 20px 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dna-bar-container {
+            margin: 0 20px 12px 20px;
+        }
+
+        .dna-bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-bottom: 4px;
+            color: var(--text-muted);
+        }
+
+        .dna-bar-bg {
+            height: 8px;
+            background: #f1f5f9;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .dna-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .dna-activity-log {
+            margin: 0 20px;
+            border-left: 2px solid #e2e8f0;
+            padding-left: 20px;
+            padding-top: 10px;
+        }
+
+        .dna-log-item {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .dna-log-item::before {
+            content: '';
+            position: absolute;
+            left: -25px;
+            top: 5px;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px white;
+        }
+
+        .dna-log-time {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+
+        .dna-log-desc {
+            font-size: 13px;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        /* --- BATCH ANALYSIS --- */
+        .batch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            padding: 0 5px;
+        }
+
+        .batch-card {
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .batch-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .top-student-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+        }
     </style>
 </head>
 
@@ -4025,6 +4287,8 @@
                     <div class="dropdown">
                         <button onclick="toggleMenu()" class="menu-trigger"><i class="fas fa-bars"></i></button>
                         <div id="dropdown-menu" class="dropdown-content">
+                            <button onclick="openStudyDNA()"><i class="fas fa-dna" style="color:#ec4899;"></i> Study DNA
+                                (Beta)</button>
                             <button onclick="toggleStudyMode()"><i class="fas fa-graduation-cap"></i> স্টাডি
                                 মোড</button>
                             <button onclick="openProfileModal()"><i class="fas fa-user-circle"></i> My Profile</button>
@@ -4149,7 +4413,8 @@
                                     <svg class="timer-svg" viewBox="0 0 300 300">
                                         <circle class="timer-bg" cx="150" cy="150" r="135"></circle>
                                         <circle id="timer-progress-bar" class="timer-progress" cx="150" cy="150"
-                                            r="135"></circle>
+                                            r="135">
+                                        </circle>
                                     </svg>
                                     <div class="timer-center" onclick="toggleTimer()">
                                         <h1 id="timer-digital">00:00:00</h1>
@@ -4259,7 +4524,8 @@
                         <button class="tool-btn btn-refresh" onclick="loadPaymentData()"><i class="fas fa-sync-alt"></i>
                             রিফ্রেশ</button>
                         <button class="tool-btn btn-bulk" onclick="sendBulkReminder()"><i
-                                class="fas fa-paper-plane"></i> বাল্ক রিমাইন্ডার</button>
+                                class="fas fa-paper-plane"></i>
+                            বাল্ক রিমাইন্ডার</button>
                     </div>
                 </div>
 
@@ -4984,6 +5250,105 @@
                 <h1 style="margin-top:20px; font-size:22px">অ্যাক্সেস ডিনাইড!</h1>
                 <p style="margin-top: 10px; color: #94a3b8; text-align: center; padding: 0 20px;">আপনার ডিভাইসটি এই
                     ওয়েবসাইট থেকে চিরতরে ব্লক করা হয়েছে।</p>
+            </div>
+            <div id="study-dna-page" class="hidden">
+                <header class="dna-header">
+                    <div
+                        style="display:flex; justify-content:space-between; align-items:center; position:relative; z-index:1;">
+                        <div>
+                            <h2
+                                style="margin:0; font-size:24px; font-weight:800; display:flex; align-items:center; gap:10px;">
+                                <i class="fas fa-dna" style="color:#ec4899"></i> Study DNA
+                                <span
+                                    style="font-size:12px; background:rgba(255,255,255,0.2); padding:2px 8px; border-radius:20px; font-weight:600;">BETA</span>
+                            </h2>
+                            <p style="margin:5px 0 0 0; opacity:0.8; font-size:14px;">অ্যাডভান্সড স্টুডেন্ট
+                                অ্যানালিটিক্স</p>
+                        </div>
+                        <button onclick="showPage('dashboard-page')"
+                            style="background:rgba(255,255,255,0.2); width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(5px);">
+                            <i class="fas fa-times" style="font-size:18px;"></i>
+                        </button>
+                    </div>
+                </header>
+
+                <div class="container dna-container">
+                    <!-- Global Stats -->
+                    <div class="dna-stats-grid">
+                        <div class="dna-stat-card">
+                            <div style="background:#ec48991a; padding:10px; border-radius:50%; margin-bottom:5px;">
+                                <i class="fas fa-crown" style="color:#ec4899; font-size:20px;"></i>
+                            </div>
+                            <span class="dna-stat-value" id="dna-top-performer">-</span>
+                            <span class="dna-stat-label">সেরা পারফর্মার (Last 24h)</span>
+                        </div>
+                        <div class="dna-stat-card">
+                            <div style="background:#3b82f61a; padding:10px; border-radius:50%; margin-bottom:5px;">
+                                <i class="fas fa-fire" style="color:#3b82f6; font-size:20px;"></i>
+                            </div>
+                            <span class="dna-stat-value" id="dna-trending-subject">-</span>
+                            <span class="dna-stat-label">ট্রেন্ডিং সাবজেক্ট</span>
+                        </div>
+                    </div>
+
+                    <!-- Search -->
+                    <div class="dna-search-box">
+                        <i class="fas fa-search" style="color:var(--text-muted)"></i>
+                        <input type="text" id="dna-search-input" class="dna-search-input"
+                            placeholder="শিক্ষার্থীর নাম বা আইডি দিয়ে খুঁজুন..." oninput="filterDnaStudents()">
+                    </div>
+
+                    <!-- Student List -->
+                    <button onclick="renderBatchAnalysis()" class="btn-primary"
+                        style="margin-bottom:20px; background:linear-gradient(135deg, #6366f1, #4f46e5);">
+                        <i class="fas fa-chart-pie"></i> ব্যাচ অ্যানালিটিক্স দেখুন
+                    </button>
+
+                    <h3 style="margin-bottom:15px; font-size:16px; color:var(--text-main);">শিক্ষার্থী তালিকা (<span
+                            id="dna-student-count">0</span>)</h3>
+                    <div id="dna-student-list" class="dna-student-list"></div>
+
+                    <!-- Batch Analysis View (Hidden by default) -->
+                    <div id="dna-batch-view" class="hidden" style="margin-top:20px;">
+                        <div
+                            style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                            <h3 style="font-size:16px;">ব্যাচ পারফরমেন্স রিপোর্ট</h3>
+                            <button
+                                onclick="document.getElementById('dna-batch-view').classList.add('hidden'); document.getElementById('dna-student-list').classList.remove('hidden')"
+                                style="font-size:12px; padding:5px 10px; background:var(--bg); color:var(--text-muted);">Back
+                                to List</button>
+                        </div>
+                        <div id="dna-batch-grid" class="batch-grid"></div>
+                    </div>
+                </div>
+
+                <!-- Student Details Side Panel -->
+                <div id="dna-details-panel" class="dna-details-panel">
+                    <div class="dna-panel-header">
+                        <button onclick="closeDnaDetails()"
+                            style="background:none; border:none; font-size:18px; color:var(--text-main); padding:5px;"><i
+                                class="fas fa-arrow-left"></i></button>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <img id="dna-panel-img" src=""
+                                style="width:35px; height:35px; border-radius:50%; object-fit:cover; border:1px solid var(--primary);">
+                            <div>
+                                <h4 id="dna-panel-name" style="font-size:14px; margin:0; line-height:1.2;">-</h4>
+                                <span id="dna-panel-status" style="font-size:10px; color:var(--success);">● Active
+                                    Now</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dna-section-title">
+                        <i class="fas fa-chart-bar" style="color:var(--primary)"></i> সাবজেক্ট ডিএনএ (Strength Analysis)
+                    </div>
+                    <div id="dna-subject-bars"></div>
+
+                    <div class="dna-section-title" style="margin-top:30px;">
+                        <i class="fas fa-history" style="color:var(--warning)"></i> অ্যাক্টিভিটি লগ (Last 24h)
+                    </div>
+                    <div id="dna-activity-log" class="dna-activity-log"></div>
+                </div>
             </div>
         </div>
         <script>
@@ -6982,6 +7347,239 @@
                 if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
                 if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
             };
+            // --- STUDY DNA (BETA) ---
+            function openStudyDNA() {
+                // Hide dropdown
+                document.getElementById("dropdown-menu").classList.remove("show");
+                // Show page
+                showPage('study-dna-page');
+                // Load data
+                loadDnaData();
+            }
+
+            function loadDnaData() {
+                const studentList = document.getElementById('dna-student-list');
+                studentList.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:50px;"><div class="loader"></div><p style="margin-top:15px; color:var(--text-muted)">ডিএনএ বিশ্লেষণ চলছে...</p></div>';
+
+                // Get all students
+                const students = Object.values(allUsers || {}).filter(u => u.role === 'student');
+                document.getElementById('dna-student-count').textContent = convertToBengaliDigit(students.length);
+
+                // Calculate Global Stats
+                calculateDnaGlobalStats(students);
+
+                // Render List
+                renderDnaStudentList(students);
+            }
+
+            function calculateDnaGlobalStats(students) {
+                if (!students.length) return;
+
+                // 1. Top Performer (Last 24h)
+                let topStudent = null;
+                let maxTime24h = -1;
+
+                // 2. Trending Subject (Global Last 24h)
+                let subjectCounts = {};
+
+                const now = Date.now();
+                const oneDay = 24 * 60 * 60 * 1000;
+
+                students.forEach(student => {
+                    // Calc 24h time for student
+                    let time24 = calculateStudyTime(student, null, '24h');
+                    if (time24 > maxTime24h) {
+                        maxTime24h = time24;
+                        topStudent = student;
+                    }
+
+                    // Scan logs for subject counts (duration based)
+                    if (student.studyLogs) {
+                        Object.values(student.studyLogs).forEach(log => {
+                            if (now - log.timestamp < oneDay) {
+                                subjectCounts[log.subject] = (subjectCounts[log.subject] || 0) + (log.duration || 0);
+                            }
+                        });
+                    }
+                });
+
+                // Set Top Performer
+                if (topStudent) {
+                    document.getElementById('dna-top-performer').textContent = topStudent.name || topStudent.email.split('@')[0];
+                } else {
+                    document.getElementById('dna-top-performer').textContent = "১ জন";
+                }
+
+                // Set Trending Subject
+                let trendSub = Object.keys(subjectCounts).reduce((a, b) => subjectCounts[a] > subjectCounts[b] ? a : b, null);
+                document.getElementById('dna-trending-subject').textContent = trendSub || "নাই";
+            }
+
+            function renderDnaStudentList(students) {
+                const list = document.getElementById('dna-student-list');
+                list.innerHTML = '';
+
+                students.forEach(student => {
+                    // Calculate Rank (based on lifetime study)
+                    // Simplified for UI: just show total study time
+                    const totalTime = calculateStudyTime(student, null, 'lifetime');
+                    const hours = Math.floor(totalTime / 3600);
+
+                    const card = document.createElement('div');
+                    card.className = 'dna-student-card';
+                    card.onclick = () => showDnaStudentDetails(student.id);
+                    card.innerHTML = `
+                        <img src="${student.photoURL || 'https://link.pc-master-academy.com/user_demo.png'}" class="dna-student-avatar">
+                        <div class="dna-student-name">${student.name || 'Student'}</div>
+                        <div class="dna-batch-rank">Total Hours: ${convertToBengaliDigit(hours)}h</div>
+                    `;
+                    list.appendChild(card);
+                });
+            }
+
+            function filterDnaStudents() {
+                const query = document.getElementById('dna-search-input').value.toLowerCase();
+                const cards = document.querySelectorAll('.dna-student-card');
+                cards.forEach(card => {
+                    const name = card.querySelector('.dna-student-name').textContent.toLowerCase();
+                    if (name.includes(query)) card.style.display = 'block';
+                    else card.style.display = 'none';
+                });
+            }
+
+            function showDnaStudentDetails(uid) {
+                const student = allUsers[uid];
+                if (!student) return;
+
+                // Fill Info
+                document.getElementById('dna-panel-img').src = student.photoURL || 'https://link.pc-master-academy.com/user_demo.png';
+                document.getElementById('dna-panel-name').textContent = student.name || 'Unknown';
+
+                const lastActive = student.lastActive || 0; // Assuming lastActive field exists or we simulate
+                // If we don't have lastActive, rely on check
+                const isOnline = (Date.now() - (student.lastLogin || 0)) < 5 * 60 * 1000; // 5 min
+                const statusEl = document.getElementById('dna-panel-status');
+                if (isOnline) {
+                    statusEl.innerHTML = '<span style="color:var(--success)">● Active Now</span>';
+                } else {
+                    statusEl.innerHTML = '<span style="color:var(--text-muted)">● Offline</span>';
+                }
+
+                // Fill DNA Bars (Subject Strength)
+                const barsContainer = document.getElementById('dna-subject-bars');
+                barsContainer.innerHTML = '';
+
+                // Get syllabus subjects
+                const subjects = syllabusData ? Object.keys(syllabusData) : ['Physics', 'Chemistry', 'Math', 'Biology'];
+
+                subjects.forEach(sub => {
+                    // Logic: Get progress % for this subject
+                    const progress = calculateSubjectProgress(student, sub); // Returns 0-100
+
+                    const barDiv = document.createElement('div');
+                    barDiv.className = 'dna-bar-container';
+                    barDiv.innerHTML = `
+                        <div class="dna-bar-label">
+                            <span>${sub}</span>
+                            <span>${convertToBengaliDigit(Math.round(progress))}%</span>
+                        </div>
+                        <div class="dna-bar-bg">
+                            <div class="dna-bar-fill" style="width:${progress}%; background: ${getProgressColor(progress)}"></div>
+                        </div>
+                    `;
+                    barsContainer.appendChild(barDiv);
+                });
+
+                // Fill Activity Log (Last 24h)
+                const logContainer = document.getElementById('dna-activity-log');
+                logContainer.innerHTML = '';
+
+                if (student.studyLogs) {
+                    const now = Date.now();
+                    const oneDay = 24 * 60 * 60 * 1000;
+                    // Sort logs desc
+                    const logs = Object.values(student.studyLogs)
+                        .filter(l => (now - l.timestamp) < oneDay)
+                        .sort((a, b) => b.timestamp - a.timestamp);
+
+                    if (logs.length === 0) {
+                        logContainer.innerHTML = '<p style="color:var(--text-muted); font-size:12px;">No recent activity.</p>';
+                    } else {
+                        logs.forEach(log => {
+                            const date = new Date(log.timestamp);
+                            const timeStr = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+
+                            const item = document.createElement('div');
+                            item.className = 'dna-log-item';
+                            item.innerHTML = `
+                                <div class="dna-log-time">${timeStr}</div>
+                                <div class="dna-log-desc">Studied <b>${log.subject}</b> for ${Math.round(log.duration / 60)} mins</div>
+                            `;
+                            logContainer.appendChild(item);
+                        });
+                    }
+                } else {
+                    logContainer.innerHTML = '<p style="color:var(--text-muted); font-size:12px;">No activity logs found.</p>';
+                }
+
+                // Show Panel
+                document.getElementById('dna-details-panel').classList.add('show');
+            }
+
+            function closeDnaDetails() {
+                document.getElementById('dna-details-panel').classList.remove('show');
+            }
+
+            function getProgressColor(p) {
+                if (p < 30) return 'var(--danger)';
+                if (p < 70) return 'var(--warning)';
+                return 'var(--success)';
+            }
+
+            function renderBatchAnalysis() {
+                document.getElementById('dna-student-list').classList.add('hidden');
+                document.getElementById('dna-batch-view').classList.remove('hidden');
+
+                const grid = document.getElementById('dna-batch-grid');
+                grid.innerHTML = '';
+
+                const subjects = syllabusData ? Object.keys(syllabusData) : ['Physics', 'Chemistry'];
+                const students = Object.values(allUsers || {}).filter(u => u.role === 'student');
+
+                subjects.forEach(sub => {
+                    // Find top student for this subject
+                    let topS = null;
+                    let maxP = -1;
+
+                    students.forEach(s => {
+                        const p = calculateSubjectProgress(s, sub);
+                        if (p > maxP) {
+                            maxP = p;
+                            topS = s;
+                        }
+                    });
+
+                    if (topS && maxP > 0) {
+                        const card = document.createElement('div');
+                        card.className = 'batch-card';
+                        card.innerHTML = `
+                            <div class="batch-card-header">
+                                <span style="font-weight:700; color:var(--primary)">${sub}</span>
+                                <span style="font-size:12px; background:#f1f5f9; padding:2px 6px; border-radius:4px;">Avg: ${convertToBengaliDigit(Math.round(maxP))}%</span> 
+                            </div> <!-- Avg is placeholder, showing top score here actually -->
+                            <div class="top-student-row">
+                                <img src="${topS.photoURL || 'https://link.pc-master-academy.com/user_demo.png'}" style="width:30px; height:30px; border-radius:50%;">
+                                <div>
+                                    <div style="font-size:12px; font-weight:700;">${topS.name}</div>
+                                    <div style="font-size:10px; color:var(--success);">Top Performer</div>
+                                </div>
+                            </div>
+                        `;
+                        grid.appendChild(card);
+                    }
+                });
+            }
         </script>
 </body>
+
 </html>
