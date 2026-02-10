@@ -3760,10 +3760,20 @@
         }
 
         /* --- STUDY DNA STYLES --- */
+        #study-dna-page {
+            background: var(--bg);
+            min-height: 100vh;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+
         .dna-container {
             padding: 15px;
             padding-bottom: 80px;
-            animation: fadeIn 0.4s ease;
+            /* animation: fadeIn 0.4s ease; */
         }
 
         .dna-header {
@@ -5250,6 +5260,14 @@
                 <h1 style="margin-top:20px; font-size:22px">অ্যাক্সেস ডিনাইড!</h1>
                 <p style="margin-top: 10px; color: #94a3b8; text-align: center; padding: 0 20px;">আপনার ডিভাইসটি এই
                     ওয়েবসাইট থেকে চিরতরে ব্লক করা হয়েছে।</p>
+            </div>
+            <!-- Debug Console -->
+            <div id="debug-console"
+                style="position:fixed; bottom:0; left:0; width:100%; height:150px; background:rgba(0,0,0,0.8); color:#0f0; overflow-y:scroll; z-index:999999; font-family:monospace; font-size:12px; padding:10px; display:none;">
+                <div>Debug Log (Auto-scrolls) <button onclick="this.parentElement.parentElement.style.display='none'"
+                        style="float:right; border:1px solid #fff; color:#fff; background:red; padding:2px 5px;">Close</button>
+                </div>
+                <div id="debug-output"></div>
             </div>
             <div id="study-dna-page" class="hidden">
                 <header class="dna-header">
@@ -7347,183 +7365,282 @@
                 if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
                 if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
             };
+            function logDebug(msg) {
+                const consoleEl = document.getElementById('debug-console');
+                const outputEl = document.getElementById('debug-output');
+                if (consoleEl && outputEl) {
+                    consoleEl.style.display = 'block';
+                    const line = document.createElement('div');
+                    line.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+                    outputEl.appendChild(line);
+                    consoleEl.scrollTop = consoleEl.scrollHeight;
+                }
+                console.log(msg); // Fallback
+            }
+
             // --- STUDY DNA (BETA) ---
             function openStudyDNA() {
-                // Hide dropdown
-                document.getElementById("dropdown-menu").classList.remove("show");
-                // Show page
-                showPage('study-dna-page');
-                // Load data
-                loadDnaData();
+                logDebug("openStudyDNA called");
+                try {
+                    // Hide dropdown
+                    const dropdown = document.getElementById("dropdown-menu");
+                    if (dropdown) dropdown.classList.remove("show");
+
+                    // Show page
+                    logDebug("Calling showPage('study-dna-page')");
+                    showPage('study-dna-page');
+                    const page = document.getElementById('study-dna-page');
+                    if (page) {
+                        logDebug("Page found. Classes: " + page.className);
+                        page.style.display = 'block'; // Force display
+                        page.style.minHeight = '100vh';
+                        page.style.background = 'var(--bg)';
+                        logDebug("Forced styles applied.");
+                    } else {
+                        logDebug("ERROR: study-dna-page element not found!");
+                        alert("Error: Page element missing!");
+                        return;
+                    }
+
+                    window.scrollTo(0, 0); // Reset scroll
+
+                    // Load data
+                    logDebug("Calling loadDnaData()");
+                    loadDnaData();
+                } catch (e) {
+                    logDebug("EXCEPTION in openStudy: " + e.message);
+                    console.error("Error in openStudyDNA:", e);
+                    alert("ফিচারটি লোড করতে সমস্যা হয়েছে: " + e.message);
+                }
             }
 
             function loadDnaData() {
-                const studentList = document.getElementById('dna-student-list');
-                studentList.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:50px;"><div class="loader"></div><p style="margin-top:15px; color:var(--text-muted)">ডিএনএ বিশ্লেষণ চলছে...</p></div>';
+                try {
+                    const studentList = document.getElementById('dna-student-list');
+                    if (studentList) studentList.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:50px;"><div class="loader"></div><p style="margin-top:15px; color:var(--text-muted)">ডিএনএ বিশ্লেষণ চলছে...</p></div>';
 
-                // Get all students
-                const students = Object.values(allUsers || {}).filter(u => u.role === 'student');
-                document.getElementById('dna-student-count').textContent = convertToBengaliDigit(students.length);
+                    // Check for data availability
+                    logDebug("Checking allUsers for data...");
+                    if (!allUsers || Object.keys(allUsers).length === 0) {
+                        logDebug("allUsers is empty or null. Waiting for data...");
+                        if (studentList) studentList.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:50px;"><p style="color:var(--text-muted)">ডাটা লোড হচ্ছে, দয়া করে অপেক্ষা করুন...</p></div>';
+                        // Retry once after 2 seconds if data is missing
+                        setTimeout(() => {
+                            logDebug("Retrying loadDnaData after 2s...");
+                            if (allUsers && Object.keys(allUsers).length > 0) {
+                                logDebug("Data found on retry!");
+                                loadDnaData();
+                            } else {
+                                logDebug("Still no data on retry.");
+                                if (studentList) studentList.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:50px;"><p style="color:var(--danger)">ডাটা লোড ব্যর্থ হয়েছে। ইন্টারনেট সংযোগ চেক করুন।</p></div>';
+                            }
+                        }, 2000);
+                        return;
+                    }
 
-                // Calculate Global Stats
-                calculateDnaGlobalStats(students);
+                    // Get all students
+                    const students = Object.values(allUsers || {}).filter(u => u && u.role === 'student');
+                    const countEl = document.getElementById('dna-student-count');
+                    if (countEl) countEl.textContent = convertToBengaliDigit(students.length);
 
-                // Render List
-                renderDnaStudentList(students);
+                    // Calculate Global Stats
+                    calculateDnaGlobalStats(students);
+
+                    // Render List
+                    renderDnaStudentList(students);
+                } catch (e) {
+                    console.error("Error in loadDnaData:", e);
+                    document.getElementById('dna-student-list').innerHTML = `<div style="color:red; text-align:center;">Error loading data: ${e.message}</div>`;
+                }
             }
 
             function calculateDnaGlobalStats(students) {
-                if (!students.length) return;
+                try {
+                    if (!students || !students.length) return;
 
-                // 1. Top Performer (Last 24h)
-                let topStudent = null;
-                let maxTime24h = -1;
+                    // 1. Top Performer (Last 24h)
+                    let topStudent = null;
+                    let maxTime24h = -1;
 
-                // 2. Trending Subject (Global Last 24h)
-                let subjectCounts = {};
+                    // 2. Trending Subject (Global Last 24h)
+                    let subjectCounts = {};
 
-                const now = Date.now();
-                const oneDay = 24 * 60 * 60 * 1000;
+                    const now = Date.now();
+                    const oneDay = 24 * 60 * 60 * 1000;
 
-                students.forEach(student => {
-                    // Calc 24h time for student
-                    let time24 = calculateStudyTime(student, null, '24h');
-                    if (time24 > maxTime24h) {
-                        maxTime24h = time24;
-                        topStudent = student;
+                    students.forEach(student => {
+                        if (!student) return;
+                        // Calc 24h time for student
+                        let time24 = calculateStudyTime(student, null, '24h');
+                        if (time24 > maxTime24h) {
+                            maxTime24h = time24;
+                            topStudent = student;
+                        }
+
+                        // Scan logs for subject counts (duration based)
+                        if (student.studyLogs) {
+                            Object.values(student.studyLogs).forEach(log => {
+                                if (now - log.timestamp < oneDay) {
+                                    subjectCounts[log.subject] = (subjectCounts[log.subject] || 0) + (log.duration || 0);
+                                }
+                            });
+                        }
+                    });
+
+                    // Set Top Performer
+                    const topPerfEl = document.getElementById('dna-top-performer');
+                    if (topPerfEl) {
+                        if (topStudent) {
+                            topPerfEl.textContent = topStudent.name || topStudent.email.split('@')[0];
+                        } else {
+                            topPerfEl.textContent = "১ জন";
+                        }
                     }
 
-                    // Scan logs for subject counts (duration based)
-                    if (student.studyLogs) {
-                        Object.values(student.studyLogs).forEach(log => {
-                            if (now - log.timestamp < oneDay) {
-                                subjectCounts[log.subject] = (subjectCounts[log.subject] || 0) + (log.duration || 0);
-                            }
-                        });
+                    // Set Trending Subject
+                    const trendEl = document.getElementById('dna-trending-subject');
+                    if (trendEl) {
+                        let trendSub = Object.keys(subjectCounts).reduce((a, b) => subjectCounts[a] > subjectCounts[b] ? a : b, null);
+                        trendEl.textContent = trendSub || "নাই";
                     }
-                });
-
-                // Set Top Performer
-                if (topStudent) {
-                    document.getElementById('dna-top-performer').textContent = topStudent.name || topStudent.email.split('@')[0];
-                } else {
-                    document.getElementById('dna-top-performer').textContent = "১ জন";
+                } catch (e) {
+                    console.error("Error in calculateDnaGlobalStats:", e);
                 }
-
-                // Set Trending Subject
-                let trendSub = Object.keys(subjectCounts).reduce((a, b) => subjectCounts[a] > subjectCounts[b] ? a : b, null);
-                document.getElementById('dna-trending-subject').textContent = trendSub || "নাই";
             }
 
             function renderDnaStudentList(students) {
-                const list = document.getElementById('dna-student-list');
-                list.innerHTML = '';
+                try {
+                    const list = document.getElementById('dna-student-list');
+                    if (!list) return;
+                    list.innerHTML = '';
 
-                students.forEach(student => {
-                    // Calculate Rank (based on lifetime study)
-                    // Simplified for UI: just show total study time
-                    const totalTime = calculateStudyTime(student, null, 'lifetime');
-                    const hours = Math.floor(totalTime / 3600);
+                    students.forEach(student => {
+                        // Calculate Rank (based on lifetime study)
+                        // Simplified for UI: just show total study time
+                        const totalTime = calculateStudyTime(student, null, 'lifetime');
+                        const hours = Math.floor(totalTime / 3600);
 
-                    const card = document.createElement('div');
-                    card.className = 'dna-student-card';
-                    card.onclick = () => showDnaStudentDetails(student.id);
-                    card.innerHTML = `
-                        <img src="${student.photoURL || 'https://link.pc-master-academy.com/user_demo.png'}" class="dna-student-avatar">
-                        <div class="dna-student-name">${student.name || 'Student'}</div>
-                        <div class="dna-batch-rank">Total Hours: ${convertToBengaliDigit(hours)}h</div>
-                    `;
-                    list.appendChild(card);
-                });
+                        const card = document.createElement('div');
+                        card.className = 'dna-student-card';
+                        card.onclick = () => showDnaStudentDetails(student.id);
+                        card.innerHTML = `
+                            <img src="${student.photoURL || 'https://link.pc-master-academy.com/user_demo.png'}" class="dna-student-avatar">
+                            <div class="dna-student-name">${student.name || 'Student'}</div>
+                            <div class="dna-batch-rank">Total Hours: ${convertToBengaliDigit(hours)}h</div>
+                        `;
+                        list.appendChild(card);
+                    });
+                } catch (e) {
+                    console.error("Error in renderDnaStudentList:", e);
+                }
             }
 
             function filterDnaStudents() {
-                const query = document.getElementById('dna-search-input').value.toLowerCase();
-                const cards = document.querySelectorAll('.dna-student-card');
-                cards.forEach(card => {
-                    const name = card.querySelector('.dna-student-name').textContent.toLowerCase();
-                    if (name.includes(query)) card.style.display = 'block';
-                    else card.style.display = 'none';
-                });
+                try {
+                    const input = document.getElementById('dna-search-input');
+                    if (!input) return;
+                    const query = input.value.toLowerCase();
+                    const cards = document.querySelectorAll('.dna-student-card');
+                    cards.forEach(card => {
+                        const nameEl = card.querySelector('.dna-student-name');
+                        if (nameEl) {
+                            const name = nameEl.textContent.toLowerCase();
+                            if (name.includes(query)) card.style.display = 'block';
+                            else card.style.display = 'none';
+                        }
+                    });
+                } catch (e) { console.error("Error filtering:", e); }
             }
 
             function showDnaStudentDetails(uid) {
-                const student = allUsers[uid];
-                if (!student) return;
+                try {
+                    const student = allUsers[uid];
+                    if (!student) return;
 
-                // Fill Info
-                document.getElementById('dna-panel-img').src = student.photoURL || 'https://link.pc-master-academy.com/user_demo.png';
-                document.getElementById('dna-panel-name').textContent = student.name || 'Unknown';
+                    // Fill Info
+                    const imgEl = document.getElementById('dna-panel-img');
+                    if (imgEl) imgEl.src = student.photoURL || 'https://link.pc-master-academy.com/user_demo.png';
+                    const nameEl = document.getElementById('dna-panel-name');
+                    if (nameEl) nameEl.textContent = student.name || 'Unknown';
 
-                const lastActive = student.lastActive || 0; // Assuming lastActive field exists or we simulate
-                // If we don't have lastActive, rely on check
-                const isOnline = (Date.now() - (student.lastLogin || 0)) < 5 * 60 * 1000; // 5 min
-                const statusEl = document.getElementById('dna-panel-status');
-                if (isOnline) {
-                    statusEl.innerHTML = '<span style="color:var(--success)">● Active Now</span>';
-                } else {
-                    statusEl.innerHTML = '<span style="color:var(--text-muted)">● Offline</span>';
-                }
+                    const lastActive = student.lastActive || 0;
+                    const isOnline = (Date.now() - (student.lastLogin || 0)) < 5 * 60 * 1000;
+                    const statusEl = document.getElementById('dna-panel-status');
+                    if (statusEl) {
+                        if (isOnline) {
+                            statusEl.innerHTML = '<span style="color:var(--success)">● Active Now</span>';
+                        } else {
+                            statusEl.innerHTML = '<span style="color:var(--text-muted)">● Offline</span>';
+                        }
+                    }
 
-                // Fill DNA Bars (Subject Strength)
-                const barsContainer = document.getElementById('dna-subject-bars');
-                barsContainer.innerHTML = '';
+                    // Fill DNA Bars (Subject Strength)
+                    const barsContainer = document.getElementById('dna-subject-bars');
+                    if (barsContainer) {
+                        barsContainer.innerHTML = '';
 
-                // Get syllabus subjects
-                const subjects = syllabusData ? Object.keys(syllabusData) : ['Physics', 'Chemistry', 'Math', 'Biology'];
+                        // Get syllabus subjects
+                        const subjects = syllabusData ? Object.keys(syllabusData) : ['Physics', 'Chemistry', 'Math', 'Biology'];
 
-                subjects.forEach(sub => {
-                    // Logic: Get progress % for this subject
-                    const progress = calculateSubjectProgress(student, sub); // Returns 0-100
+                        subjects.forEach(sub => {
+                            // Logic: Get progress % for this subject
+                            const progress = calculateSubjectProgress(sub, student); // Returns 0-100
 
-                    const barDiv = document.createElement('div');
-                    barDiv.className = 'dna-bar-container';
-                    barDiv.innerHTML = `
-                        <div class="dna-bar-label">
-                            <span>${sub}</span>
-                            <span>${convertToBengaliDigit(Math.round(progress))}%</span>
-                        </div>
-                        <div class="dna-bar-bg">
-                            <div class="dna-bar-fill" style="width:${progress}%; background: ${getProgressColor(progress)}"></div>
-                        </div>
-                    `;
-                    barsContainer.appendChild(barDiv);
-                });
-
-                // Fill Activity Log (Last 24h)
-                const logContainer = document.getElementById('dna-activity-log');
-                logContainer.innerHTML = '';
-
-                if (student.studyLogs) {
-                    const now = Date.now();
-                    const oneDay = 24 * 60 * 60 * 1000;
-                    // Sort logs desc
-                    const logs = Object.values(student.studyLogs)
-                        .filter(l => (now - l.timestamp) < oneDay)
-                        .sort((a, b) => b.timestamp - a.timestamp);
-
-                    if (logs.length === 0) {
-                        logContainer.innerHTML = '<p style="color:var(--text-muted); font-size:12px;">No recent activity.</p>';
-                    } else {
-                        logs.forEach(log => {
-                            const date = new Date(log.timestamp);
-                            const timeStr = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-
-                            const item = document.createElement('div');
-                            item.className = 'dna-log-item';
-                            item.innerHTML = `
-                                <div class="dna-log-time">${timeStr}</div>
-                                <div class="dna-log-desc">Studied <b>${log.subject}</b> for ${Math.round(log.duration / 60)} mins</div>
+                            const barDiv = document.createElement('div');
+                            barDiv.className = 'dna-bar-container';
+                            barDiv.innerHTML = `
+                                <div class="dna-bar-label">
+                                    <span>${sub}</span>
+                                    <span>${convertToBengaliDigit(Math.round(progress))}%</span>
+                                </div>
+                                <div class="dna-bar-bg">
+                                    <div class="dna-bar-fill" style="width:${progress}%; background: ${getProgressColor(progress)}"></div>
+                                </div>
                             `;
-                            logContainer.appendChild(item);
+                            barsContainer.appendChild(barDiv);
                         });
                     }
-                } else {
-                    logContainer.innerHTML = '<p style="color:var(--text-muted); font-size:12px;">No activity logs found.</p>';
-                }
 
-                // Show Panel
-                document.getElementById('dna-details-panel').classList.add('show');
+                    // Fill Activity Log (Last 24h)
+                    const logContainer = document.getElementById('dna-activity-log');
+                    if (logContainer) {
+                        logContainer.innerHTML = '';
+
+                        if (student.studyLogs) {
+                            const now = Date.now();
+                            const oneDay = 24 * 60 * 60 * 1000;
+                            // Sort logs desc
+                            const logs = Object.values(student.studyLogs)
+                                .filter(l => (now - l.timestamp) < oneDay)
+                                .sort((a, b) => b.timestamp - a.timestamp);
+
+                            if (logs.length === 0) {
+                                logContainer.innerHTML = '<p style="color:var(--text-muted); font-size:12px;">No recent activity.</p>';
+                            } else {
+                                logs.forEach(log => {
+                                    const date = new Date(log.timestamp);
+                                    const timeStr = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+
+                                    const item = document.createElement('div');
+                                    item.className = 'dna-log-item';
+                                    item.innerHTML = `
+                                        <div class="dna-log-time">${timeStr}</div>
+                                        <div class="dna-log-desc">Studied <b>${log.subject}</b> for ${Math.round(log.duration / 60)} mins</div>
+                                    `;
+                                    logContainer.appendChild(item);
+                                });
+                            }
+                        } else {
+                            logContainer.innerHTML = '<p style="color:var(--text-muted); font-size:12px;">No activity logs found.</p>';
+                        }
+                    }
+
+                    // Show Panel
+                    document.getElementById('dna-details-panel').classList.add('show');
+                } catch (e) {
+                    console.error("Error in showDnaStudentDetails:", e);
+                    alert("বিস্তারিত দেখাতে সমস্যা হয়েছে: " + e.message);
+                }
             }
 
             function closeDnaDetails() {
@@ -7537,47 +7654,57 @@
             }
 
             function renderBatchAnalysis() {
-                document.getElementById('dna-student-list').classList.add('hidden');
-                document.getElementById('dna-batch-view').classList.remove('hidden');
+                try {
+                    const stuList = document.getElementById('dna-student-list');
+                    const batchView = document.getElementById('dna-batch-view');
+                    if (stuList) stuList.classList.add('hidden');
+                    if (batchView) batchView.classList.remove('hidden');
 
-                const grid = document.getElementById('dna-batch-grid');
-                grid.innerHTML = '';
+                    const grid = document.getElementById('dna-batch-grid');
+                    if (!grid) return;
+                    grid.innerHTML = '';
 
-                const subjects = syllabusData ? Object.keys(syllabusData) : ['Physics', 'Chemistry'];
-                const students = Object.values(allUsers || {}).filter(u => u.role === 'student');
+                    const subjects = syllabusData ? Object.keys(syllabusData) : ['Physics', 'Chemistry'];
+                    const students = Object.values(allUsers || {}).filter(u => u && u.role === 'student');
 
-                subjects.forEach(sub => {
-                    // Find top student for this subject
-                    let topS = null;
-                    let maxP = -1;
+                    subjects.forEach(sub => {
+                        // Find top student for this subject
+                        let topS = null;
+                        let maxP = -1;
 
-                    students.forEach(s => {
-                        const p = calculateSubjectProgress(s, sub);
-                        if (p > maxP) {
-                            maxP = p;
-                            topS = s;
+                        students.forEach(s => {
+                            try {
+                                const p = calculateSubjectProgress(sub, s);
+                                if (p > maxP) {
+                                    maxP = p;
+                                    topS = s;
+                                }
+                            } catch (err) { console.error("Error calcing progress for", s.name, err); }
+                        });
+
+                        if (topS && maxP > 0) {
+                            const card = document.createElement('div');
+                            card.className = 'batch-card';
+                            card.innerHTML = `
+                                <div class="batch-card-header">
+                                    <span style="font-weight:700; color:var(--primary)">${sub}</span>
+                                    <span style="font-size:12px; background:#f1f5f9; padding:2px 6px; border-radius:4px;">Avg: ${convertToBengaliDigit(Math.round(maxP))}%</span> 
+                                </div>
+                                <div class="top-student-row">
+                                    <img src="${topS.photoURL || 'https://link.pc-master-academy.com/user_demo.png'}" style="width:30px; height:30px; border-radius:50%;">
+                                    <div>
+                                        <div style="font-size:12px; font-weight:700;">${topS.name}</div>
+                                        <div style="font-size:10px; color:var(--success);">Top Performer</div>
+                                    </div>
+                                </div>
+                            `;
+                            grid.appendChild(card);
                         }
                     });
-
-                    if (topS && maxP > 0) {
-                        const card = document.createElement('div');
-                        card.className = 'batch-card';
-                        card.innerHTML = `
-                            <div class="batch-card-header">
-                                <span style="font-weight:700; color:var(--primary)">${sub}</span>
-                                <span style="font-size:12px; background:#f1f5f9; padding:2px 6px; border-radius:4px;">Avg: ${convertToBengaliDigit(Math.round(maxP))}%</span> 
-                            </div> <!-- Avg is placeholder, showing top score here actually -->
-                            <div class="top-student-row">
-                                <img src="${topS.photoURL || 'https://link.pc-master-academy.com/user_demo.png'}" style="width:30px; height:30px; border-radius:50%;">
-                                <div>
-                                    <div style="font-size:12px; font-weight:700;">${topS.name}</div>
-                                    <div style="font-size:10px; color:var(--success);">Top Performer</div>
-                                </div>
-                            </div>
-                        `;
-                        grid.appendChild(card);
-                    }
-                });
+                } catch (e) {
+                    console.error("Error in renderBatchAnalysis:", e);
+                    alert("ব্যাচ অ্যানালিটিক্স লোড করা সম্ভব হয়নি।");
+                }
             }
         </script>
 </body>
