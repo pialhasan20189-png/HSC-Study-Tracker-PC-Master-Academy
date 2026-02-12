@@ -622,11 +622,11 @@
             border-radius: 12px;
             text-align: center;
             cursor: pointer;
-            border: 2.5px solid var(--primary);
-            transition: 0.1s;
+            border: 3px solid var(--primary);
             position: relative;
             overflow: hidden;
             font-size: 14px;
+            background-clip: padding-box;
         }
 
         .profile-boxes-grid {
@@ -753,7 +753,7 @@
             font-weight: bold;
             box-shadow: 0 2px 5px rgba(239, 68, 68, 0.4);
             z-index: 1;
-            animation: pulse 2s infinite;
+            /* animation: pulse 2s infinite; */
         }
 
         @keyframes pulse {
@@ -822,7 +822,6 @@
 
         .subject-btn:hover {
             background: var(--card-bg);
-            transform: scale(1.02) translateZ(0);
         }
 
         .subject-btn.active {
@@ -5554,16 +5553,6 @@
             localStorage.setItem('active_study_subject', subject);
             resetStudyTimerUI();
 
-            // NEW: Track active session in Firebase for absolute real-time admin sync
-            if (currentUser) {
-                db.ref('users/' + currentUser.id).update({
-                    activeSession: {
-                        subject: subject,
-                        startTime: Date.now()
-                    }
-                });
-            }
-
             const savedStartTime = localStorage.getItem('timer_start_timestamp');
             if (savedStartTime) startTimerProcess(parseInt(savedStartTime));
             renderLeaderboard();
@@ -5572,6 +5561,12 @@
             if (isTimerRunning) return alert("ঘড়ি বন্ধ না করে আপনি এই সাবজেক্ট থেকে বের হতে পারবেন না!");
             document.getElementById('study-timer-view').classList.add('hidden');
             document.getElementById('study-main-content').classList.remove('hidden');
+
+            // Cleanup active session just in case
+            if (currentUser) {
+                db.ref('users/' + currentUser.id + '/activeSession').remove();
+            }
+
             localStorage.removeItem('active_study_subject');
             localStorage.removeItem('timer_start_timestamp');
             localStorage.removeItem('timer_target_alarm');
@@ -5666,6 +5661,16 @@
                 const startTimestamp = Date.now() - (studySeconds * 1000);
                 localStorage.setItem('timer_start_timestamp', startTimestamp);
                 localStorage.setItem('timer_target_alarm', targetAlarmSeconds);
+
+                // NEW: Update active session in Firebase when timer starts
+                if (currentUser) {
+                    const currentSubject = localStorage.getItem('active_study_subject');
+                    db.ref('users/' + currentUser.id + '/activeSession').set({
+                        subject: currentSubject,
+                        startTime: startTimestamp
+                    });
+                }
+
                 startTimerProcess(startTimestamp);
             } else {
                 const currentSubject = localStorage.getItem('active_study_subject');
@@ -5678,7 +5683,7 @@
                     saveStudySessionLog(currentSubject, studySeconds, startTime);
                 }
 
-                // NEW: Clear active session in Firebase
+                // Clear active session in Firebase
                 if (currentUser) {
                     db.ref('users/' + currentUser.id + '/activeSession').remove();
                 }
