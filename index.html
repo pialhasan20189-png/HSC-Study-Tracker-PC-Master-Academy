@@ -682,25 +682,25 @@
         }
 
         .admin-action-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 25px;
+            border-radius: 24px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             position: relative;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border: 2px solid #3b82f6;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
             overflow: hidden;
-            width: 180px;
-            /* Balanced square width */
-            height: 180px;
-            /* Balanced square height */
+            width: 100%;
+            aspect-ratio: 1/1;
+            max-width: 200px;
             flex-shrink: 0;
         }
 
@@ -711,16 +711,17 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.2) 100%);
+            background: radial-gradient(circle at center, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
             opacity: 0;
             transition: opacity 0.4s ease;
             z-index: 0;
         }
 
         .admin-action-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
-            border-color: #2563eb;
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.25);
+            border-color: rgba(59, 130, 246, 0.5);
+            background: rgba(255, 255, 255, 0.06);
         }
 
         .admin-action-card:hover::before {
@@ -728,41 +729,44 @@
         }
 
         .admin-action-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
+            font-size: 2.8rem;
+            margin-bottom: 18px;
             position: relative;
             z-index: 1;
-            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
-            transition: transform 0.3s ease;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+            transition: all 0.4s ease;
         }
 
         .admin-action-card:hover .admin-action-icon {
-            transform: scale(1.1) rotate(5deg);
+            transform: scale(1.15) translateY(-5px);
+            filter: drop-shadow(0 6px 12px rgba(59, 130, 246, 0.4));
         }
 
         .admin-action-text {
-            font-size: 1rem;
-            font-weight: 700;
+            font-size: 1.05rem;
+            font-weight: 600;
             color: var(--text-main);
             position: relative;
             z-index: 1;
-            line-height: 1.4;
+            line-height: 1.3;
+            letter-spacing: 0.3px;
         }
 
         .admin-action-count {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #ef4444;
-            /* Red color for 'New' badge */
+            top: 12px;
+            right: 12px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
             color: white;
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(239, 68, 68, 0.4);
+            font-size: 0.7rem;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-weight: 800;
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
             z-index: 1;
-            /* animation: pulse 2s infinite; */
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         @keyframes pulse {
@@ -1470,9 +1474,10 @@
             }
 
             .admin-action-card {
-                width: 220px;
-                /* Better size for mobile centered stack */
-                height: 180px;
+                width: 100%;
+                max-width: 250px;
+                aspect-ratio: 1.1 / 1;
+                height: auto;
             }
         }
 
@@ -4651,6 +4656,8 @@
                 gap: 20px;
                 height: calc(100vh - 160px);
                 min-height: 500px;
+                max-width: 1250px;
+                margin: 0 auto;
             }
 
             .monitor-sidebar {
@@ -4858,14 +4865,17 @@
                 }
             }
 
-            .monitor-sidebar {
-                width: 100%;
-                height: 400px;
-            }
+            /* Move mobile-only styles inside media query */
+            @media (max-width: 900px) {
+                .monitor-sidebar {
+                    width: 100%;
+                    height: 400px;
+                }
 
-            .monitor-main {
-                height: auto;
-                min-height: 500px;
+                .monitor-main {
+                    height: auto;
+                    min-height: 500px;
+                }
             }
         </style>
         <div id="inactivity-page" class="hidden">
@@ -5244,6 +5254,101 @@
             <h1 style="margin-top:20px; font-size:22px">অ্যাক্সেস ডিনাইড!</h1>
             <p style="margin-top: 10px; color: #94a3b8; text-align: center; padding: 0 20px;">আপনার ডিভাইসটি এই
                 ওয়েবসাইট থেকে চিরতরে ব্লক করা হয়েছে।</p>
+        </div>
+        <!-- Batch Payment Management Page -->
+        <div id="batch-payment-page" class="hidden">
+            <div class="payment-container">
+                <button onclick="showPage('dashboard-page')" class="btn-primary"
+                    style="margin-bottom: 20px; width: auto; padding: 10px 20px;">
+                    <i class="fas fa-arrow-left"></i> ড্যাশবোর্ডে ফিরে যান
+                </button>
+
+                <!-- Header -->
+                <div class="payment-header-v2">
+                    <div class="payment-header-content">
+                        <h1><i class="fas fa-wallet"></i> ব্যাচ পেমেন্ট ম্যানেজমেন্ট</h1>
+                        <p>শিক্ষার্থীদের মাসিক পেমেন্ট স্ট্যাটাস পরিচালনা করুন</p>
+                    </div>
+                </div>
+
+                <!-- Tools/Filters -->
+                <div class="payment-tools-section">
+                    <div class="selector-group">
+                        <div class="tool-item">
+                            <label>📅 মাস নির্বাচন করুন</label>
+                            <select id="payMonthSelector" onchange="loadPaymentData()">
+                                <option value="01">জানুয়ারি</option>
+                                <option value="02">ফেব্রুয়ারি</option>
+                                <option value="03">মার্চ</option>
+                                <option value="04">এপ্রিল</option>
+                                <option value="05">মে</option>
+                                <option value="06">জুন</option>
+                                <option value="07">জুলাই</option>
+                                <option value="08">আগস্ট</option>
+                                <option value="09">সেপ্টেম্বর</option>
+                                <option value="10">অক্টোবর</option>
+                                <option value="11">নভেম্বর</option>
+                                <option value="12">ডিসেম্বর</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="action-group">
+                        <button class="tool-btn btn-refresh" onclick="loadPaymentData()">
+                            <i class="fas fa-sync-alt"></i> রিফ্রেশ
+                        </button>
+                        <button class="tool-btn btn-bulk" onclick="sendBulkReminder()">
+                            <i class="fas fa-bullhorn"></i> বালক রিমাইন্ডার
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="payment-stats-grid">
+                    <div class="p-stat-card total">
+                        <span class="p-stat-label">মোট শিক্ষার্থী</span>
+                        <span class="p-stat-value" id="payTotalCount">0</span>
+                    </div>
+                    <div class="p-stat-card paid">
+                        <span class="p-stat-label">পেইড</span>
+                        <span class="p-stat-value" id="payPaidCount">0</span>
+                    </div>
+                    <div class="p-stat-card due">
+                        <span class="p-stat-label">ডিউ (বাকি)</span>
+                        <span class="p-stat-value" id="payDueCount">0</span>
+                    </div>
+                </div>
+
+                <!-- Folders/Lists -->
+                <div class="payment-folders">
+                    <!-- Due List -->
+                    <div class="pay-folder due">
+                        <div class="pay-folder-header">
+                            <span><i class="fas fa-exclamation-circle"></i> পেমেন্ট বাকি (Due)</span>
+                            <div class="search-mini">
+                                <input type="text" placeholder="খুঁজুন..."
+                                    onkeyup="filterPaymentList('due', this.value)">
+                            </div>
+                        </div>
+                        <div class="pay-folder-list" id="payDueList">
+                            <!-- Due student cards will be injected here -->
+                        </div>
+                    </div>
+
+                    <!-- Paid List -->
+                    <div class="pay-folder paid">
+                        <div class="pay-folder-header">
+                            <span><i class="fas fa-check-circle"></i> পরিশোধিত (Paid)</span>
+                            <div class="search-mini">
+                                <input type="text" placeholder="খুঁজুন..."
+                                    onkeyup="filterPaymentList('paid', this.value)">
+                            </div>
+                        </div>
+                        <div class="pay-folder-list" id="payPaidList">
+                            <!-- Paid student cards will be injected here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- Student Management Page -->
         <div id="student-management-page" class="hidden">
@@ -8049,4 +8154,5 @@
         </div>
     </div>
 </body>
+
 </html>
