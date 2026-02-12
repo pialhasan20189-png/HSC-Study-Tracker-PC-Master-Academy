@@ -648,6 +648,15 @@
             cursor: pointer;
             backface-visibility: hidden;
             transform: translateZ(0);
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .profile-card h4 {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
         }
 
         .profile-card img {
@@ -4734,7 +4743,7 @@
                 background: transparent;
                 border: none;
                 color: var(--text-muted);
-                padding: 8px 18px;
+                padding: 6px 10px;
                 border-radius: 10px;
                 font-size: 13px;
                 font-weight: 600;
@@ -4790,15 +4799,73 @@
                     height: auto;
                 }
 
-                .monitor-sidebar {
-                    width: 100%;
-                    height: 400px;
+                @media (max-width: 600px) {
+                    .monitor-filters {
+                        width: 100%;
+                        display: grid;
+                        grid-template-columns: repeat(4, 1fr);
+                        gap: 5px;
+                        padding: 4px;
+                        justify-content: space-between;
+                    }
+
+                    .time-filter-btn {
+                        padding: 8px 4px;
+                        font-size: 11px;
+                        width: 100%;
+                        text-align: center;
+                        justify-content: center;
+                    }
+
+                    .monitor-profile-header {
+                        flex-direction: column;
+                        text-align: center;
+                        gap: 10px !important;
+                        padding-bottom: 10px !important;
+                        margin-bottom: 10px !important;
+                    }
+
+                    .monitor-profile-info {
+                        width: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                    }
+
+                    .monitor-profile-name-row {
+                        justify-content: center;
+                        margin-bottom: 4px !important;
+                    }
+
+                    .monitor-profile-stats {
+                        justify-content: center;
+                        gap: 8px !important;
+                    }
                 }
 
                 .monitor-main {
-                    height: auto;
-                    min-height: 500px;
+                    padding: 10px !important;
                 }
+
+                .monitor-stats-grid {
+                    gap: 10px !important;
+                    margin-bottom: 20px !important;
+                }
+
+                .monitor-subject-card {
+                    padding: 15px !important;
+                    margin-bottom: 20px !important;
+                }
+            }
+
+            .monitor-sidebar {
+                width: 100%;
+                height: 400px;
+            }
+
+            .monitor-main {
+                height: auto;
+                min-height: 500px;
             }
         </style>
         <div id="inactivity-page" class="hidden">
@@ -7586,9 +7653,9 @@
             const days = Math.floor(hours / 24);
 
             if (seconds < 60) return "এইমাত্র";
-            if (minutes < 60) return convertToBengaliDigit(minutes) + " মিনিট আগে";
-            if (hours < 24) return convertToBengaliDigit(hours) + " ঘণ্টা আগে";
-            return convertToBengaliDigit(days) + " দিন আগে";
+            if (minutes < 60) return minutes + " মিনিট আগে";
+            if (hours < 24) return hours + " ঘণ্টা আগে";
+            return days + " দিন আগে";
         }
 
         const subjectThemes = {
@@ -7608,7 +7675,7 @@
             const formatDate = (ts, includeTime = true) => {
                 if (!ts) return null;
                 const date = new Date(ts);
-                const options = { day: 'numeric', month: 'long', year: 'numeric' };
+                const options = { day: 'numeric', month: 'long', year: 'numeric', numberingSystem: 'latn' };
                 if (includeTime) { options.hour = '2-digit'; options.minute = '2-digit'; }
                 return date.toLocaleString('bn-BD', options);
             };
@@ -7644,7 +7711,7 @@
                     }
 
                     const theme = subjectThemes[student.activeSession.subject] || { icon: "fas fa-book", color: "var(--primary)" };
-                    const startTimeStr = new Date(student.activeSession.startTime).toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit' });
+                    const startTimeStr = new Date(student.activeSession.startTime).toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit', numberingSystem: 'latn' });
 
                     liveSessionHtml = `
                         <div class="monitor-timeline-item" style="background: rgba(34, 197, 94, 0.05); padding: 18px; border-radius: 18px; border: 1px dashed var(--success); display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden;">
@@ -7676,24 +7743,24 @@
             const sortedSubjects = Object.entries(subjectStats).sort((a, b) => b[1] - a[1]);
 
             content.innerHTML = `
-                <div style="padding-bottom: 30px;">
-                    <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 30px; flex-wrap: wrap;">
+                <div style="padding-bottom: 15px;">
+                    <div class="monitor-profile-header" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 15px; flex-wrap: wrap;">
                         <div style="position: relative;">
-                            <img src="${avatar}" style="width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover;">
-                            <span style="position: absolute; bottom: 5px; right: 5px; width: 18px; height: 18px; border-radius: 50%; background: ${isActive ? 'var(--success)' : '#94a3b8'}; border: 3px solid var(--card-bg);"></span>
+                            <img src="${avatar}" style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover;">
+                            <span style="position: absolute; bottom: 5px; right: 5px; width: 16px; height: 16px; border-radius: 50%; background: ${isActive ? 'var(--success)' : '#94a3b8'}; border: 3px solid var(--card-bg);"></span>
                         </div>
-                        <div style="flex: 1; min-width: 250px;">
-                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 5px;">
-                                <h2 style="margin: 0; font-size: 1.5rem; color: var(--text-main);">${student.name}</h2>
+                        <div class="monitor-profile-info" style="flex: 1; min-width: 250px;">
+                            <div class="monitor-profile-name-row" style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
+                                <h2 style="margin: 0; font-size: 1.4rem; color: var(--text-main);">${student.name}</h2>
                                 ${isActive ? '<span class="pulse-status" style="background: var(--success); color: white; font-size: 9px; padding: 2px 8px; border-radius: 20px; font-weight: 800;">LIVE</span>' : ''}
                             </div>
-                            <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 12px;"><i class="fas fa-envelope"></i> ${student.id.replace(/_/g, '.')}</p>
-                            <div style="display: flex; flex-wrap: wrap; gap: 15px;">
-                                <div style="font-size: 12px; color: var(--text-muted);">
-                                    <i class="fas fa-sign-in-alt" style="color: var(--primary); width: 14px;"></i> শেষ লগইন: <span style="color: var(--text-main); font-weight: 600;">${lastLoginStr}</span>
+                            <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 5px;"><i class="fas fa-envelope"></i> ${student.id.replace(/_/g, '.')}</p>
+                            <div class="monitor-profile-stats" style="display: flex; flex-wrap: wrap; gap: 10px;">
+                                <div style="font-size: 11px; color: var(--text-muted);">
+                                    <i class="fas fa-sign-in-alt" style="color: var(--primary); width: 12px;"></i> শেষ লগইন: <span style="color: var(--text-main); font-weight: 600;">${lastLoginStr}</span>
                                 </div>
-                                <div style="font-size: 12px; color: var(--text-muted);">
-                                    <i class="fas fa-history" style="color: var(--warning); width: 14px;"></i> শেষ এক্টিভ: <span style="color: var(--text-main); font-weight: 600;">${lastActiveStr}</span>
+                                <div style="font-size: 11px; color: var(--text-muted);">
+                                    <i class="fas fa-history" style="color: var(--warning); width: 12px;"></i> শেষ এক্টিভ: <span style="color: var(--text-main); font-weight: 600;">${lastActiveStr}</span>
                                 </div>
                             </div>
                         </div>
@@ -7702,16 +7769,16 @@
                     <div class="monitor-filters">
                         <button class="time-filter-btn ${monitorFilterDays === 1 ? 'active' : ''}" onclick="setMonitorFilter(1)">২৪ ঘণ্টা</button>
                         <button class="time-filter-btn ${monitorFilterDays === 7 ? 'active' : ''}" onclick="setMonitorFilter(7)">৭ দিন</button>
-                        <button class="time-filter-btn ${monitorFilterDays === 15 ? 'active' : ''}" onclick="setMonitorFilter(15)">১৫ দিন</button>
+
                         <button class="time-filter-btn ${monitorFilterDays === 30 ? 'active' : ''}" onclick="setMonitorFilter(30)">১ মাস</button>
                         <button class="time-filter-btn ${monitorFilterDays === 365 ? 'active' : ''}" onclick="setMonitorFilter(365)">লাইফটাইম</button>
                     </div>
 
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                    <div class="monitor-stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 30px;">
                         <div class="card" style="background: var(--bg); border: 1px solid var(--border); padding: 20px; border-radius: 18px; display: flex; align-items: center; gap: 18px;">
                             <div style="width: 50px; height: 50px; border-radius: 12px; background: rgba(37, 99, 235, 0.1); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.3rem;"><i class="fas fa-hourglass-start"></i></div>
                             <div>
-                                <p style="color: var(--text-muted); font-size: 12px; margin: 0;">মোট পড়াশোনা (${monitorFilterDays === 1 ? '২৪ ঘণ্টা' : monitorFilterDays + ' দিন'})</p>
+                                <p style="color: var(--text-muted); font-size: 12px; margin: 0;">মোট পড়াশোনা (${monitorFilterDays === 1 ? '24 ঘণ্টা' : monitorFilterDays + ' দিন'})</p>
                                 <h2 style="margin: 3px 0 0 0; font-size: 1.4rem; color: var(--primary); font-family: 'Poppins';">${formatTime(totalStudyTime)}</h2>
                             </div>
                         </div>
@@ -7724,7 +7791,7 @@
                         </div>
                     </div>
 
-                    <div class="card" style="background: var(--bg); border: 1px solid var(--border); padding: 25px; border-radius: 20px; margin-bottom: 30px;">
+                    <div class="card monitor-subject-card" style="background: var(--bg); border: 1px solid var(--border); padding: 25px; border-radius: 20px; margin-bottom: 30px;">
                         <h4 style="margin: 0 0 20px 0; font-size: 1.1rem; display: flex; align-items: center; gap: 12px;">
                             <i class="fas fa-chart-bar" style="color: var(--primary);"></i> বিষয় ভিত্তিক এনালাইসিস (Subject Analysis)
                         </h4>
@@ -7763,8 +7830,8 @@
                         ${filteredLogs.length > 0 ? filteredLogs.map(log => {
                 const theme = subjectThemes[log.subject] || { icon: "fas fa-book", color: "var(--primary)" };
                 const logDate = new Date(log.timestamp);
-                const timeStr = logDate.toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit' });
-                const endStr = log.endTime ? new Date(log.endTime).toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit' }) : 'চলমান';
+                const timeStr = logDate.toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit', numberingSystem: 'latn' });
+                const endStr = log.endTime ? new Date(log.endTime).toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit', numberingSystem: 'latn' }) : 'চলমান';
 
                 return `
                                 <div class="monitor-timeline-item" style="background: var(--bg); padding: 18px; border-radius: 18px; border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
@@ -7776,7 +7843,7 @@
                                             <div style="font-weight: 700; color: var(--text-main); font-size: 16px;">${log.subject}</div>
                                             <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                                                 <span><i class="far fa-clock" style="margin-right: 4px;"></i> ${timeStr} - ${endStr}</span>
-                                                <span style="color: ${theme.color}; font-weight: 600;">• ${logDate.toLocaleDateString('bn-BD', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                                                <span style="color: ${theme.color}; font-weight: 600;">• ${logDate.toLocaleDateString('bn-BD', { day: 'numeric', month: 'long', year: 'numeric', numberingSystem: 'latn' })}</span>
                                             </div>
                                         </div>
                                     </div>
