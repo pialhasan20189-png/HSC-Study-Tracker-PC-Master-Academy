@@ -901,6 +901,11 @@
             flex-wrap: wrap;
         }
 
+        ul.chapter-list.hm-compact li {
+            padding: 10px 12px;
+            gap: 8px;
+        }
+
         .sub-check-group {
             display: flex;
             gap: 4px;
@@ -929,6 +934,971 @@
         .sub-box.checked {
             background: var(--primary);
             color: white;
+        }
+
+        .hm-part-box {
+            width: auto;
+            min-width: 88px;
+            height: 32px;
+            padding: 0 10px;
+            line-height: 1;
+            font-size: 10px;
+            white-space: nowrap;
+        }
+
+        ul.chapter-list.hm-compact .main-ch-check {
+            transform: scale(1.05);
+        }
+
+        ul.chapter-list.hm-compact .sub-check-group {
+            gap: 6px;
+        }
+
+        ul.chapter-list li.bangla-section-card {
+            display: block;
+            justify-content: initial;
+            align-items: initial;
+            flex-wrap: nowrap;
+            gap: 0;
+            padding: 0;
+            width: 100%;
+            background: #1e2b44;
+            border: 1px solid #2a3a57;
+            border-radius: 16px;
+            margin-bottom: 14px;
+            overflow: hidden;
+        }
+
+        .bangla-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 14px;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .bangla-section-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .bangla-section-btn {
+            border: none;
+            background: #ffffff;
+            color: #1d4ed8;
+            border-radius: 7px;
+            padding: 6px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .bangla-section-body {
+            padding: 6px 10px 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .bangla-item {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 10px 4px;
+        }
+
+        .bangla-item-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .bangla-item-left {
+            display: grid;
+            grid-template-columns: 28px minmax(0, 1fr);
+            align-items: start;
+            column-gap: 10px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .bangla-item-number {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .bangla-title-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            min-width: 0;
+            flex: 1;
+            gap: 2px;
+        }
+
+        .bangla-item-title {
+            font-size: 16px;
+            color: #fff;
+            font-weight: 700;
+            line-height: 1.35;
+            word-break: break-word;
+        }
+
+        .bangla-item-author {
+            font-size: 12px;
+            color: #9fb5d6;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .bangla-tag {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 6px;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .bangla-sec-sohopath-tag { color: #ffedd5; }
+        .bangla-sec-godyo-tag {
+            background: rgba(59, 130, 246, 0.25);
+            color: #dbeafe;
+        }
+        .bangla-sec-kobita-tag {
+            background: rgba(124, 58, 237, 0.25);
+            color: #ede9fe;
+        }
+        .bangla-sec-sohopath-tag {
+            background: rgba(234, 88, 12, 0.28);
+            color: #ffedd5;
+        }
+
+        .bangla-sec-godyo-tag {
+            background: rgba(59, 130, 246, 0.25);
+            color: #dbeafe;
+        }
+
+        .bangla-sec-kobita-tag {
+            background: rgba(124, 58, 237, 0.25);
+            color: #ede9fe;
+        }
+
+        .bangla-sec-sohopath-tag {
+            background: rgba(234, 88, 12, 0.28);
+            color: #ffedd5;
+        }
+
+        .bangla-sec-godyo-tag {
+            background: rgba(59, 130, 246, 0.25);
+            color: #dbeafe;
+        }
+
+        .bangla-sec-kobita-tag {
+            background: rgba(124, 58, 237, 0.25);
+            color: #ede9fe;
+        }
+
+        .bangla-sec-sohopath-tag {
+            background: rgba(234, 88, 12, 0.28);
+            color: #ffedd5;
+        }
+
+        .bangla-steps {
+            margin: 10px 0 0 0;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px dashed rgba(255, 255, 255, 0.22);
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bangla-step-btn {
+            width: 100%;
+            margin-bottom: 8px;
+            border: 2px solid;
+            background: #0c1c3c;
+            color: #fff;
+            border-radius: 10px;
+            padding: 11px 12px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .bangla-step-btn:last-child {
+            margin-bottom: 0;
+        }
+
+        .bangla-step-btn.checked {
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .bangla-section-header {
+                padding: 10px 12px;
+                font-size: 14px;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .bangla-section-actions {
+                margin-left: auto;
+            }
+
+            .bangla-item-title {
+                font-size: 15px;
+            }
+
+            .bangla-step-btn {
+                font-size: 13px;
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .bangla-section-header {
+                font-size: 13px;
+            }
+
+            .bangla-section-btn {
+                padding: 5px 8px;
+                font-size: 10px;
+            }
+
+            .bangla-item {
+                padding: 9px 2px;
+            }
+
+            .bangla-item-left {
+                grid-template-columns: 24px minmax(0, 1fr);
+                column-gap: 8px;
+            }
+
+            .bangla-item-number {
+                width: 22px;
+                height: 22px;
+                font-size: 11px;
+            }
+
+            .bangla-item-title {
+                font-size: 14px;
+            }
+
+            .bangla-item-author {
+                font-size: 11px;
+            }
+
+            .bangla-steps {
+                margin: 9px 0 0 0;
+                padding: 8px;
+            }
+
+            .bangla-step-btn {
+                font-size: 12px;
+                border-radius: 9px;
+                padding: 9px 8px;
+            }
+        }
+
+        .bangla-sec-godyo .bangla-section-header {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+        }
+
+        .bangla-sec-godyo .bangla-item-number {
+            background: rgba(59, 130, 246, 0.55);
+        }
+
+        .bangla-sec-godyo .bangla-step-btn {
+            border-color: #3b82f6;
+        }
+
+        .bangla-sec-godyo .bangla-step-btn.checked {
+            background: #2563eb;
+            border-color: #2563eb;
+        }
+
+        .bangla-sec-godyo .bangla-item-number.done {
+            background: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
+        }
+
+        .bangla-sec-kobita .bangla-section-header {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+
+        .bangla-sec-kobita .bangla-item-number {
+            background: rgba(139, 92, 246, 0.55);
+        }
+
+        .bangla-sec-kobita .bangla-step-btn {
+            border-color: #8b5cf6;
+        }
+
+        .bangla-sec-kobita .bangla-step-btn.checked {
+            background: #7c3aed;
+            border-color: #7c3aed;
+        }
+
+        .bangla-sec-kobita .bangla-item-number.done {
+            background: #7c3aed;
+            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.3);
+        }
+
+        .bangla-sec-sohopath .bangla-section-header {
+            background: linear-gradient(135deg, #f59e0b, #f97316);
+        }
+
+        .bangla-sec-sohopath .bangla-item-number {
+            background: rgba(245, 158, 11, 0.35);
+        }
+
+        .bangla-sec-sohopath .bangla-step-btn {
+            border-color: #f59e0b;
+        }
+
+        .bangla-sec-sohopath .bangla-step-btn.checked {
+            background: #ea580c;
+            border-color: #ea580c;
+        }
+
+        .bangla-sec-sohopath .bangla-item-number.done {
+            background: #ea580c;
+            box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.3);
+        }
+
+        .bangla-sec-grammar .bangla-section-header,
+        .bangla-sec-nirmiti .bangla-section-header {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+        }
+
+        .bangla-sec-grammar .bangla-item-number,
+        .bangla-sec-nirmiti .bangla-item-number {
+            background: rgba(156, 163, 175, 0.4); /* ধূসর বর্ণ (Grey) */
+        }
+
+        .bangla-sec-grammar .bangla-step-btn,
+        .bangla-sec-nirmiti .bangla-step-btn {
+            border-color: #3b82f6;
+        }
+
+        .bangla-sec-grammar .bangla-step-btn.checked,
+        .bangla-sec-grammar .bangla-item-number.done,
+        .bangla-sec-nirmiti .bangla-step-btn.checked,
+        .bangla-sec-nirmiti .bangla-item-number.done {
+            background: #2563eb;
+            border-color: #2563eb;
+        }
+
+        body:not(.dark) ul.chapter-list li.bangla-section-card {
+            background: #eef2f7;
+            border: 1px solid #d8e0ea;
+        }
+
+        body:not(.dark) .bangla-item {
+            border-top: 1px solid rgba(15, 23, 42, 0.08);
+        }
+
+        body:not(.dark) .bangla-item-title {
+            color: #0f172a;
+        }
+
+        body:not(.dark) .bangla-item-author {
+            color: #475569;
+        }
+
+        body:not(.dark) .bangla-tag {
+            border: 1px solid rgba(59, 130, 246, 0.32);
+        }
+
+        body:not(.dark) .bangla-sec-godyo-tag {
+            background: rgba(59, 130, 246, 0.16);
+            color: #1e3a8a;
+        }
+
+        body:not(.dark) .bangla-sec-kobita-tag {
+            background: rgba(124, 58, 237, 0.16);
+            color: #5b21b6;
+            border-color: rgba(124, 58, 237, 0.34);
+        }
+
+        body:not(.dark) .bangla-sec-sohopath-tag {
+            background: rgba(234, 88, 12, 0.18);
+            color: #9a3412;
+            border-color: rgba(234, 88, 12, 0.38);
+        }
+
+        body:not(.dark) .bangla-tag {
+            background: rgba(59, 130, 246, 0.16);
+            color: #1e3a8a;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        body:not(.dark) .bangla-steps {
+            border: 1px dashed rgba(30, 64, 175, 0.25);
+            background: rgba(255, 255, 255, 0.55);
+        }
+
+        body:not(.dark) .bangla-step-btn {
+            background: #ffffff;
+            color: #1e3a8a;
+        }
+
+        body:not(.dark) .bangla-sec-godyo .bangla-step-btn.checked {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: #fff;
+        }
+
+        body:not(.dark) .bangla-sec-kobita .bangla-step-btn.checked {
+            background: #7c3aed;
+            border-color: #7c3aed;
+            color: #fff;
+        }
+
+        body:not(.dark) .bangla-sec-sohopath .bangla-step-btn.checked {
+            background: #ea580c;
+            border-color: #ea580c;
+            color: #fff;
+        }
+
+        .english-section-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            margin-bottom: 14px;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(2, 6, 23, 0.05);
+        }
+
+        .english-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 14px;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .english-read .english-section-header {
+            background: linear-gradient(135deg, #0ea5e9, #2563eb);
+        }
+
+        .english-write .english-section-header {
+            background: linear-gradient(135deg, #14b8a6, #0d9488);
+        }
+
+        .english-grammar .english-section-header {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+
+        .english-composition .english-section-header {
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+        }
+
+        .english-section-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            margin-bottom: 14px;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(2, 6, 23, 0.05);
+        }
+
+        .english-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 14px;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .english-read .english-section-header {
+            background: linear-gradient(135deg, #0ea5e9, #2563eb);
+        }
+
+        .english-write .english-section-header {
+            background: linear-gradient(135deg, #14b8a6, #0d9488);
+        }
+
+        .english-grammar .english-section-header {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+
+        .english-composition .english-section-header {
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+        }
+
+        .english-section-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .english-section-btn {
+            border: none;
+            background: rgba(255, 255, 255, 0.94);
+            color: #1e40af;
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .english-section-body {
+            padding: 4px 12px 10px;
+        }
+
+        .english-topic {
+            border-top: 1px solid rgba(100, 116, 139, 0.22);
+            padding: 10px 2px;
+        }
+
+        .english-topic-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .english-topic-left {
+            display: grid;
+            grid-template-columns: 28px minmax(0, 1fr);
+            column-gap: 10px;
+            align-items: start;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .english-topic-number {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+            background: #2563eb;
+        }
+
+        .english-topic-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.35;
+        }
+
+        .english-topic-meta {
+            margin-top: 4px;
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .english-mark {
+            background: rgba(59, 130, 246, 0.14);
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            color: #1e3a8a;
+            border-radius: 12px;
+            padding: 2px 7px;
+            font-weight: 700;
+            font-size: 10px;
+        }
+
+        .english-topic-steps {
+            margin-top: 10px;
+            border: 1px dashed rgba(37, 99, 235, 0.32);
+            border-radius: 10px;
+            padding: 8px;
+        }
+
+        .english-step-btn {
+            width: 100%;
+            border: 2px solid #2563eb;
+            background: #ffffff;
+            color: #1e3a8a;
+            border-radius: 9px;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .english-read .english-step-btn.checked {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: #fff;
+        }
+
+        .english-write .english-step-btn.checked {
+            background: #0d9488;
+            border-color: #0d9488;
+            color: #fff;
+        }
+
+        .english-grammar .english-step-btn.checked {
+            background: #7c3aed;
+            border-color: #7c3aed;
+            color: #fff;
+        }
+
+        .english-composition .english-step-btn.checked {
+            background: #ea580c;
+            border-color: #ea580c;
+            color: #fff;
+        }
+
+        .english-read .english-topic-number.done {
+            background: #2563eb;
+        }
+
+        .english-write .english-topic-number.done {
+            background: #0d9488;
+        }
+
+        .english-grammar .english-topic-number.done {
+            background: #7c3aed;
+        }
+
+        .english-composition .english-topic-number.done {
+            background: #ea580c;
+        }
+
+        @media (max-width: 600px) {
+            .english-topic-title {
+                font-size: 14px;
+            }
+
+            .english-section-header {
+                padding: 10px 12px;
+                font-size: 13px;
+                flex-wrap: wrap;
+            }
+
+            .english-section-btn {
+                padding: 5px 8px;
+                font-size: 10px;
+            }
+        }
+
+        /* English UI polish (scoped only to English custom cards) */
+        ul.chapter-list li.english-section-card {
+            display: block;
+            width: 100%;
+            padding: 0;
+            gap: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+        }
+
+        .english-section-header {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .english-read .english-section-header,
+        .english-write .english-section-header,
+        .english-grammar .english-section-header,
+        .english-composition .english-section-header {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+        }
+
+        .english-section-btn {
+            background: rgba(255, 255, 255, 0.95);
+            color: #1e3a8a;
+            border: 1px solid rgba(255, 255, 255, 0.85);
+        }
+
+        .english-section-body,
+        .english-topic,
+        .english-topic-head,
+        .english-topic-left {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .english-topic {
+            padding: 11px 0;
+        }
+
+        .english-topic-title {
+            font-size: 16px;
+        }
+
+        .english-mark {
+            background: rgba(59, 130, 246, 0.18);
+            border: 1px solid rgba(59, 130, 246, 0.35);
+            color: #1e40af;
+            font-weight: 800;
+        }
+
+        .english-topic-number {
+            background: #94a3b8;
+            color: #f8fafc;
+        }
+
+        .english-read .english-topic-number.done,
+        .english-write .english-topic-number.done,
+        .english-grammar .english-topic-number.done,
+        .english-composition .english-topic-number.done {
+            background: #2563eb;
+            color: #ffffff;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.28);
+        }
+
+        .english-topic-steps {
+            background: rgba(2, 132, 199, 0.04);
+        }
+
+        body.dark .english-mark {
+            background: rgba(148, 163, 184, 0.18);
+            border-color: rgba(148, 163, 184, 0.35);
+            color: #e2e8f0;
+        }
+
+        body.dark .english-topic-steps {
+            background: rgba(37, 99, 235, 0.08);
+            border-color: rgba(96, 165, 250, 0.35);
+        }
+
+        @media (max-width: 600px) {
+            .english-section-card {
+                border-radius: 12px;
+            }
+
+            .english-section-header {
+                padding: 10px;
+            }
+
+            .english-section-body {
+                padding: 2px 10px 8px;
+            }
+        }
+
+        /* English UI polish (scoped only to English custom cards) */
+        ul.chapter-list li.english-section-card {
+            display: block;
+            width: 100%;
+            padding: 0;
+            gap: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+        }
+
+        .english-section-header {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .english-read .english-section-header,
+        .english-write .english-section-header,
+        .english-grammar .english-section-header,
+        .english-composition .english-section-header {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+        }
+
+        .english-section-btn {
+            background: rgba(255, 255, 255, 0.95);
+            color: #1e3a8a;
+            border: 1px solid rgba(255, 255, 255, 0.85);
+        }
+
+        .english-section-body,
+        .english-topic,
+        .english-topic-head,
+        .english-topic-left {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .english-topic {
+            padding: 11px 0;
+        }
+
+        .english-topic-title {
+            font-size: 16px;
+        }
+
+        .english-mark {
+            background: rgba(59, 130, 246, 0.18);
+            border: 1px solid rgba(59, 130, 246, 0.35);
+            color: #1e40af;
+            font-weight: 800;
+        }
+
+        .english-topic-steps {
+            background: rgba(2, 132, 199, 0.04);
+        }
+
+        body.dark .english-mark {
+            background: rgba(148, 163, 184, 0.18);
+            border-color: rgba(148, 163, 184, 0.35);
+            color: #e2e8f0;
+        }
+
+        body.dark .english-topic-steps {
+            background: rgba(37, 99, 235, 0.08);
+            border-color: rgba(96, 165, 250, 0.35);
+        }
+
+        /* Final unified blue theme for English (1st & 2nd paper) */
+        ul.chapter-list li.english-section-card .english-section-header {
+            background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+        }
+
+        ul.chapter-list li.english-section-card .english-topic-steps {
+            border: 1px dashed rgba(37, 99, 235, 0.35) !important;
+            background: rgba(37, 99, 235, 0.06) !important;
+        }
+
+        ul.chapter-list li.english-section-card .english-step-btn {
+            border: 2px solid #2563eb !important;
+            color: #1e40af !important;
+            background: #ffffff !important;
+        }
+
+        ul.chapter-list li.english-section-card .english-step-btn.checked {
+            border-color: #2563eb !important;
+            background: #2563eb !important;
+            color: #ffffff !important;
+        }
+
+        body.dark ul.chapter-list li.english-section-card .english-topic-steps {
+            border-color: rgba(96, 165, 250, 0.4) !important;
+            background: rgba(37, 99, 235, 0.14) !important;
+        }
+
+        body.dark ul.chapter-list li.english-section-card .english-step-btn {
+            color: #dbeafe !important;
+            background: #0b1c3d !important;
+            border-color: #3b82f6 !important;
+        }
+
+        body.dark ul.chapter-list li.english-section-card .english-step-btn.checked {
+            background: #2563eb !important;
+            color: #ffffff !important;
+            border-color: #2563eb !important;
+        }
+
+        body.dark ul.chapter-list li.english-section-card .english-mark {
+            background: rgba(59, 130, 246, 0.24) !important;
+            border-color: rgba(96, 165, 250, 0.45) !important;
+            color: #eaf2ff !important;
+        }
+
+        /* Light mode support for Bangla 1st Paper custom cards */
+        body:not(.dark) ul.chapter-list li.bangla-section-card {
+            background: #eef2f7;
+            border: 1px solid #d8e0ea;
+        }
+
+        body:not(.dark) .bangla-item {
+            border-top: 1px solid rgba(15, 23, 42, 0.08);
+        }
+
+        body:not(.dark) .bangla-item-title {
+            color: #0f172a;
+        }
+
+        body:not(.dark) .bangla-item-author {
+            color: #475569;
+        }
+
+        body:not(.dark) .bangla-steps {
+            border: 1px dashed rgba(30, 64, 175, 0.25);
+            background: rgba(255, 255, 255, 0.55);
+        }
+
+        body:not(.dark) .bangla-step-btn {
+            background: #ffffff;
+            color: #1e3a8a;
+        }
+
+        body:not(.dark) .bangla-sec-godyo .bangla-step-btn.checked {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: #fff;
+        }
+
+        body:not(.dark) .bangla-sec-kobita .bangla-step-btn.checked {
+            background: #7c3aed;
+            border-color: #7c3aed;
+            color: #fff;
+        }
+
+        body:not(.dark) .bangla-sec-sohopath .bangla-step-btn.checked {
+            background: #ea580c;
+            border-color: #ea580c;
+            color: #fff;
+        }
+
+        /* Light mode support for Bangla 1st Paper custom cards */
+        body:not(.dark) ul.chapter-list li.bangla-section-card {
+            background: #eef2f7;
+            border: 1px solid #d8e0ea;
+        }
+
+        body:not(.dark) .bangla-item {
+            border-top: 1px solid rgba(15, 23, 42, 0.08);
+        }
+
+        body:not(.dark) .bangla-item-title {
+            color: #0f172a;
+        }
+
+        body:not(.dark) .bangla-item-author {
+            color: #475569;
+        }
+
+        body:not(.dark) .bangla-steps {
+            border: 1px dashed rgba(30, 64, 175, 0.25);
+            background: rgba(255, 255, 255, 0.55);
+        }
+
+        body:not(.dark) .bangla-step-btn {
+            background: #ffffff;
+            color: #1e3a8a;
+        }
+
+        body:not(.dark) .bangla-sec-godyo .bangla-step-btn.checked {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: #fff;
+        }
+
+        body:not(.dark) .bangla-sec-kobita .bangla-step-btn.checked {
+            background: #7c3aed;
+            border-color: #7c3aed;
+            color: #fff;
+        }
+
+        body:not(.dark) .bangla-sec-sohopath .bangla-step-btn.checked {
+            background: #ea580c;
+            border-color: #ea580c;
+            color: #fff;
         }
 
         .main-ch-check {
@@ -1032,6 +2002,37 @@
         }
 
         @media (max-width: 650px) {
+            ul.chapter-list li {
+                align-items: flex-start;
+                padding: 12px;
+            }
+
+            ul.chapter-list.hm-compact li {
+                padding: 10px;
+            }
+
+            ul.chapter-list.hm-compact li>div:first-child {
+                width: 100%;
+            }
+
+            ul.chapter-list.hm-compact li>div:first-child span {
+                font-size: 13px;
+                line-height: 1.35;
+            }
+
+            ul.chapter-list.hm-compact .sub-check-group {
+                width: 100%;
+                justify-content: flex-end;
+                gap: 6px;
+            }
+
+            .hm-part-box {
+                min-width: 84px;
+                height: 30px;
+                font-size: 9px;
+                padding: 0 8px;
+            }
+
             .subjects-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -1264,6 +2265,23 @@
             transform: rotate(-90deg);
             width: 100%;
             height: 100%;
+        }
+
+        @media (max-width: 420px) {
+            ul.chapter-list.hm-compact .sub-check-group {
+                justify-content: space-between;
+            }
+
+            .hm-part-box {
+                flex: 1;
+                min-width: 0;
+                font-size: 9px;
+                padding: 0 6px;
+            }
+
+            ul.chapter-list.hm-compact li>div:first-child span {
+                font-size: 12px;
+            }
         }
 
         .timer-bg {
@@ -3775,6 +4793,52 @@
                 font-size: 0.8rem;
             }
         }
+
+        .study-sub-box.ebi-mode-btn,
+        .subject-btn.ebi-mode-btn {
+            display: none;
+            transition: none !important;
+        }
+
+        /* Final English Theme (only English custom UI) */
+        ul.chapter-list li.english-section-card {
+            display: block;
+            width: 100%;
+            padding: 0;
+            margin-bottom: 14px;
+            border-radius: 14px;
+        }
+
+        .english-read .english-section-header,
+        .english-write .english-section-header,
+        .english-grammar .english-section-header,
+        .english-composition .english-section-header {
+            background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+        }
+
+        .english-topic-number {
+            background: #94a3b8 !important;
+            color: #f8fafc !important;
+        }
+
+        .english-read .english-topic-number.done,
+        .english-write .english-topic-number.done,
+        .english-grammar .english-topic-number.done,
+        .english-composition .english-topic-number.done {
+            background: #2563eb !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.26) !important;
+        }
+
+        .english-mark {
+            font-weight: 800;
+        }
+
+        body.dark .english-mark {
+            background: rgba(148, 163, 184, 0.24) !important;
+            border-color: rgba(148, 163, 184, 0.45) !important;
+            color: #f1f5f9 !important;
+        }
     </style>
 </head>
 
@@ -4070,6 +5134,8 @@
                                     class="fas fa-user-check"></i> অ্যাটেন্ডেন্স
                                 দিন</button>
                             <button onclick="openProfileModal()"><i class="fas fa-user-circle"></i> My Profile</button>
+                            <button id="ebi-mode-text" onclick="toggleEbiMode(event)"><i class="fas fa-eye"></i> EBI
+                                Mode: OFF</button>
                             <button onclick="toggleDarkMode()"><i class="fas fa-moon"></i> ডার্ক মোড অন/অফ</button>
                             <button onclick="confirmLogout()" class="logout-item"><i class="fas fa-sign-out-alt"></i>
                                 লগআউট করুন</button>
@@ -4211,9 +5277,13 @@
                                         </div>
                                         <div class="study-sub-box" onclick="enterStudySession('উচ্চতর গণিত')">উচ্চতর
                                             গণিত</div>
-                                        <div class="study-sub-box" onclick="enterStudySession('বাংলা')">বাংলা</div>
-                                        <div class="study-sub-box" onclick="enterStudySession('ইংরেজি')">ইংরেজি</div>
-                                        <div class="study-sub-box" onclick="enterStudySession('ICT')">ICT</div>
+                                        <div class="study-sub-box ebi-mode-btn" onclick="enterStudySession('ইংরেজি')">
+                                            ইংরেজি</div>
+                                        <div class="study-sub-box ebi-mode-btn" onclick="enterStudySession('বাংলা')">
+                                            বাংলা</div>
+                                        <div class="study-sub-box ebi-mode-btn" onclick="enterStudySession('ICT')">ICT
+                                        </div>
+                                        <div class="study-sub-box ebi-mode-btn" style="cursor: default; opacity: 0.8;">GPA Calculator</div>
                                     </div>
                                 </div>
                             </div>
@@ -5436,8 +6506,167 @@
             "উচ্চতর গণিত": {
                 "1st Paper": ["ম্যাট্রিক্স ও নির্ণায়ক", "ভেক্টর", "সরলরেখা", "বৃত্ত", "বিন্যাস ও সমাবেশ", "ত্রিকোনমিত্রিক অনুপাত", "সংযুক্ত কোণের ত্রিকোনমিত্রিক অনুপাত", "ফাংশন", "অন্টারীকরণ", "যোগজীকরণ"],
                 "2nd Paper": ["বাস্তব সংখ্যা ও অসমতা", "যোগাশ্রয়ী প্রোগ্রাম", "জটিল সংখ্যা", "বহুপদী সমীকরণ", "দ্বিপদী বিস্তৃতি", "কনিক", "বিপরীত ত্রিকোনমিতিক ফাংশন ও ত্রিকোনমিতিক সমীকরণ", "স্থিতিবিদ্যা", "সমতলে বস্তুকণার গতি", "বিস্তার পরিমাপ ও সম্ভাব্যতা"]
+            },
+            "ইংরেজি": {
+                "1st Paper": [
+                    "A. MCQ (guessing meaning from context) + B. Comprehension questions",
+                    "Information transfer / Flow chart",
+                    "Summarizing",
+                    "Cloze test with clues",
+                    "Cloze test without clues",
+                    "Rearranging (unseen)",
+                    "Writing paragraph by answering questions",
+                    "Completing a story",
+                    "Writing informal letters / emails",
+                    "Analyzing maps / graphs / charts",
+                    "Appreciating short stories / poems"
+                ],
+                "2nd Paper": [
+                    "Article",
+                    "Preposition",
+                    "Phrase / words",
+                    "Complete the sentence with clause",
+                    "Fill the gaps with correct form of verbs",
+                    "Change the sentences as directed",
+                    "Narration",
+                    "Identify unclear pronoun and rewrite sentence",
+                    "Use modifiers in the blank line",
+                    "Use appropriate sentence connector",
+                    "Synonym or antonym",
+                    "Use punctuation marks",
+                    "Write an application",
+                    "Write a report",
+                    "Write a paragraph (about 150 words)",
+                    "Write an essay (above 200 words)"
+                ]
+            },
+            "বাংলা": {
+                "1st Paper": [
+                    "বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন",
+                    "অপরিচিতা",
+                    "সাহিত্যে খেলা",
+                    "বিলাসী",
+                    "অর্ধাঙ্গী",
+                    "যৌবনের গান",
+                    "জীবন ও বৃক্ষ",
+                    "গন্তব্য কাবুল",
+                    "মাসি-পিসি",
+                    "কপিলদাস মুর্মুর শেষ কাজ",
+                    "রেইনকোট",
+                    "নেকলেস",
+                    "ঋতু-বর্ণন",
+                    "বিভীষণের প্রতি মেঘনাদ",
+                    "সোনার তরী",
+                    "বিদ্রোহী",
+                    "সুচেতনা",
+                    "প্রতিদান",
+                    "তাহারেই পড়ে মনে",
+                    "পদ্মা",
+                    "ফেব্রুয়ারি ১৯৬৯",
+                    "আঠারো বছর বয়স",
+                    "আমি কিংবদন্তির কথা বলছি",
+                    "প্রত্যাবর্তনের লজ্জা",
+                    "লালসালু",
+                    "সিরাজউদ্দৌলা"
+                ],
+                "2nd Paper": [
+                    "উচ্চারণের নিয়ম / শব্দ উচ্চারণ",
+                    "বানানের নিয়ম / শুদ্ধ বানান",
+                    "ব্যাকরণিক শব্দ শ্রেণির প্রকারভেদ / ব্যাকরণিক শব্দ শ্রেণীর নিয়ম",
+                    "উপসর্গ / সমাস",
+                    "বাক্য সংক্রান্ত প্রশ্ন / বাক্যান্তর",
+                    "ভাষার অপপ্রয়োগ ও শুদ্ধ প্রয়োগ / বাক্যের মধ্যে শুদ্ধ প্রয়োগ",
+                    "অনুবাদ / পারিভাষিক শব্দ",
+                    "দিনলিপি / প্রতিবেদন",
+                    "বৈদ্যুতিক চিঠি / আবেদন পত্র",
+                    "সারাংশ/সারমর্ম / ভাব সম্প্রসারণ",
+                    "সংলাপ রচনা / ক্ষুদে গল্প রচনা",
+                    "প্রবন্ধ রচনা"
+                ]
+            },
+            "ICT": {
+                "Full Book": ["অধ্যায় ০১ : বিশ্ব ও বাংলাদেশ প্রেক্ষিত", "অধ্যায় ০২ : কমিউনিকেশন সিস্টেমস ও নেটওয়ার্কিং", "অধ্যায় ০৩ : সংখ্যা পদ্ধতি ও ডিজিটাল ডিভাইস", "অধ্যায় ০৪ : ওয়েব ডিজাইন পরিচিতি এবং HTML", "অধ্যায় ০৫ : প্রোগ্রামিং ভাষা (C Programming)", "অধ্যায় ০৬ : ডেটাবেজ ম্যানেজমেন্ট সিস্টেম"]
+            },
+            "GPA Calculator": {
+                "General": []
             }
         };
+        const banglaFirstPaperMeta = [
+            { section: "গদ্য", title: "বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন", author: "বঙ্কিমচন্দ্র চট্টোপাধ্যায়", tag: "", steps: [{ key: "k", label: "Step - 01: ক" }, { key: "kh", label: "Step - 02: খ" }, { key: "g", label: "Step - 03: মূল বই" }] },
+            { section: "গদ্য", title: "অপরিচিতা", author: "রবীন্দ্রনাথ ঠাকুর", tag: "", steps: [{ key: "k", label: "Step - 01: ক" }, { key: "kh", label: "Step - 02: খ" }, { key: "g", label: "Step - 03: মূল বই" }] },
+            { section: "গদ্য", title: "সাহিত্যে খেলা", author: "প্রমথ চৌধুরী", tag: "", steps: [{ key: "k", label: "Step - 01: ক" }, { key: "kh", label: "Step - 02: খ" }, { key: "g", label: "Step - 03: মূল বই" }] },
+            { section: "গদ্য", title: "বিলাসী", author: "শরৎচন্দ্র চট্টোপাধ্যায়", tag: "", steps: [{ key: "k", label: "Step - 01: ক" }, { key: "kh", label: "Step - 02: খ" }, { key: "g", label: "Step - 03: মূল বই" }] },
+            { section: "গদ্য", title: "অর্ধাঙ্গী", author: "রোকেয়া সাখাওয়াত হোসেন", tag: "", steps: [{ key: "k", label: "Step - 01: ক" }, { key: "kh", label: "Step - 02: খ" }, { key: "g", label: "Step - 03: মূল বই" }] },
+            { section: "গদ্য", title: "যৌবনের গান", author: "কাজী নজরুল ইসলাম", tag: "", steps: [{ key: "k", label: "Step - 01: ক" }, { key: "kh", label: "Step - 02: খ" }, { key: "g", label: "Step - 03: মূল বই" }] },
+            { section: "গদ্য", title: "জীবন ও বৃক্ষ", author: "মোতাহের হোসেন চৌধুরী", tag: "", steps: [{ key: "k", label: "Step - 01: ক" }, { key: "kh", label: "Step - 02: খ" }, { key: "g", label: "Step - 03: মূল বই" }] },
+            { section: "গদ্য", title: "গন্তব্য কাবুল", author: "সৈয়দ মুজতবা আলী", tag: "", steps: [{ key: "k", label: "Step - 01: ক" }, { key: "kh", label: "Step - 02: খ" }, { key: "g", label: "Step - 03: মূল বই" }] },
+            { section: "গদ্য", title: "মাসি-পিসি", author: "মানিক বন্দ্যোপাধ্যায়", tag: "", steps: [{ key: "k", label: "Step - 01: ক" }, { key: "kh", label: "Step - 02: খ" }, { key: "g", label: "Step - 03: মূল বই" }] },
+            { section: "গদ্য", title: "কপিলদাস মুর্মুর শেষ কাজ", author: "শওকত আলী", tag: "", steps: [{ key: "k", label: "Step - 01: ক" }, { key: "kh", label: "Step - 02: খ" }, { key: "g", label: "Step - 03: মূল বই" }] },
+            { section: "গদ্য", title: "রেইনকোট", author: "আখতারুজ্জামান ইলিয়াস", tag: "", steps: [{ key: "k", label: "Step - 01: ক" }, { key: "kh", label: "Step - 02: খ" }, { key: "g", label: "Step - 03: মূল বই" }] },
+            { section: "গদ্য", title: "নেকলেস", author: "গী দ্য মোপাসাঁ", tag: "", steps: [{ key: "k", label: "Step - 01: ক" }, { key: "kh", label: "Step - 02: খ" }, { key: "g", label: "Step - 03: মূল বই" }] },
+            { section: "কবিতা", title: "ঋতু-বর্ণন", author: "আলাওল", tag: "", steps: [{ key: "k", label: "Step - 01: পাঠ পরিচিতি" }, { key: "kh", label: "Step - 02: কবিতার লাইনের ব্যাখ্যা" }, { key: "g", label: "Step - 03: গুরুত্বপূর্ণ শব্দার্থ" }, { key: "gh", label: "Step - 04: কবি পরিচিতি" }] },
+            { section: "কবিতা", title: "বিভীষণের প্রতি মেঘনাদ", author: "মাইকেল মধুসূদন দত্ত", tag: "", steps: [{ key: "k", label: "Step - 01: পাঠ পরিচিতি" }, { key: "kh", label: "Step - 02: কবিতার লাইনের ব্যাখ্যা" }, { key: "g", label: "Step - 03: গুরুত্বপূর্ণ শব্দার্থ" }, { key: "gh", label: "Step - 04: কবি পরিচিতি" }] },
+            { section: "কবিতা", title: "সোনার তরী", author: "রবীন্দ্রনাথ ঠাকুর", tag: "", steps: [{ key: "k", label: "Step - 01: পাঠ পরিচিতি" }, { key: "kh", label: "Step - 02: কবিতার লাইনের ব্যাখ্যা" }, { key: "g", label: "Step - 03: গুরুত্বপূর্ণ শব্দার্থ" }, { key: "gh", label: "Step - 04: কবি পরিচিতি" }] },
+            { section: "কবিতা", title: "বিদ্রোহী", author: "কাজী নজরুল ইসলাম", tag: "", steps: [{ key: "k", label: "Step - 01: পাঠ পরিচিতি" }, { key: "kh", label: "Step - 02: কবিতার লাইনের ব্যাখ্যা" }, { key: "g", label: "Step - 03: গুরুত্বপূর্ণ শব্দার্থ" }, { key: "gh", label: "Step - 04: কবি পরিচিতি" }] },
+            { section: "কবিতা", title: "সুচেতনা", author: "জীবনানন্দ দাশ", tag: "", steps: [{ key: "k", label: "Step - 01: পাঠ পরিচিতি" }, { key: "kh", label: "Step - 02: কবিতার লাইনের ব্যাখ্যা" }, { key: "g", label: "Step - 03: গুরুত্বপূর্ণ শব্দার্থ" }, { key: "gh", label: "Step - 04: কবি পরিচিতি" }] },
+            { section: "কবিতা", title: "প্রতিদান", author: "জসীমউদ্দীন", tag: "", steps: [{ key: "k", label: "Step - 01: পাঠ পরিচিতি" }, { key: "kh", label: "Step - 02: কবিতার লাইনের ব্যাখ্যা" }, { key: "g", label: "Step - 03: গুরুত্বপূর্ণ শব্দার্থ" }, { key: "gh", label: "Step - 04: কবি পরিচিতি" }] },
+            { section: "কবিতা", title: "তাহারেই পড়ে মনে", author: "সুফিয়া কামাল", tag: "", steps: [{ key: "k", label: "Step - 01: পাঠ পরিচিতি" }, { key: "kh", label: "Step - 02: কবিতার লাইনের ব্যাখ্যা" }, { key: "g", label: "Step - 03: গুরুত্বপূর্ণ শব্দার্থ" }, { key: "gh", label: "Step - 04: কবি পরিচিতি" }] },
+            { section: "কবিতা", title: "পদ্মা", author: "ফররুখ আহমদ", tag: "", steps: [{ key: "k", label: "Step - 01: পাঠ পরিচিতি" }, { key: "kh", label: "Step - 02: কবিতার লাইনের ব্যাখ্যা" }, { key: "g", label: "Step - 03: গুরুত্বপূর্ণ শব্দার্থ" }, { key: "gh", label: "Step - 04: কবি পরিচিতি" }] },
+            { section: "কবিতা", title: "ফেব্রুয়ারি ১৯৬৯", author: "শামসুর রাহমান", tag: "", steps: [{ key: "k", label: "Step - 01: পাঠ পরিচিতি" }, { key: "kh", label: "Step - 02: কবিতার লাইনের ব্যাখ্যা" }, { key: "g", label: "Step - 03: গুরুত্বপূর্ণ শব্দার্থ" }, { key: "gh", label: "Step - 04: কবি পরিচিতি" }] },
+            { section: "কবিতা", title: "আঠারো বছর বয়স", author: "সুকান্ত ভট্টাচার্য", tag: "", steps: [{ key: "k", label: "Step - 01: পাঠ পরিচিতি" }, { key: "kh", label: "Step - 02: কবিতার লাইনের ব্যাখ্যা" }, { key: "g", label: "Step - 03: গুরুত্বপূর্ণ শব্দার্থ" }, { key: "gh", label: "Step - 04: কবি পরিচিতি" }] },
+            { section: "কবিতা", title: "আমি কিংবদন্তির কথা বলছি", author: "আবু জাফর ওবায়দুল্লাহ", tag: "", steps: [{ key: "k", label: "Step - 01: পাঠ পরিচিতি" }, { key: "kh", label: "Step - 02: কবিতার লাইনের ব্যাখ্যা" }, { key: "g", label: "Step - 03: গুরুত্বপূর্ণ শব্দার্থ" }, { key: "gh", label: "Step - 04: কবি পরিচিতি" }] },
+            { section: "কবিতা", title: "প্রত্যাবর্তনের লজ্জা", author: "আল মাহমুদ", tag: "", steps: [{ key: "k", label: "Step - 01: পাঠ পরিচিতি" }, { key: "kh", label: "Step - 02: কবিতার লাইনের ব্যাখ্যা" }, { key: "g", label: "Step - 03: গুরুত্বপূর্ণ শব্দার্থ" }, { key: "gh", label: "Step - 04: কবি পরিচিতি" }] },
+            { section: "সহপাঠ", title: "লালসালু", author: "সৈয়দ ওয়ালীউল্লাহ", tag: "উপন্যাস", steps: [{ key: "k", label: "Step - 01: ক" }, { key: "kh", label: "Step - 02: খ" }, { key: "g", label: "Step - 03: মূল বই" }, { key: "gh", label: "Step - 04: উপন্যাসের Summary" }] },
+            { section: "সহপাঠ", title: "সিরাজউদ্দৌলা", author: "সিকান্দার আবু জাফর", tag: "নাটক", steps: [{ key: "k", label: "Step - 01: ক" }, { key: "kh", label: "Step - 02: খ" }, { key: "g", label: "Step - 03: মূল বই" }, { key: "gh", label: "Step - 04: নাটকের Summary" }] }
+        ];
+        const banglaSecondPaperMeta = [
+            { section: "ব্যাকরণ - ৩০ নম্বর", title: "উচ্চারণের নিয়ম", author: "বিকল্প: শব্দ উচ্চারণ", tag: "", steps: [{ key: "k", label: "টপিক সম্পন্ন" }] },
+            { section: "ব্যাকরণ - ৩০ নম্বর", title: "বানানের নিয়ম", author: "বিকল্প: শুদ্ধ বানান", tag: "", steps: [{ key: "k", label: "টপিক সম্পন্ন" }] },
+            { section: "ব্যাকরণ - ৩০ নম্বর", title: "ব্যাকরণিক শব্দ শ্রেণির প্রকারভেদ", author: "বিকল্প: ব্যাকরণিক শব্দ শ্রেণীর নিয়ম", tag: "", steps: [{ key: "k", label: "টপিক সম্পন্ন" }] },
+            { section: "ব্যাকরণ - ৩০ নম্বর", title: "উপসর্গ", author: "বিকল্প: সমাস", tag: "", steps: [{ key: "k", label: "টপিক সম্পন্ন" }] },
+            { section: "ব্যাকরণ - ৩০ নম্বর", title: "বাক্য সংক্রান্ত প্রশ্ন", author: "বিকল্প: বাক্যান্তর", tag: "", steps: [{ key: "k", label: "টপিক সম্পন্ন" }] },
+            { section: "ব্যাকরণ - ৩০ নম্বর", title: "ভাষার অপপ্রয়োগ ও শুদ্ধ প্রয়োগ", author: "বিকল্প: বাক্যের মধ্যে শুদ্ধ প্রয়োগ", tag: "", steps: [{ key: "k", label: "টপিক সম্পন্ন" }] },
+            { section: "নির্মিতি অংশ - ৭০ নম্বর", title: "অনুবাদ", author: "বিকল্প: পারিভাষিক শব্দ", tag: "", steps: [{ key: "k", label: "টপিক সম্পন্ন" }] },
+            { section: "নির্মিতি অংশ - ৭০ নম্বর", title: "দিনলিপি", author: "বিকল্প: প্রতিবেদন", tag: "", steps: [{ key: "k", label: "টপিক সম্পন্ন" }] },
+            { section: "নির্মিতি অংশ - ৭০ নম্বর", title: "বৈদ্যুতিক চিঠি", author: "বিকল্প: আবেদন পত্র", tag: "", steps: [{ key: "k", label: "টপিক সম্পন্ন" }] },
+            { section: "নির্মিতি অংশ - ৭০ নম্বর", title: "সারাংশ/সারমর্ম", author: "বিকল্প: ভাব সম্প্রসারণ", tag: "", steps: [{ key: "k", label: "টপিক সম্পন্ন" }] },
+            { section: "নির্মিতি অংশ - ৭০ নম্বর", title: "সংলাপ রচনা", author: "বিকল্প: ক্ষুদে গল্প রচনা", tag: "", steps: [{ key: "k", label: "টপিক সম্পন্ন" }] },
+            { section: "নির্মিতি অংশ - ৭০ নম্বর", title: "প্রবন্ধ রচনা", author: "বাধ্যতামূলক", tag: "", steps: [{ key: "k", label: "টপিক সম্পন্ন" }] }
+        ];
+        let banglaOpenChapterIndexes = new Set();
+        let banglaSecondOpenChapterIndexes = new Set();
+        const englishFirstPaperMeta = [
+            { section: "Reading - 60 Marks", marks: "15" },
+            { section: "Reading - 60 Marks", marks: "10" },
+            { section: "Reading - 60 Marks", marks: "10" },
+            { section: "Reading - 60 Marks", marks: "05" },
+            { section: "Reading - 60 Marks", marks: "10" },
+            { section: "Reading - 60 Marks", marks: "10" },
+            { section: "Writing - 40 Marks", marks: "10" },
+            { section: "Writing - 40 Marks", marks: "07" },
+            { section: "Writing - 40 Marks", marks: "05" },
+            { section: "Writing - 40 Marks", marks: "10" },
+            { section: "Writing - 40 Marks", marks: "08" }
+        ];
+        const englishSecondPaperMeta = [
+            { section: "Grammar Part - A", marks: "0.5x10=5" },
+            { section: "Grammar Part - A", marks: "0.5x10=5" },
+            { section: "Grammar Part - A", marks: "0.5x10=5" },
+            { section: "Grammar Part - A", marks: "0.5x10=5" },
+            { section: "Grammar Part - A", marks: "0.5x10=5" },
+            { section: "Grammar Part - A", marks: "5x1=5" },
+            { section: "Grammar Part - A", marks: "5x1=5" },
+            { section: "Grammar Part - A", marks: "5x1=5" },
+            { section: "Grammar Part - A", marks: "0.5x10=5" },
+            { section: "Grammar Part - A", marks: "0.5x10=5" },
+            { section: "Grammar Part - A", marks: "0.5x10=5" },
+            { section: "Grammar Part - A", marks: "0.5x10=5" },
+            { section: "Composition Part - B", marks: "1x8=8" },
+            { section: "Composition Part - B", marks: "1x8=8" },
+            { section: "Composition Part - B", marks: "1x10=10" },
+            { section: "Composition Part - B", marks: "1x14=14" }
+        ];
+        let englishOpenTopicIndexes = new Set();
         let allUsers = {};
         let globalAttendanceData = {};
         let globalPaymentData = {};
@@ -5448,11 +6677,14 @@
         let openedDetails = new Set();
         let subjectStates = JSON.parse(localStorage.getItem('subjectStates')) || {};
         let isStudyMode = false;
+        let ebiModeActive = localStorage.getItem('ebiModeActive') === 'true';
         let timerInterval = null;
+        let lastSeenInterval = null; // BUG-01 FIX: single interval reference to prevent memory leak
         let studySeconds = 0;
         let isTimerRunning = false;
         let targetAlarmSeconds = 0;
         let isDangerAlertActive = false;
+        let sessionAlreadySaved = false; // Guard: prevent double-save of same session
         let currentLeaderboardFilter = '24h';
         let currentSummaryMode = 'study';
         let currentSubjectTimeFilter = 'lifetime';
@@ -5495,55 +6727,38 @@
             return startTime.getTime();
         }
 
-        // FIXED: Calculate study time - use studyLogs for time filters, fallback to studyTime
+        // BUG-02 & BUG-07 FIX: Clean strategy —
+        //   'lifetime' → use studyTime (cumulative, includes ALL sessions old+new, no double-count)
+        //   '24h'/'7d'/'1m' → use studyLogs (has timestamps, needed for filtering)
         function calculateStudyTime(user, subject, filterType = 'lifetime') {
             if (!user) return 0;
 
-            let totalTime = 0;
-            const startTime = getTimeFilterStartTime(filterType);
-
-            // First try to calculate from studyLogs (new system with timestamps)
-            if (user.studyLogs && Object.keys(user.studyLogs).length > 0) {
-                Object.keys(user.studyLogs).forEach(logKey => {
-                    const log = user.studyLogs[logKey];
-
-                    if (filterType === 'lifetime') {
-                        // For lifetime, use all logs
-                        if (subject) {
-                            if (log.subject === subject) {
-                                totalTime += log.duration || 0;
-                            }
-                        } else {
-                            totalTime += log.duration || 0;
-                        }
-                    } else {
-                        // For time filters, check if log is within range
-                        if (log.timestamp >= startTime) {
-                            if (subject) {
-                                if (log.subject === subject) {
-                                    totalTime += log.duration || 0;
-                                }
-                            } else {
-                                totalTime += log.duration || 0;
-                            }
-                        }
-                    }
-                });
-            }
-
-            // Fallback: If no studyLogs or total is 0 and filter is lifetime, use old studyTime
-            // This ensures old data is preserved and shown
-            if (totalTime === 0 && filterType === 'lifetime') {
-                if (user.studyTime) {
-                    if (subject) {
-                        totalTime = user.studyTime[subject] || 0;
-                    } else {
-                        Object.keys(user.studyTime).forEach(sub => {
-                            totalTime += user.studyTime[sub] || 0;
-                        });
-                    }
+            if (filterType === 'lifetime') {
+                // studyTime is the single source of truth for lifetime totals
+                if (!user.studyTime) return 0;
+                if (subject) {
+                    return user.studyTime[subject] || 0;
+                } else {
+                    let total = 0;
+                    Object.keys(user.studyTime).forEach(sub => { total += user.studyTime[sub] || 0; });
+                    return total;
                 }
             }
+
+            // For time-filtered views — use studyLogs with timestamp ranges
+            if (!user.studyLogs) return 0;
+            const startTime = getTimeFilterStartTime(filterType);
+            let totalTime = 0;
+
+            Object.keys(user.studyLogs).forEach(logKey => {
+                const log = user.studyLogs[logKey];
+                if (!log || log.timestamp < startTime) return;
+                if (subject) {
+                    if (log.subject === subject) totalTime += log.duration || 0;
+                } else {
+                    totalTime += log.duration || 0;
+                }
+            });
 
             return totalTime;
         }
@@ -5634,9 +6849,11 @@
             const app = document.getElementById('app');
             const loader = document.getElementById('page-loader');
             setTimeout(() => {
-                app.classList.add('visible');
-                loader.style.opacity = '0';
-                setTimeout(() => loader.style.visibility = 'hidden', 600);
+                if (app) app.classList.add('visible');
+                if (loader) {
+                    loader.style.opacity = '0';
+                    setTimeout(() => loader.style.visibility = 'hidden', 600);
+                }
             }, 1000);
         };
         const showLoginModal = () => { document.getElementById("loginModal").style.display = "flex"; };
@@ -5723,10 +6940,38 @@
             document.getElementById('study-timer-view').classList.remove('hidden');
             document.getElementById('timer-subject-name').innerText = subject;
             localStorage.setItem('active_study_subject', subject);
-            resetStudyTimerUI();
 
-            const savedStartTime = localStorage.getItem('timer_start_timestamp');
-            if (savedStartTime) startTimerProcess(parseInt(savedStartTime));
+            // Check if there is a saved timer from a previous session (e.g. page reload)
+            const savedStartTime = parseInt(localStorage.getItem('timer_start_timestamp')) || 0;
+
+            if (savedStartTime && !isTimerRunning) {
+                // --- PAGE RELOAD RESTORE PATH ---
+                // A timer was running before the reload. Resume it seamlessly.
+                const savedAlarm = parseInt(localStorage.getItem('timer_target_alarm')) || 0;
+                targetAlarmSeconds = savedAlarm;
+                sessionAlreadySaved = false;
+
+                // Calculate how many seconds have elapsed since the original start
+                studySeconds = Math.floor((Date.now() - savedStartTime) / 1000);
+                updateTimerDisplay();
+                document.getElementById('timer-status-text').innerText = "STOP";
+                document.getElementById('timer-main-btn').innerHTML = '<i class="fas fa-stop"></i> স্টপ করুন';
+                document.getElementById('timer-main-btn').style.background = "var(--danger)";
+
+                // Resume the timer interval from the original start time
+                startTimerProcess(savedStartTime);
+
+            } else if (!isTimerRunning) {
+                // --- FRESH SESSION PATH ---
+                // No saved timer. User is choosing a new subject.
+                localStorage.removeItem('timer_start_timestamp');
+                localStorage.removeItem('timer_target_alarm');
+                studySeconds = 0;
+                sessionAlreadySaved = false;
+                resetStudyTimerUI();
+            }
+            // If isTimerRunning is already true, leave the timer as-is
+
             renderLeaderboard();
         }
         function exitStudyTimer() {
@@ -5759,13 +7004,7 @@
             document.getElementById('timer-digital').innerText = `${hrs}:${mins}:${secs}`;
         }
 
-        // Helper: Convert digits to Bengali
-        function convertToBengaliDigit(number) {
-            const bengaliDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
-            return number.toString().split('').map(digit => {
-                return !isNaN(parseInt(digit)) ? bengaliDigits[parseInt(digit)] : digit;
-            }).join('');
-        }
+        // NOTE: convertToBengaliDigit is defined at line 5559 — removed duplicate here (BUG-04 FIX)
 
         function handleLogin() {
             if (localStorage.getItem('device_blocked')) return showPage('device-blocked-screen');
@@ -5822,19 +7061,84 @@
             };
 
             const userLogsRef = db.ref('users/' + currentUser.id + '/studyLogs');
-            const newLogKey = userLogsRef.push().key;
-            userLogsRef.child(newLogKey).set(logData);
+            // Use startTime to prevent multiple tabs/instances from duplicating the same session
+            userLogsRef.child(startTime.toString()).set(logData)
+                .then(() => removePendingSession(startTime.toString())) // ✅ online-এ save সফল হলে backup মুছে দাও
+                .catch(() => { }); // offline হলে  — localStorage backup থেকে পরে sync হবে
         }
+
+        // ── OFFLINE SAFETY SYSTEM ──────────────────────────────────────────────
+        // যখন নেট থাকে না, তখন session localStorage-এ save হয়।
+        // নেট আসলে বা পরের বার page load হলে Firebase-এ পাঠানো হয়।
+
+        function savePendingSessionLocally(subject, duration, startTime) {
+            if (!subject || duration <= 0) return;
+            try {
+                const pending = JSON.parse(localStorage.getItem('pending_study_sessions') || '{}');
+                pending[startTime.toString()] = { subject, duration, startTime, endTime: Date.now() };
+                localStorage.setItem('pending_study_sessions', JSON.stringify(pending));
+            } catch (e) { }
+        }
+
+        function removePendingSession(key) {
+            try {
+                const pending = JSON.parse(localStorage.getItem('pending_study_sessions') || '{}');
+                delete pending[key];
+                localStorage.setItem('pending_study_sessions', JSON.stringify(pending));
+            } catch (e) { }
+        }
+
+        function syncPendingSessions() {
+            if (!currentUser || !navigator.onLine) return;
+            try {
+                const pending = JSON.parse(localStorage.getItem('pending_study_sessions') || '{}');
+                const keys = Object.keys(pending);
+                if (keys.length === 0) return;
+
+                keys.forEach(key => {
+                    const session = pending[key];
+                    if (!session) return;
+
+                    const logRef = db.ref('users/' + currentUser.id + '/studyLogs/' + key);
+
+                    // প্রথমে Firebase-এ check করো — ইতিমধ্যে save হয়েছে কিনা
+                    logRef.once('value', snapshot => {
+                        if (snapshot.exists()) {
+                            // ইতিমধ্যে Firebase-এ আছে, শুধু backup মুছে দাও
+                            removePendingSession(key);
+                        } else {
+                            // Firebase-এ নেই, এখন save করো
+                            const logData = {
+                                subject: session.subject,
+                                duration: session.duration,
+                                timestamp: session.startTime,
+                                endTime: session.endTime
+                            };
+                            logRef.set(logData).then(() => {
+                                // studyLogs save হল — এখন cumulative studyTime আপডেট করো
+                                db.ref('users/' + currentUser.id + '/studyTime/' + session.subject)
+                                    .transaction(curr => (curr || 0) + session.duration, (err, committed) => {
+                                        if (!err && committed) removePendingSession(key);
+                                    });
+                            }).catch(() => { }); // পরের sync-এ আবার চেষ্টা হবে
+                        }
+                    });
+                });
+            } catch (e) { }
+        }
+        // ──────────────────────────────────────────────────────────────────────
 
         function toggleTimer() {
             if (!isTimerRunning) {
                 const alarmMins = parseInt(document.getElementById('alarm-minutes').value) || 0;
                 targetAlarmSeconds = alarmMins * 60;
-                const startTimestamp = Date.now() - (studySeconds * 1000);
+                studySeconds = 0; // Always start fresh
+                const startTimestamp = Date.now();
                 localStorage.setItem('timer_start_timestamp', startTimestamp);
                 localStorage.setItem('timer_target_alarm', targetAlarmSeconds);
+                sessionAlreadySaved = false; // Reset save-guard for this new session
 
-                // NEW: Update active session in Firebase when timer starts
+                // Update active session in Firebase when timer starts
                 if (currentUser) {
                     const currentSubject = localStorage.getItem('active_study_subject');
                     db.ref('users/' + currentUser.id + '/activeSession').set({
@@ -5846,13 +7150,24 @@
                 startTimerProcess(startTimestamp);
             } else {
                 const currentSubject = localStorage.getItem('active_study_subject');
-                if (currentSubject && studySeconds > 0) {
-                    // Save to cumulative studyTime (preserves old data)
-                    saveStudyTimeToFirebase(currentSubject, studySeconds);
+                const startTime = parseInt(localStorage.getItem('timer_start_timestamp')) || (Date.now() - studySeconds * 1000);
 
-                    // Save session log (new system for time filters)
-                    const startTime = parseInt(localStorage.getItem('timer_start_timestamp')) || (Date.now() - studySeconds * 1000);
-                    saveStudySessionLog(currentSubject, studySeconds, startTime);
+                // Only save once per session (guard against double-tap or alarm auto-stop)
+                if (!sessionAlreadySaved) {
+                    sessionAlreadySaved = true;
+
+                    if (currentSubject && studySeconds > 0) {
+                        // 💾 OFFLINE SAFETY: সবার আগে localStorage-এ backup রাখো
+                        // নেট না থাকলেও ডেটা হারাবে না
+                        savePendingSessionLocally(currentSubject, studySeconds, startTime);
+
+                        // Save to cumulative studyTime (preserves old data)
+                        saveStudyTimeToFirebase(currentSubject, studySeconds);
+
+                        // Save session log (new system for time filters)
+                        // সফল হলে saveStudySessionLog নিজেই removePendingSession ডাকবে
+                        saveStudySessionLog(currentSubject, studySeconds, startTime);
+                    }
                 }
 
                 // Clear active session in Firebase
@@ -5887,7 +7202,9 @@
                 // 2-Hour Limit Check
                 if (studySeconds >= 7200) {
                     toggleTimer();
-                    alert("টানা ২ ঘণ্টা সম্পন্ন হয়েছে! টাইমার স্বয়ংক্রিয়ভাবে বন্ধ করা হলো। আবার পড়তে চাইলে নতুন করে শুরু করুন।");
+                    setTimeout(() => {
+                        alert("টানা ২ ঘণ্টা সম্পন্ন হয়েছে! টাইমার স্বয়ংক্রিয়ভাবে বন্ধ করা হলো। আবার পড়তে চাইলে নতুন করে শুরু করুন।");
+                    }, 500);
                     return;
                 }
 
@@ -5936,7 +7253,16 @@
             });
         }
 
-        function handleLogout() { localStorage.removeItem('hsc_uid'); localStorage.removeItem('master_auth'); localStorage.removeItem('active_study_subject'); localStorage.removeItem('timer_start_timestamp'); location.reload(); }
+        function handleLogout() {
+            // BUG-03 FIX: clear ALL timer-related localStorage keys on logout
+            localStorage.removeItem('hsc_uid');
+            localStorage.removeItem('master_auth');
+            localStorage.removeItem('active_study_subject');
+            localStorage.removeItem('timer_start_timestamp');
+            localStorage.removeItem('timer_target_alarm');
+            localStorage.removeItem('study_mode_persistent');
+            location.reload();
+        }
         function confirmLogout() {
             if (isTimerRunning) return alert("পড়া চলাকালীন লগআউট করা যাবে না।");
             document.getElementById('logoutModal').style.display = 'flex';
@@ -5950,7 +7276,10 @@
             document.getElementById('edit-pass').value = currentUser.pass || "";
             document.getElementById('edit-gender').value = currentUser.gender || "male";
             document.getElementById('profile-preview').src = currentUser.img || (currentUser.gender === 'female' ? 'https://cdn-icons-png.flaticon.com/512/6997/6997662.png' : 'https://cdn-icons-png.flaticon.com/512/4140/4140037.png');
-            document.getElementById('profileModal').style.display = 'flex'; toggleMenu();
+            document.getElementById('profileModal').style.display = 'flex';
+            // BUG-05 FIX: close dropdown directly instead of toggleMenu() which has isTimerRunning guard
+            const dropdown = document.getElementById("dropdown-menu");
+            if (dropdown && dropdown.classList.contains('show')) dropdown.classList.remove('show');
         }
         function closeProfileModal() { document.getElementById('profileModal').style.display = 'none'; }
         function handleUpdateProfile() {
@@ -5994,8 +7323,22 @@
                 }
             }
             renderSubjectBtns(); updateGlobalUI();
-            setInterval(() => { if (currentUser && currentUser.role !== 'teacher') db.ref('users/' + currentUser.id + '/lastSeen').set(Date.now()); }, 1000);
+            // BUG-01 FIX: clear old interval before creating a new one to prevent memory leak
+            if (lastSeenInterval) clearInterval(lastSeenInterval);
+            lastSeenInterval = setInterval(() => {
+                if (currentUser && currentUser.role !== 'teacher') {
+                    db.ref('users/' + currentUser.id + '/lastSeen').set(Date.now());
+                }
+            }, 1000);
+
+            // OFFLINE SAFETY: page load হলে কোনো pending session থাকলে sync করো
+            setTimeout(() => syncPendingSessions(), 3000); // ৩ সেকেন্ড পরে — Firebase connection ready হওয়ার জন্য
         }
+
+        // OFFLINE SAFETY: নেট ফিরে আসলে সাথে সাথে pending data sync করো
+        window.addEventListener('online', () => {
+            setTimeout(() => syncPendingSessions(), 2000); // ২ সেকেন্ড delay — connection stable হওয়ার জন্য
+        });
         function openApprovalModal() { document.getElementById('approvalModal').style.display = 'flex'; }
         function closeApprovalModal() { document.getElementById('approvalModal').style.display = 'none'; }
         function renderApprovalList(reqs) {
@@ -6029,11 +7372,20 @@
         }
         function renderSubjectBtns() {
             const container = document.getElementById('subject-btns'); if (!container) return; container.innerHTML = "";
+            const ebiSubjects = ["ইংরেজি", "বাংলা", "ICT", "GPA Calculator"];
             Object.keys(syllabusData).forEach(sub => {
                 const perc = calculateSubjectProgress(sub, currentUser);
-                const btn = document.createElement('div'); btn.className = `subject-btn ${selectedSub === sub ? 'active' : ''}`;
+                const btn = document.createElement('div');
+                const isEbi = ebiSubjects.includes(sub);
+                btn.className = `subject-btn ${selectedSub === sub ? 'active' : ''} ${isEbi ? 'ebi-mode-btn' : ''}`;
                 btn.innerHTML = `<div style="font-weight:bold; font-size:15px; margin-bottom:2px;">${perc.toFixed(0)}%</div><span style="font-size:12px">${sub}</span><div class="prog-mini-bar" style="width: ${perc}%"></div>`;
-                btn.onclick = () => selectSubject(sub); container.appendChild(btn);
+                btn.onclick = () => selectSubject(sub);
+
+                if (isEbi) {
+                    btn.style.setProperty('display', typeof ebiModeActive !== 'undefined' && ebiModeActive ? 'block' : 'none', 'important');
+                }
+
+                container.appendChild(btn);
             });
         }
         function selectSubject(sub) {
@@ -6055,18 +7407,281 @@
             document.querySelectorAll('.tab').forEach(t => { t.innerText.includes(paper) ? t.classList.add('active') : t.classList.remove('active'); });
             setTimeout(() => { renderChapters(); }, 10);
         }
+        function isBanglaFirstPaper(sub, paper) {
+            return sub === "বাংলা" && paper === "1st Paper";
+        }
+        function isBanglaSecondPaper(sub, paper) {
+            return sub === "বাংলা" && paper === "2nd Paper";
+        }
+        function isEnglishPaper(sub, paper) {
+            return sub === "ইংরেজি" && (paper === "1st Paper" || paper === "2nd Paper");
+        }
+        function getBanglaMeta(index) {
+            if (!isBanglaFirstPaper(selectedSub, selectedPaper)) return null;
+            return banglaFirstPaperMeta[index] || null;
+        }
+        function getRequiredPartKeys(sub, paper, index) {
+            if (sub === "ICT") return ["k", "kh", "g", "gh", "nctb"];
+            if (isEnglishPaper(sub, paper)) return ["k"];
+            if (sub === "উচ্চতর গণিত") return ["k", "kh"];
+            if (isBanglaFirstPaper(sub, paper)) {
+                const meta = banglaFirstPaperMeta[index];
+                if (meta && Array.isArray(meta.steps) && meta.steps.length > 0) {
+                    return meta.steps.map(s => s.key);
+                }
+            }
+            if (isBanglaSecondPaper(sub, paper)) {
+                const meta = banglaSecondPaperMeta[index];
+                if (meta && Array.isArray(meta.steps) && meta.steps.length > 0) {
+                    return meta.steps.map(s => s.key);
+                }
+            }
+            return ["k", "kh", "g", "gh"];
+        }
+        function getEnglishPaperMeta(paper) {
+            return paper === "1st Paper" ? englishFirstPaperMeta : englishSecondPaperMeta;
+        }
+        function getEnglishSectionClass(sectionName) {
+            if (/Reading|Writing/.test(sectionName)) {
+                return sectionName.includes("Reading") ? "english-read" : "english-write";
+            }
+            return sectionName.includes("Grammar") ? "english-grammar" : "english-composition";
+        }
+        function toggleEnglishTopic(index) {
+            if (englishOpenTopicIndexes.has(index)) englishOpenTopicIndexes.delete(index);
+            else englishOpenTopicIndexes.add(index);
+            renderChapters();
+        }
+        function bulkCheckEnglishSection(section, status, event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            const key = `${selectedSub}-${selectedPaper}`;
+            if (!currentUser.trackerData) currentUser.trackerData = {};
+            if (!currentUser.trackerData[key]) currentUser.trackerData[key] = {};
+            getEnglishPaperMeta(selectedPaper).forEach((meta, idx) => {
+                if (meta.section !== section) return;
+                currentUser.trackerData[key][idx] = { done: status, parts: { k: status, kh: false, g: false, gh: false, nctb: false } };
+            });
+            updateGlobalUI();
+            renderChapters();
+            db.ref('users/' + currentUser.id).update(currentUser);
+        }
+        function renderEnglishPaper(list, chapters, key) {
+            const paperMeta = getEnglishPaperMeta(selectedPaper);
+            const sections = [...new Set(paperMeta.map(m => m.section))];
+            sections.forEach(section => {
+                const sectionRows = paperMeta.map((m, idx) => ({ ...m, idx })).filter(r => r.section === section);
+                const sectionClass = getEnglishSectionClass(section);
+                const doneCount = sectionRows.filter(r => !!(currentUser.trackerData && currentUser.trackerData[key] && currentUser.trackerData[key][r.idx]?.done)).length;
+                const card = document.createElement('li');
+                card.className = `english-section-card ${sectionClass}`;
+                let html = `<div class="english-section-header">
+                    <div><i class="fas fa-book-open"></i> ${section} : ${doneCount}/${sectionRows.length}</div>
+                    <div class="english-section-actions">
+                        <button type="button" class="english-section-btn" onclick="bulkCheckEnglishSection('${section}', true, event)">সব শেষ</button>
+                        <button type="button" class="english-section-btn" onclick="bulkCheckEnglishSection('${section}', false, event)">সব মুছুন</button>
+                    </div>
+                </div><div class="english-section-body">`;
+                sectionRows.forEach((row, idxInSection) => {
+                    const data = (currentUser.trackerData && currentUser.trackerData[key] && currentUser.trackerData[key][row.idx]) || { done: false, parts: { k: false } };
+                    const isOpen = englishOpenTopicIndexes.has(row.idx);
+                    const arrow = isOpen ? "fa-chevron-up" : "fa-chevron-down";
+                    html += `<div class="english-topic">
+                        <div class="english-topic-head" onclick="toggleEnglishTopic(${row.idx})">
+                            <div class="english-topic-left">
+                                <span class="english-topic-number ${data.done ? 'done' : ''}">${idxInSection + 1}</span>
+                                <div>
+                                    <div class="english-topic-title">${chapters[row.idx]}</div>
+                                    <div class="english-topic-meta"><i class="fas fa-tag"></i> Marks <span class="english-mark">${row.marks}</span></div>
+                                </div>
+                            </div>
+                            <i class="fas ${arrow}" style="color: var(--text-muted);"></i>
+                        </div>
+                        ${isOpen ? `<div class="english-topic-steps"><button type="button" class="english-step-btn ${data.parts?.k ? 'checked' : ''}" onclick="toggleSubPart(${row.idx}, 'k', this)">Complete this topic</button></div>` : ''}
+                    </div>`;
+                });
+                html += `</div>`;
+                card.innerHTML = html;
+                list.appendChild(card);
+            });
+        }
+        function renderBanglaFirstPaper(list, chapters, key) {
+            const sectionOrder = ["গদ্য", "কবিতা", "সহপাঠ"];
+            sectionOrder.forEach(section => {
+                const rows = banglaFirstPaperMeta
+                    .map((meta, idx) => ({ ...meta, idx }))
+                    .filter(row => row.section === section);
+                if (rows.length === 0) return;
+
+                const sectionClass = section === "গদ্য" ? "bangla-sec-godyo" : section === "কবিতা" ? "bangla-sec-kobita" : "bangla-sec-sohopath";
+                const card = document.createElement('li');
+                card.className = `bangla-section-card ${sectionClass}`;
+                const doneCount = rows.filter(row => (currentUser.trackerData && currentUser.trackerData[key] && currentUser.trackerData[key][row.idx]?.done)).length;
+
+                let html = `<div class="bangla-section-header">
+                    <div><i class="${section === "গদ্য" ? "fas fa-book-open" : section === "কবিতা" ? "fas fa-feather-alt" : "fas fa-book"}"></i> ${section} : ${doneCount}/${rows.length}টি</div>
+                    <div class="bangla-section-actions">
+                        <button type="button" class="bangla-section-btn" onclick="bulkCheckBanglaSection('${section}', true, event)">সব শেষ</button>
+                        <button type="button" class="bangla-section-btn" onclick="bulkCheckBanglaSection('${section}', false, event)">সব মুছুন</button>
+                    </div>
+                </div><div class="bangla-section-body">`;
+
+                rows.forEach((row, rowIndex) => {
+                    const data = (currentUser.trackerData && currentUser.trackerData[key] && currentUser.trackerData[key][row.idx]) || { done: false, parts: {} };
+                    const isOpen = banglaOpenChapterIndexes.has(row.idx);
+                    const arrow = isOpen ? 'fa-chevron-up' : 'fa-chevron-down';
+
+                    html += `<div class="bangla-item">
+                        <div class="bangla-item-head" onclick="toggleBanglaChapter(${row.idx})">
+                            <div class="bangla-item-left">
+                                <span class="bangla-item-number ${data.done ? 'done' : ''}">${rowIndex + 1}</span>
+                                <div class="bangla-title-wrap">
+                                    <div class="bangla-item-title">${chapters[row.idx]}</div>
+                                    <div class="bangla-item-author"><i class="fas fa-pen-nib"></i> ${row.author}${row.tag ? ` <span class="bangla-tag ${sectionClass}-tag">${row.tag}</span>` : ''}</div>
+                                </div>
+                            </div>
+                            <i class="fas ${arrow}" style="color:#9fb5d6;"></i>
+                        </div>
+                        ${isOpen ? `<div class="bangla-steps">${row.steps.map(step => `<button class="bangla-step-btn ${data.parts?.[step.key] ? 'checked' : ''}" onclick="toggleSubPart(${row.idx}, '${step.key}', this)">${step.label}</button>`).join('')}</div>` : ''}
+                    </div>`;
+                });
+                html += `</div>`;
+                card.innerHTML = html;
+                list.appendChild(card);
+            });
+        }
+        function renderBanglaSecondPaper(list, chapters, key) {
+            const sectionOrder = ["ব্যাকরণ - ৩০ নম্বর", "নির্মিতি অংশ - ৭০ নম্বর"];
+            let globalRowIndex = 1;
+            sectionOrder.forEach(section => {
+                const rows = banglaSecondPaperMeta
+                    .map((meta, idx) => ({ ...meta, idx }))
+                    .filter(row => row.section === section);
+                if (rows.length === 0) return;
+
+                const sectionClass = section.includes("ব্যাকরণ") ? "bangla-sec-grammar" : "bangla-sec-nirmiti";
+                const card = document.createElement('li');
+                card.className = `bangla-section-card ${sectionClass}`;
+                const doneCount = rows.filter(row => (currentUser.trackerData && currentUser.trackerData[key] && currentUser.trackerData[key][row.idx]?.done)).length;
+
+                let html = `<div class="bangla-section-header">
+                    <div><i class="fas fa-layer-group"></i> ${section} : ${doneCount}/${rows.length}টি</div>
+                    <div class="bangla-section-actions">
+                        <button type="button" class="bangla-section-btn" onclick="bulkCheckBanglaSection('${section}', true, event)">সব শেষ</button>
+                        <button type="button" class="bangla-section-btn" onclick="bulkCheckBanglaSection('${section}', false, event)">সব মুছুন</button>
+                    </div>
+                </div><div class="bangla-section-body">`;
+
+                rows.forEach((row) => {
+                    const data = (currentUser.trackerData && currentUser.trackerData[key] && currentUser.trackerData[key][row.idx]) || { done: false, parts: {} };
+                    const isOpen = banglaSecondOpenChapterIndexes.has(row.idx);
+                    const arrow = isOpen ? 'fa-chevron-up' : 'fa-chevron-down';
+                    html += `<div class="bangla-item">
+                        <div class="bangla-item-head" onclick="toggleBanglaChapter(${row.idx})">
+                            <div class="bangla-item-left">
+                                <span class="bangla-item-number ${data.done ? 'done' : ''}">${globalRowIndex++}</span>
+                                <div class="bangla-title-wrap">
+                                    <div class="bangla-item-title">${chapters[row.idx]}</div>
+                                </div>
+                            </div>
+                            <i class="fas ${arrow}" style="color:#9fb5d6;"></i>
+                        </div>
+                        ${isOpen ? `<div class="bangla-steps">${row.steps.map(step => `<button class="bangla-step-btn ${data.parts?.[step.key] ? 'checked' : ''}" onclick="toggleSubPart(${row.idx}, '${step.key}', this)">${step.label}</button>`).join('')}</div>` : ''}
+                    </div>`;
+                });
+                html += `</div>`;
+                card.innerHTML = html;
+                list.appendChild(card);
+            });
+        }
+        function toggleBanglaChapter(index) {
+            const activeSet = isBanglaSecondPaper(selectedSub, selectedPaper) ? banglaSecondOpenChapterIndexes : banglaOpenChapterIndexes;
+            if (activeSet.has(index)) activeSet.delete(index);
+            else activeSet.add(index);
+            renderChapters();
+        }
+        function bulkCheckBanglaSection(section, status, event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            const key = `${selectedSub}-${selectedPaper}`;
+            if (!currentUser.trackerData) currentUser.trackerData = {};
+            if (!currentUser.trackerData[key]) currentUser.trackerData[key] = {};
+            const activeMeta = isBanglaSecondPaper(selectedSub, selectedPaper) ? banglaSecondPaperMeta : banglaFirstPaperMeta;
+            const sectionRows = activeMeta
+                .map((meta, idx) => ({ meta, idx }))
+                .filter(row => row.meta.section === section);
+            sectionRows.forEach(({ idx }) => {
+                const required = getRequiredPartKeys(selectedSub, selectedPaper, idx);
+                const parts = { k: false, kh: false, g: false, gh: false, nctb: false };
+                required.forEach(p => parts[p] = status);
+                currentUser.trackerData[key][idx] = { done: status, parts };
+            });
+            updateGlobalUI();
+            renderChapters();
+            db.ref('users/' + currentUser.id).update(currentUser);
+        }
         function renderChapters() {
             const list = document.getElementById('chapter-list'); list.innerHTML = "";
+            list.classList.toggle('hm-compact', selectedSub === "উচ্চতর গণিত");
             document.getElementById('active-title').innerText = `${selectedSub} - ${selectedPaper}`;
             const chapters = syllabusData[selectedSub][selectedPaper];
-            const subList = ["পদার্থবিজ্ঞান", "রসায়ন", "জীববিজ্ঞান"];
+            if (isEnglishPaper(selectedSub, selectedPaper)) {
+                const key = `${selectedSub}-${selectedPaper}`;
+                renderEnglishPaper(list, chapters, key);
+                updatePaperUI();
+                return;
+            }
+            if (isBanglaFirstPaper(selectedSub, selectedPaper)) {
+                const key = `${selectedSub}-${selectedPaper}`;
+                renderBanglaFirstPaper(list, chapters, key);
+                updatePaperUI();
+                return;
+            }
+            if (isBanglaSecondPaper(selectedSub, selectedPaper)) {
+                const key = `${selectedSub}-${selectedPaper}`;
+                renderBanglaSecondPaper(list, chapters, key);
+                updatePaperUI();
+                return;
+            }
+            const subList = ["পদার্থবিজ্ঞান", "রসায়ন", "জীববিজ্ঞান", "উচ্চতর গণিত", "ইংরেজি", "বাংলা", "ICT"];
             const isSpecialSub = subList.includes(selectedSub);
             chapters.forEach((ch, i) => {
                 const key = `${selectedSub}-${selectedPaper}`;
-                const data = (currentUser.trackerData && currentUser.trackerData[key] && currentUser.trackerData[key][i]) || { done: false, parts: { k: false, kh: false, g: false, gh: false } };
+                const data = (currentUser.trackerData && currentUser.trackerData[key] && currentUser.trackerData[key][i]) || { done: false, parts: { k: false, kh: false, g: false, gh: false, nctb: false } };
                 const li = document.createElement('li');
-                let html = `<div style="display:flex; align-items:center; gap:8px; flex:1;"><input type="checkbox" class="main-ch-check" ${data.done ? 'checked' : ''} onchange="toggleChapter(${i}, this.checked)"><span style="font-weight:500;">${ch}</span></div>`;
-                if (isSpecialSub) html += `<div class="sub-check-group"><div class="sub-box ${data.parts?.k ? 'checked' : ''}" onclick="toggleSubPart(${i}, 'k', this)">ক</div><div class="sub-box ${data.parts?.kh ? 'checked' : ''}" onclick="toggleSubPart(${i}, 'kh', this)">খ</div><div class="sub-box ${data.parts?.g ? 'checked' : ''}" onclick="toggleSubPart(${i}, 'g', this)">গ</div><div class="sub-box ${data.parts?.gh ? 'checked' : ''}" onclick="toggleSubPart(${i}, 'gh', this)">ঘ</div></div>`;
+
+                let html = '';
+                if (selectedSub === "ICT") {
+                    li.style.cssText = "display: flex; flex-direction: column; background: var(--bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border); box-sizing: border-box; margin-bottom: 20px; width: 100%; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);";
+
+                    html += `<div style="display:flex; align-items:center; gap:12px; width: 100%;">
+                        <input type="checkbox" class="main-ch-check" ${data.done ? 'checked' : ''} onchange="toggleChapter(${i}, this.checked)">
+                        <span style="font-weight:bold; font-size: 16px;">${ch}</span>
+                    </div>`;
+
+                    html += `<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px; width: 100%;">
+                        <div class="sub-box ${data.parts?.k ? 'checked' : ''}" onclick="toggleSubPart(${i}, 'k', this)" style="width: 100%; height: auto; padding: 14px 0; border-radius: 8px; box-sizing: border-box; font-size: 16px; transition: 0.1s;">ক</div>
+                        <div class="sub-box ${data.parts?.kh ? 'checked' : ''}" onclick="toggleSubPart(${i}, 'kh', this)" style="width: 100%; height: auto; padding: 14px 0; border-radius: 8px; box-sizing: border-box; font-size: 16px; transition: 0.1s;">খ</div>
+                        <div class="sub-box ${data.parts?.g ? 'checked' : ''}" onclick="toggleSubPart(${i}, 'g', this)" style="width: 100%; height: auto; padding: 14px 0; border-radius: 8px; box-sizing: border-box; font-size: 16px; transition: 0.1s;">গ</div>
+                        <div class="sub-box ${data.parts?.gh ? 'checked' : ''}" onclick="toggleSubPart(${i}, 'gh', this)" style="width: 100%; height: auto; padding: 14px 0; border-radius: 8px; box-sizing: border-box; font-size: 16px; transition: 0.1s;">ঘ</div>
+                    </div>`;
+
+                    html += `<div class="sub-box nctb-btn ${data.parts?.nctb ? 'checked' : ''}" onclick="toggleSubPart(${i}, 'nctb', this)" style="width: 100%; height: auto; text-align: center; border-radius: 8px; padding: 14px 0; margin-top: 12px; font-weight: bold; box-sizing: border-box; font-size: 16px; transition: 0.1s; letter-spacing: 0.5px;">NCTB দাগানো বই</div>`;
+                } else {
+                    html = `<div style="display:flex; align-items:center; gap:8px; flex:1;"><input type="checkbox" class="main-ch-check" ${data.done ? 'checked' : ''} onchange="toggleChapter(${i}, this.checked)"><span style="font-weight:500;">${ch}</span></div>`;
+                    if (isSpecialSub) {
+                        if (selectedSub === "উচ্চতর গণিত") {
+                            html += `<div class="sub-check-group"><div class="sub-box hm-part-box ${data.parts?.k ? 'checked' : ''}" onclick="toggleSubPart(${i}, 'k', this)">ক্লাস নোট</div><div class="sub-box hm-part-box ${data.parts?.kh ? 'checked' : ''}" onclick="toggleSubPart(${i}, 'kh', this)">সাতবার CQ</div></div>`;
+                        } else {
+                            html += `<div class="sub-check-group"><div class="sub-box ${data.parts?.k ? 'checked' : ''}" onclick="toggleSubPart(${i}, 'k', this)">ক</div><div class="sub-box ${data.parts?.kh ? 'checked' : ''}" onclick="toggleSubPart(${i}, 'kh', this)">খ</div><div class="sub-box ${data.parts?.g ? 'checked' : ''}" onclick="toggleSubPart(${i}, 'g', this)">গ</div><div class="sub-box ${data.parts?.gh ? 'checked' : ''}" onclick="toggleSubPart(${i}, 'gh', this)">ঘ</div></div>`;
+                        }
+                    }
+                }
+
                 li.innerHTML = html; list.appendChild(li);
             });
             updatePaperUI();
@@ -6075,27 +7690,48 @@
             element.classList.toggle('checked'); const key = `${selectedSub}-${selectedPaper}`;
             if (!currentUser.trackerData) currentUser.trackerData = {};
             if (!currentUser.trackerData[key]) currentUser.trackerData[key] = {};
-            if (!currentUser.trackerData[key][index]) currentUser.trackerData[key][index] = { done: false, parts: { k: false, kh: false, g: false, gh: false } };
-            const currentParts = currentUser.trackerData[key][index].parts || { k: false, kh: false, g: false, gh: false };
+            if (!currentUser.trackerData[key][index]) currentUser.trackerData[key][index] = { done: false, parts: { k: false, kh: false, g: false, gh: false, nctb: false } };
+            const currentParts = currentUser.trackerData[key][index].parts || { k: false, kh: false, g: false, gh: false, nctb: false };
             currentParts[part] = !currentParts[part]; currentUser.trackerData[key][index].parts = currentParts;
-            currentUser.trackerData[key][index].done = currentParts.k && currentParts.kh && currentParts.g && currentParts.gh;
-            updateGlobalUI(); db.ref('users/' + currentUser.id).update(currentUser).then(() => renderChapters());
+            const required = getRequiredPartKeys(selectedSub, selectedPaper, index);
+            currentUser.trackerData[key][index].done = required.every(p => !!currentParts[p]);
+            updateGlobalUI();
+            if (isBanglaFirstPaper(selectedSub, selectedPaper) || isBanglaSecondPaper(selectedSub, selectedPaper) || isEnglishPaper(selectedSub, selectedPaper)) renderChapters();
+            db.ref('users/' + currentUser.id).update(currentUser).then(() => {
+                if (!isBanglaFirstPaper(selectedSub, selectedPaper) && !isBanglaSecondPaper(selectedSub, selectedPaper) && !isEnglishPaper(selectedSub, selectedPaper)) renderChapters();
+            });
         }
         function toggleChapter(index, isDone) {
             const key = `${selectedSub}-${selectedPaper}`;
             if (!currentUser.trackerData) currentUser.trackerData = {};
             if (!currentUser.trackerData[key]) currentUser.trackerData[key] = {};
-            if (!currentUser.trackerData[key][index]) currentUser.trackerData[key][index] = { done: false, parts: { k: false, kh: false, g: false, gh: false } };
+            if (!currentUser.trackerData[key][index]) currentUser.trackerData[key][index] = { done: false, parts: { k: false, kh: false, g: false, gh: false, nctb: false } };
             currentUser.trackerData[key][index].done = isDone;
-            if (isDone) currentUser.trackerData[key][index].parts = { k: true, kh: true, g: true, gh: true };
-            updateGlobalUI(); db.ref('users/' + currentUser.id).update(currentUser).then(() => renderChapters());
+            const required = getRequiredPartKeys(selectedSub, selectedPaper, index);
+            const parts = { k: false, kh: false, g: false, gh: false, nctb: false };
+            required.forEach(p => parts[p] = isDone);
+            currentUser.trackerData[key][index].parts = parts;
+            updateGlobalUI();
+            if (isBanglaFirstPaper(selectedSub, selectedPaper) || isBanglaSecondPaper(selectedSub, selectedPaper) || isEnglishPaper(selectedSub, selectedPaper)) renderChapters();
+            db.ref('users/' + currentUser.id).update(currentUser).then(() => {
+                if (!isBanglaFirstPaper(selectedSub, selectedPaper) && !isBanglaSecondPaper(selectedSub, selectedPaper) && !isEnglishPaper(selectedSub, selectedPaper)) renderChapters();
+            });
         }
         function bulkCheck(status) {
             const chapters = syllabusData[selectedSub][selectedPaper]; const key = `${selectedSub}-${selectedPaper}`;
             if (!currentUser.trackerData) currentUser.trackerData = {};
             if (!currentUser.trackerData[key]) currentUser.trackerData[key] = {};
-            chapters.forEach((_, i) => { currentUser.trackerData[key][i] = { done: status, parts: { k: status, kh: status, g: status, gh: status } }; });
-            updateGlobalUI(); db.ref('users/' + currentUser.id).update(currentUser).then(() => renderChapters());
+            chapters.forEach((_, i) => {
+                const required = getRequiredPartKeys(selectedSub, selectedPaper, i);
+                const parts = { k: false, kh: false, g: false, gh: false, nctb: false };
+                required.forEach(p => parts[p] = status);
+                currentUser.trackerData[key][i] = { done: status, parts };
+            });
+            updateGlobalUI();
+            if (isBanglaFirstPaper(selectedSub, selectedPaper) || isBanglaSecondPaper(selectedSub, selectedPaper) || isEnglishPaper(selectedSub, selectedPaper)) renderChapters();
+            db.ref('users/' + currentUser.id).update(currentUser).then(() => {
+                if (!isBanglaFirstPaper(selectedSub, selectedPaper) && !isBanglaSecondPaper(selectedSub, selectedPaper) && !isEnglishPaper(selectedSub, selectedPaper)) renderChapters();
+            });
         }
         function updatePaperUI() {
             const perc = calculatePaperPercentage(selectedSub, selectedPaper, currentUser);
@@ -6104,14 +7740,16 @@
         }
         function calculatePaperPercentage(sub, paper, user) {
             const chapters = syllabusData[sub][paper]; const key = `${sub}-${paper}`;
-            const subList = ["পদার্থবিজ্ঞান", "রসায়ন", "জীববিজ্ঞান"];
+            const subList = ["পদার্থবিজ্ঞান", "রসায়ন", "জীববিজ্ঞান", "উচ্চতর গণিত", "ইংরেজি", "বাংলা", "ICT"];
             let score = 0;
             chapters.forEach((_, i) => {
                 const data = (user.trackerData && user.trackerData[key] && user.trackerData[key][i]);
                 if (data) {
                     if (subList.includes(sub)) {
-                        const parts = data.parts || { k: false, kh: false, g: false, gh: false };
-                        if (parts.k) score += 0.25; if (parts.kh) score += 0.25; if (parts.g) score += 0.25; if (parts.gh) score += 0.25;
+                        const parts = data.parts || { k: false, kh: false, g: false, gh: false, nctb: false };
+                        const required = getRequiredPartKeys(sub, paper, i);
+                        const perPart = 1 / required.length;
+                        required.forEach(p => { if (parts[p]) score += perPart; });
                     } else if (data.done) score += 1;
                 }
             });
@@ -6182,10 +7820,13 @@
                         timeB = calculateStudyTime(b, null, currentLeaderboardFilter);
                     }
 
-                    // Add current session time for current user if timer is running
-                    if (currentUser && a.id === currentUser.id && isTimerRunning) {
-                        if (!activeSubject || activeSubject === localStorage.getItem('active_study_subject')) {
-                            timeA += studySeconds;
+                    // BUG-06 FIX: Apply live studySeconds for current user on BOTH sides (a and b)
+                    if (currentUser && isTimerRunning) {
+                        const liveSubject = localStorage.getItem('active_study_subject');
+                        const sessionIsForSubject = !activeSubject || activeSubject === liveSubject;
+                        if (sessionIsForSubject) {
+                            if (a.id === currentUser.id) timeA += studySeconds;
+                            if (b.id === currentUser.id) timeB += studySeconds;
                         }
                     }
 
@@ -6399,14 +8040,18 @@
                     const perc = calculatePaperPercentage(sub, paper, user); const item = document.createElement('div');
                     item.className = "summary-item"; const safeKey = `${sub.replace(/\s+/g, '')}-${paper.replace(/\s+/g, '')}`;
                     let detailsHtml = ""; const key = `${sub}-${paper}`; const chapters = syllabusData[sub][paper];
-                    const subList = ["পদার্থবিজ্ঞান", "রসায়ন", "জীববিজ্ঞান"];
+                    const subList = ["পদার্থবিজ্ঞান", "রসায়ন", "জীববিজ্ঞান", "উচ্চতর গণিত", "ইংরেজি", "বাংলা", "ICT"];
                     chapters.forEach((ch, idx) => {
                         const chData = (user.trackerData && user.trackerData[key] && user.trackerData[key][idx]);
                         let icon = chData?.done ? '<i class="fas fa-check-circle" style="color:var(--success)"></i>' : '<i class="far fa-circle" style="color:#cbd5e1"></i>';
                         let partsBoxes = "";
                         if (subList.includes(sub)) {
                             const p = chData?.parts || { k: false, kh: false, g: false, gh: false };
-                            partsBoxes = `<div class="mini-check-group"><div class="mini-box ${p.k ? 'active' : ''}">ক</div><div class="mini-box ${p.kh ? 'active' : ''}">খ</div><div class="mini-box ${p.g ? 'active' : ''}">গ</div><div class="mini-box ${p.gh ? 'active' : ''}">ঘ</div></div>`;
+                            if (sub === "উচ্চতর গণিত") {
+                                partsBoxes = `<div class="mini-check-group"><div class="mini-box ${p.k ? 'active' : ''}" style="width:auto; min-width:56px; padding:0 6px; font-size:9px; line-height:1.1;">ক্লাস নোট</div><div class="mini-box ${p.kh ? 'active' : ''}" style="width:auto; min-width:56px; padding:0 6px; font-size:9px; line-height:1.1;">সাতবার CQ</div></div>`;
+                            } else {
+                                partsBoxes = `<div class="mini-check-group"><div class="mini-box ${p.k ? 'active' : ''}">ক</div><div class="mini-box ${p.kh ? 'active' : ''}">খ</div><div class="mini-box ${p.g ? 'active' : ''}">গ</div><div class="mini-box ${p.gh ? 'active' : ''}">ঘ</div></div>`;
+                            }
                         }
                         detailsHtml += `<div class="detail-row"><span class="ch-name-small">${icon} ${ch}</span>${partsBoxes}</div>`;
                     });
@@ -6421,11 +8066,11 @@
                     body.appendChild(item);
                 });
             });
-            modal.style.display = "flex";
+            // BUG-11 FIX: removed duplicate modal display - already shown at top of viewSummary
         }
 
         function updateSummaryLiveTime() {
-            if (!activeSummaryUid || activeSummaryUid !== currentUser.id || !currentUser) return;
+            if (!currentUser || !activeSummaryUid || activeSummaryUid !== currentUser.id) return; // BUG-12 FIX: !currentUser must come first
             if (document.getElementById('summaryModal').style.display !== 'flex') return;
 
             // Update stats based on filter - using calculateStudyTime
@@ -6472,14 +8117,52 @@
                     currentUser = { id: savedUid, name: "Teacher", role: 'teacher', gender: 'male', progress: 0, isApproved: true };
                     initDashboard(); finalizePage(); return;
                 }
-                db.ref('users/' + savedUid).once('value', snapshot => {
-                    currentUser = snapshot.val();
-                    if (currentUser) { if (currentUser.isBanned) showPage('banned-screen'); else if (currentUser.role === 'student' && currentUser.isApproved === false) showPage('waiting-room-screen'); else initDashboard(); }
-                    else { localStorage.removeItem('hsc_uid'); showPage('login-page'); }
+                let pageFinalized = false;
+                const safeFinalizePage = () => {
+                    if (pageFinalized) return;
+                    pageFinalized = true;
                     finalizePage();
-                });
+                };
+                // Fallback: weak/offline network হলেও loader আটকে থাকবে না
+                const networkFallbackTimer = setTimeout(() => {
+                    if (!currentUser) {
+                        showPage('login-page');
+                    }
+                    safeFinalizePage();
+                }, 4500);
+
+                db.ref('users/' + savedUid).once('value')
+                    .then(snapshot => {
+                        currentUser = snapshot.val();
+                        if (currentUser) {
+                            if (currentUser.isBanned) showPage('banned-screen');
+                            else if (currentUser.role === 'student' && currentUser.isApproved === false) showPage('waiting-room-screen');
+                            else initDashboard();
+                        } else {
+                            localStorage.removeItem('hsc_uid');
+                            showPage('login-page');
+                        }
+                    })
+                    .catch(() => {
+                        showPage('login-page');
+                    })
+                    .finally(() => {
+                        clearTimeout(networkFallbackTimer);
+                        safeFinalizePage();
+                    });
             } else { showPage('login-page'); if (!localStorage.getItem("master_auth")) showLoginModal(); finalizePage(); }
         })();
+
+        // Global failsafe: unexpected runtime error / weak network হলেও loading screen সরবে
+        setTimeout(() => {
+            const loader = document.getElementById('page-loader');
+            const app = document.getElementById('app');
+            if (loader && loader.style.visibility !== 'hidden') {
+                if (app) app.classList.add('visible');
+                loader.style.opacity = '0';
+                loader.style.visibility = 'hidden';
+            }
+        }, 8000);
 
 
 
@@ -8118,6 +9801,36 @@
             });
         }
 
+
+        function toggleEbiMode(event, forceState = null) {
+            if (event && event.stopPropagation) {
+                event.stopPropagation();
+            }
+            if (forceState !== null) {
+                ebiModeActive = forceState;
+            } else {
+                ebiModeActive = !ebiModeActive;
+            }
+            localStorage.setItem('ebiModeActive', ebiModeActive);
+            const btns = document.querySelectorAll('.ebi-mode-btn');
+            const toggleIconText = document.getElementById('ebi-mode-text');
+            if (toggleIconText) {
+                if (ebiModeActive) {
+                    btns.forEach(b => {
+                        b.style.setProperty('display', 'block', 'important');
+                    });
+                    toggleIconText.innerHTML = '<i class="fas fa-eye-slash"></i> EBI Mode: ON';
+                } else {
+                    btns.forEach(b => {
+                        b.style.setProperty('display', 'none', 'important');
+                    });
+                    toggleIconText.innerHTML = '<i class="fas fa-eye"></i> EBI Mode: OFF';
+                }
+            }
+        }
+        // Initialize UI based on saved state
+        setTimeout(() => toggleEbiMode(null, ebiModeActive), 500);
+
         document.onkeydown = function (e) {
             if (e.keyCode == 123) return false;
             if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
@@ -8153,6 +9866,6 @@
             </div>
         </div>
     </div>
+    </div>
 </body>
-
 </html>
