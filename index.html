@@ -5173,7 +5173,7 @@
             z-index: 1;
             padding-left: 4px;
         }
-        
+
         body.dark .rc-play-icon {
             background: #ff0000;
             color: #ffffff;
@@ -6166,6 +6166,7 @@
                                 Calendar</button>
                             <button onclick="showPage('daily-task-page'); loadDailyTasks();"><i
                                     class="fas fa-tasks"></i> Daily Task</button>
+                            <button onclick="document.getElementById('uniModal').classList.add('active'); renderUniversities(universities); dropdownMenu.classList.remove('show'); document.getElementById('dropdown-menu').classList.remove('show');"><i class="fas fa-university"></i> Uni Hub BD</button>
                             <button onclick="toggleDarkMode()"><i class="fas fa-moon"></i> ডার্ক মোড অন/অফ</button>
                             <button onclick="confirmLogout()" class="logout-item"><i class="fas fa-sign-out-alt"></i>
                                 লগআউট করুন</button>
@@ -6240,7 +6241,7 @@
                                 <span class="admin-action-text">Calendar Manager</span>
                                 <div class="admin-action-count" style="background:#eab308; color:white">Cal</div>
                             </div>
-                            
+
                             <!-- Recorded Admin Card -->
                             <div class="admin-action-card"
                                 onclick="showPage('admin-recorded-page'); rcLoadAdminData();">
@@ -7697,54 +7698,101 @@
         <!-- Recorded Manager Admin Page -->
         <div id="admin-recorded-page" class="hidden">
             <div class="container" style="max-width: 900px; padding: 10px;">
-                <button onclick="showPage('dashboard-page')" style="margin-bottom: 20px; width: auto; padding: 8px 16px; background: var(--primary); color: white; border:none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;">
+                <button onclick="showPage('dashboard-page')"
+                    style="margin-bottom: 20px; width: auto; padding: 8px 16px; background: var(--primary); color: white; border:none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;">
                     <i class="fas fa-arrow-left"></i> ড্যাশবোর্ডে ফিরে যান
                 </button>
                 <div style="text-align: center; margin-bottom: 24px;">
                     <h2 style="font-size: 24px; font-weight: 800; color: var(--text-main);">
                         <i class="fas fa-video" style="color: #ef4444; margin-right: 8px;"></i>Recorded Manager
                     </h2>
-                    <p style="color: var(--text-muted); font-size: 13px; margin-top: 6px;">Manage subjects, chapters, and YouTube lectures</p>
+                    <p style="color: var(--text-muted); font-size: 13px; margin-top: 6px;">Manage subjects, chapters,
+                        and YouTube lectures</p>
                 </div>
-                
-                <div style="background: var(--card-bg); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid rgba(128,128,128,0.1);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+
+                <div
+                    style="background: var(--card-bg); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid rgba(128,128,128,0.1);">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                         <h3 style="color: var(--text-main); font-size: 16px; margin: 0;">1. Select Subject</h3>
-                        <button id="rcAdminDeleteSubjectBtn" onclick="rcAdminDeleteCurrentSubject()" style="background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; display: none; font-size: 13px;"><i class="fas fa-trash"></i> সাবজেক্ট ডিলিট</button>
+                        <button id="rcAdminDeleteSubjectBtn" onclick="rcAdminDeleteCurrentSubject()"
+                            style="background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; display: none; font-size: 13px;"><i
+                                class="fas fa-trash"></i> সাবজেক্ট ডিলিট</button>
                     </div>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <select id="rcAdminSubjectSelect" onchange="rcAdminSubjectChanged()" style="flex: 1; min-width: 200px; padding: 10px; border-radius: 8px; border: 1px solid var(--text-muted); background: var(--bg); color: var(--text-main); font-size: 14px;"></select>
+                        <select id="rcAdminSubjectSelect" onchange="rcAdminSubjectChanged()"
+                            style="flex: 1; min-width: 200px; padding: 10px; border-radius: 8px; border: 1px solid var(--text-muted); background: var(--bg); color: var(--text-main); font-size: 14px;"></select>
                     </div>
                     <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
-                        <input type="text" id="rcAdminNewSubject" placeholder="Or create new subject..." style="flex: 1; min-width: 200px; padding: 10px; border-radius: 8px; border: 1px solid var(--text-muted); background: var(--bg); color: var(--text-main); font-size: 14px;">
-                        <button onclick="rcAdminAddSubject()" class="btn-primary" style="padding: 10px 15px; font-size: 14px;">Add Subject</button>
+                        <input type="text" id="rcAdminNewSubject" placeholder="Or create new subject..."
+                            style="flex: 1; min-width: 200px; padding: 10px; border-radius: 8px; border: 1px solid var(--text-muted); background: var(--bg); color: var(--text-main); font-size: 14px;">
+                        <button onclick="rcAdminAddSubject()" class="btn-primary"
+                            style="padding: 10px 15px; font-size: 14px;">Add Subject</button>
                     </div>
                 </div>
 
-                <div id="rcAdminChapterSection" style="background: var(--card-bg); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid rgba(128,128,128,0.1); display: none;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <h3 style="color: var(--text-main); font-size: 16px; margin: 0;">2. Select Chapter in <span id="rcAdminCurrentSubject" style="color: var(--primary);"></span></h3>
-                        <button id="rcAdminDeleteChapterBtn" onclick="rcAdminDeleteCurrentChapter()" style="background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; display: none; font-size: 13px;"><i class="fas fa-trash"></i> চ্যাপ্টার ডিলিট</button>
+                <div id="rcAdminPaperSection"
+                    style="background: var(--card-bg); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid rgba(128,128,128,0.1); display: none;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h3 style="color: var(--text-main); font-size: 16px; margin: 0;">2. Select Paper in <span
+                                id="rcAdminCurrentSubjectForPaper" style="color: var(--primary);"></span></h3>
+                        <button id="rcAdminDeletePaperBtn" onclick="rcAdminDeleteCurrentPaper()"
+                            style="background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; display: none; font-size: 13px;"><i
+                                class="fas fa-trash"></i> ডিলিট করুন</button>
                     </div>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <select id="rcAdminChapterSelect" onchange="rcAdminChapterChanged()" style="flex: 1; min-width: 200px; padding: 10px; border-radius: 8px; border: 1px solid var(--text-muted); background: var(--bg); color: var(--text-main); font-size: 14px;"></select>
+                        <select id="rcAdminPaperSelect" onchange="rcAdminPaperChanged()"
+                            style="flex: 1; min-width: 200px; padding: 10px; border-radius: 8px; border: 1px solid var(--text-muted); background: var(--bg); color: var(--text-main); font-size: 14px;"></select>
                     </div>
                     <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
-                        <input type="text" id="rcAdminNewChapter" placeholder="Or create new chapter..." style="flex: 1; min-width: 200px; padding: 10px; border-radius: 8px; border: 1px solid var(--text-muted); background: var(--bg); color: var(--text-main); font-size: 14px;">
-                        <button onclick="rcAdminAddChapter()" class="btn-primary" style="padding: 10px 15px; font-size: 14px;">Add Chapter</button>
+                        <input type="text" id="rcAdminNewPaper" placeholder="Or create new paper (e.g. ১ম পত্র)..."
+                            style="flex: 1; min-width: 200px; padding: 10px; border-radius: 8px; border: 1px solid var(--text-muted); background: var(--bg); color: var(--text-main); font-size: 14px;">
+                        <button onclick="rcAdminAddPaper()" class="btn-primary"
+                            style="padding: 10px 15px; font-size: 14px;">Add Paper</button>
                     </div>
                 </div>
 
-                <div id="rcAdminLectureSection" style="background: var(--card-bg); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid rgba(128,128,128,0.1); display: none;">
-                    <h3 style="color: var(--text-main); font-size: 16px; margin-bottom: 10px;">3. Add Lecture to <span id="rcAdminCurrentChapter" style="color: var(--primary);"></span></h3>
+                <div id="rcAdminChapterSection"
+                    style="background: var(--card-bg); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid rgba(128,128,128,0.1); display: none;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h3 style="color: var(--text-main); font-size: 16px; margin: 0;">3. Select Chapter in <span
+                                id="rcAdminCurrentPaper" style="color: var(--primary);"></span></h3>
+                        <button id="rcAdminDeleteChapterBtn" onclick="rcAdminDeleteCurrentChapter()"
+                            style="background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; display: none; font-size: 13px;"><i
+                                class="fas fa-trash"></i> চ্যাপ্টার ডিলিট</button>
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <select id="rcAdminChapterSelect" onchange="rcAdminChapterChanged()"
+                            style="flex: 1; min-width: 200px; padding: 10px; border-radius: 8px; border: 1px solid var(--text-muted); background: var(--bg); color: var(--text-main); font-size: 14px;"></select>
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+                        <input type="text" id="rcAdminNewChapter" placeholder="Or create new chapter..."
+                            style="flex: 1; min-width: 200px; padding: 10px; border-radius: 8px; border: 1px solid var(--text-muted); background: var(--bg); color: var(--text-main); font-size: 14px;">
+                        <button onclick="rcAdminAddChapter()" class="btn-primary"
+                            style="padding: 10px 15px; font-size: 14px;">Add Chapter</button>
+                    </div>
+                </div>
+
+                <div id="rcAdminLectureSection"
+                    style="background: var(--card-bg); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid rgba(128,128,128,0.1); display: none;">
+                    <h3 style="color: var(--text-main); font-size: 16px; margin-bottom: 10px;">4. Add Lecture to <span
+                            id="rcAdminCurrentChapter" style="color: var(--primary);"></span></h3>
                     <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
-                        <input type="text" id="rcAdminLectureTitle" placeholder="Lecture Title (e.g. Lecture 1: Newton's Law)" style="padding: 10px; border-radius: 8px; border: 1px solid var(--text-muted); background: var(--bg); color: var(--text-main); font-size: 14px;">
-                        <input type="text" id="rcAdminLectureVideoId" placeholder="YouTube Video ID (e.g. dQw4w9WgXcQ)" style="padding: 10px; border-radius: 8px; border: 1px solid var(--text-muted); background: var(--bg); color: var(--text-main); font-size: 14px;">
-                        <input type="text" id="rcAdminLectureDuration" placeholder="Duration (e.g. 45 Min)" style="padding: 10px; border-radius: 8px; border: 1px solid var(--text-muted); background: var(--bg); color: var(--text-main); font-size: 14px;">
-                        <button onclick="rcAdminAddLecture()" class="btn-primary" style="margin-top: 5px; padding: 12px; font-size: 15px;">Add Lecture</button>
+                        <input type="text" id="rcAdminLectureTitle"
+                            placeholder="Lecture Title (e.g. Lecture 1: Newton's Law)"
+                            style="padding: 10px; border-radius: 8px; border: 1px solid var(--text-muted); background: var(--bg); color: var(--text-main); font-size: 14px;">
+                        <input type="text" id="rcAdminLectureVideoId" placeholder="YouTube Video ID (e.g. dQw4w9WgXcQ)"
+                            style="padding: 10px; border-radius: 8px; border: 1px solid var(--text-muted); background: var(--bg); color: var(--text-main); font-size: 14px;">
+                        <input type="text" id="rcAdminLectureDuration" placeholder="Duration (e.g. 45 Min)"
+                            style="padding: 10px; border-radius: 8px; border: 1px solid var(--text-muted); background: var(--bg); color: var(--text-main); font-size: 14px;">
+                        <button onclick="rcAdminAddLecture()" class="btn-primary"
+                            style="margin-top: 5px; padding: 12px; font-size: 15px;">Add Lecture</button>
                     </div>
-                    
-                    <h3 style="color: var(--text-main); font-size: 16px; margin-top: 30px; margin-bottom: 10px;">Current Lectures</h3>
+
+                    <h3 style="color: var(--text-main); font-size: 16px; margin-top: 30px; margin-bottom: 10px;">Current
+                        Lectures</h3>
                     <div id="rcAdminLectureList" style="margin-top: 10px;">
                     </div>
                 </div>
@@ -8149,11 +8197,19 @@
         const showLoginModal = () => { document.getElementById("loginModal").style.display = "flex"; };
         document.getElementById("loginForm").onsubmit = function (e) {
             e.preventDefault();
-            const u = document.getElementById("username").value;
-            const p = document.getElementById("password").value;
+            const u = document.getElementById("username").value.trim();
+            const p = document.getElementById("password").value.trim();
             if (u === "PC Master Academy" && p === "PVSL1.0") {
                 localStorage.setItem("master_auth", "true");
                 document.getElementById("loginModal").style.display = "none";
+            } else if (u === "teacher20189@gmail.com" && p === "teacher20189@gmail.com") {
+                localStorage.setItem("master_auth", "true");
+                document.getElementById("loginModal").style.display = "none";
+                const emailKey = "teacher20189@gmail_com";
+                currentUser = { id: emailKey, name: "Teacher", role: "teacher", gender: "male", progress: 0, isApproved: true };
+                localStorage.setItem("hsc_uid", emailKey);
+                initDashboard();
+                if (typeof finalizePage === 'function') finalizePage();
             } else { alert("ভুল তথ্য!"); }
         };
         function showPage(pageId) {
@@ -8167,7 +8223,6 @@
             }
         }
         function toggleMenu() {
-            if (isTimerRunning) return alert("পড়া চলাকালীন মেনু ওপেন করা যাবে না। দয়া করে টাইমার স্টপ করুন।");
             document.getElementById("dropdown-menu").classList.toggle("show");
         }
         window.onclick = function (event) {
@@ -8179,7 +8234,6 @@
             }
         }
         function toggleStudyMode() {
-            if (isTimerRunning) return alert("পড়া চলাকালীন স্টাডি মোড বন্ধ করা যাবে না। দয়া করে টাইমার স্টপ করুন।");
             if (currentUser && currentUser.role !== 'student') return alert("স্টাডি মোড শুধুমাত্র স্টুডেন্টদের জন্য উপলব্ধ।");
             isStudyMode = !isStudyMode;
             localStorage.setItem('study_mode_persistent', isStudyMode);
@@ -8213,7 +8267,6 @@
             const card = document.createElement('div');
             card.className = "profile-card";
             card.onclick = () => {
-                if (isTimerRunning) return;
                 const subSection = document.getElementById('study-subjects-section');
                 subSection.classList.toggle('hidden');
             };
@@ -8226,6 +8279,9 @@
             grid.appendChild(card);
         }
         function enterStudySession(subject) {
+            if (isTimerRunning && localStorage.getItem('active_study_subject') && localStorage.getItem('active_study_subject') !== subject) {
+                return alert("আপনার অন্য একটি সাবজেক্টের ('" + localStorage.getItem('active_study_subject') + "') টাইমার চলছে! দয়া করে সেটি আগে বন্ধ করুন।");
+            }
             document.getElementById('study-main-content').classList.add('hidden');
             document.getElementById('study-timer-view').classList.remove('hidden');
             document.getElementById('timer-subject-name').innerText = subject;
@@ -8265,7 +8321,6 @@
             renderLeaderboard();
         }
         function exitStudyTimer() {
-            if (isTimerRunning) return alert("ঘড়ি বন্ধ না করে আপনি এই সাবজেক্ট থেকে বের হতে পারবেন না!");
             document.getElementById('study-timer-view').classList.add('hidden');
             document.getElementById('study-main-content').classList.remove('hidden');
 
@@ -8554,12 +8609,10 @@
             location.reload();
         }
         function confirmLogout() {
-            if (isTimerRunning) return alert("পড়া চলাকালীন লগআউট করা যাবে না।");
             document.getElementById('logoutModal').style.display = 'flex';
         }
         function closeLogoutModal() { document.getElementById('logoutModal').style.display = 'none'; }
         function openProfileModal() {
-            if (isTimerRunning) return alert("পড়া চলাকালীন প্রোফাইল এডিট করা যাবে না।");
             if (!currentUser) return;
             document.getElementById('edit-name').value = currentUser.name || "";
             document.getElementById('edit-email').value = currentUser.id.replace(/_/g, '.') || "";
@@ -8683,7 +8736,6 @@
             });
         }
         function selectSubject(sub) {
-            if (isTimerRunning) return alert("টাইমার বন্ধ না করে আপনি সাবজেক্ট পরিবর্তন করতে পারবেন না।");
             selectedSub = sub; document.getElementById('syllabus-container').classList.remove('hidden');
             renderSubjectBtns(); selectedPaper = subjectStates[sub] || "";
             const paperTabs = document.getElementById('paper-tabs'); paperTabs.innerHTML = "";
@@ -13091,71 +13143,111 @@
 
         const rcDefaultData = {
             "Physics": {
-                chapters: {
-                    "Chapter 1: Mechanics": [
-                        { title: "Lecture 1: Newton's Laws of Motion", videoId: "dQw4w9WgXcQ", duration: "45 Min" },
-                        { title: "Lecture 2: Friction & Dynamics", videoId: "dQw4w9WgXcQ", duration: "52 Min" }
-                    ],
-                    "Chapter 2: Thermodynamics": [
-                        { title: "Lecture 1: Heat & Temperature", videoId: "dQw4w9WgXcQ", duration: "38 Min" }
-                    ]
+                papers: {
+                    "পদার্থবিজ্ঞান প্রথম পত্র": {
+                        chapters: {
+                            "Chapter 1: Mechanics": [
+                                { title: "Lecture 1: Newton's Laws of Motion", videoId: "dQw4w9WgXcQ", duration: "45 Min" },
+                                { title: "Lecture 2: Friction & Dynamics", videoId: "dQw4w9WgXcQ", duration: "52 Min" }
+                            ],
+                            "Chapter 2: Thermodynamics": [
+                                { title: "Lecture 1: Heat & Temperature", videoId: "dQw4w9WgXcQ", duration: "38 Min" }
+                            ]
+                        }
+                    },
+                    "পদার্থবিজ্ঞান দ্বিতীয় পত্র": {
+                        chapters: {}
+                    }
                 }
             },
             "Chemistry": {
-                chapters: {
-                    "Chapter 1: Atomic Structure": [
-                        { title: "Lecture 1: Quantum Numbers", videoId: "dQw4w9WgXcQ", duration: "40 Min" },
-                        { title: "Lecture 2: Orbitals", videoId: "dQw4w9WgXcQ", duration: "55 Min" }
-                    ]
+                papers: {
+                    "রসায়ন প্রথম পত্র": {
+                        chapters: {
+                            "Chapter 1: Atomic Structure": [
+                                { title: "Lecture 1: Quantum Numbers", videoId: "dQw4w9WgXcQ", duration: "40 Min" },
+                                { title: "Lecture 2: Orbitals", videoId: "dQw4w9WgXcQ", duration: "55 Min" }
+                            ]
+                        }
+                    },
+                    "রসায়ন দ্বিতীয় পত্র": { chapters: {} }
                 }
             },
             "Mathematics": {
-                chapters: {
-                    "Chapter 1: Calculus": [
-                        { title: "Lecture 1: Limits & Continuity", videoId: "dQw4w9WgXcQ", duration: "1 Hr 10 Min" }
-                    ]
+                papers: {
+                    "উচ্চতর গণিত প্রথম পত্র": {
+                        chapters: {
+                            "Chapter 1: Calculus": [
+                                { title: "Lecture 1: Limits & Continuity", videoId: "dQw4w9WgXcQ", duration: "1 Hr 10 Min" }
+                            ]
+                        }
+                    },
+                    "উচ্চতর গণিত দ্বিতীয় পত্র": { chapters: {} }
                 }
             },
             "Biology": {
-                chapters: {
-                    "Chapter 1: Cell Biology": [
-                        { title: "Lecture 1: Cell Structure", videoId: "dQw4w9WgXcQ", duration: "42 Min" }
-                    ]
+                papers: {
+                    "জীববিজ্ঞান প্রথম পত্র": {
+                        chapters: {
+                            "Chapter 1: Cell Biology": [
+                                { title: "Lecture 1: Cell Structure", videoId: "dQw4w9WgXcQ", duration: "42 Min" }
+                            ]
+                        }
+                    },
+                    "জীববিজ্ঞান দ্বিতীয় পত্র": { chapters: {} }
                 }
             }
         };
 
         let rcRecordedData = rcDefaultData;
-        let rcCurrentPath = { subject: null, chapter: null };
+        let rcCurrentPath = { subject: null, paper: null, chapter: null };
 
         // Firebase Sync for Recorded Classes
         db.ref('recordedClasses').on('value', snap => {
             if (snap.exists()) {
-                rcRecordedData = snap.val();
+                let data = snap.val();
+                let dirty = false;
+                for (let sub in data) {
+                    if (data[sub].chapters && !data[sub].papers) {
+                        data[sub].papers = {
+                            "১ম পত্র": { chapters: data[sub].chapters }
+                        };
+                        delete data[sub].chapters;
+                        dirty = true;
+                    }
+                }
+                rcRecordedData = data;
+                if (dirty) db.ref('recordedClasses').set(rcRecordedData);
             } else {
                 rcRecordedData = rcDefaultData;
                 db.ref('recordedClasses').set(rcRecordedData); // Initialize in db if empty
             }
 
             // Real-time update for Student Portal
-            if(document.getElementById('rcRecordedClassModal') && document.getElementById('rcRecordedClassModal').style.display === 'flex') {
-                if(!rcCurrentPath.subject) rcRenderSubjects();
-                else if(!rcCurrentPath.chapter) rcRenderChapters(rcCurrentPath.subject);
-                else rcRenderLectures(rcCurrentPath.subject, rcCurrentPath.chapter);
+            if (document.getElementById('rcRecordedClassModal') && document.getElementById('rcRecordedClassModal').style.display === 'flex') {
+                if (!rcCurrentPath.subject) rcRenderSubjects();
+                else if (!rcCurrentPath.paper) rcSelectSubject(rcCurrentPath.subject);
+                else if (!rcCurrentPath.chapter) rcSelectPaper(rcCurrentPath.paper);
+                else rcSelectChapter(rcCurrentPath.chapter);
             }
 
             // Real-time update for Admin Portal
             const adminPage = document.getElementById('admin-recorded-page');
-            if(adminPage && !adminPage.classList.contains('hidden')) {
+            if (adminPage && !adminPage.classList.contains('hidden')) {
                 const sub = document.getElementById('rcAdminSubjectSelect') ? document.getElementById('rcAdminSubjectSelect').value : null;
+                const ppr = document.getElementById('rcAdminPaperSelect') ? document.getElementById('rcAdminPaperSelect').value : null;
                 const chap = document.getElementById('rcAdminChapterSelect') ? document.getElementById('rcAdminChapterSelect').value : null;
                 rcAdminRenderSubjects();
-                if(sub && rcRecordedData[sub]) {
+                if (sub && rcRecordedData[sub]) {
                     document.getElementById('rcAdminSubjectSelect').value = sub;
                     rcAdminSubjectChanged();
-                    if(chap && rcRecordedData[sub].chapters && rcRecordedData[sub].chapters[chap]) {
-                        document.getElementById('rcAdminChapterSelect').value = chap;
-                        rcAdminChapterChanged();
+                    if (ppr && rcRecordedData[sub].papers && rcRecordedData[sub].papers[ppr]) {
+                        document.getElementById('rcAdminPaperSelect').value = ppr;
+                        rcAdminPaperChanged();
+                        if (chap && rcRecordedData[sub].papers[ppr].chapters && rcRecordedData[sub].papers[ppr].chapters[chap]) {
+                            document.getElementById('rcAdminChapterSelect').value = chap;
+                            rcAdminChapterChanged();
+                        }
                     }
                 }
             }
@@ -13177,7 +13269,7 @@
                 return;
             }
 
-            rcCurrentPath = { subject: null, chapter: null };
+            rcCurrentPath = { subject: null, paper: null, chapter: null };
             rcRenderSubjects();
         }
 
@@ -13200,13 +13292,14 @@
         </svg>`;
 
         window.rcRenderSubjects = function () {
+            rcCurrentPath = { subject: null, paper: null, chapter: null };
             const body = document.getElementById('rcModalBody');
             document.getElementById('rcModalTitle').innerHTML = `${rcLogoSVG} Recorded Classes`;
 
             let html = '<div class="rc-folder-grid">';
             for (let subject in rcRecordedData) {
                 html += `
-                    <div class="rc-folder-card" onclick="rcSelectSubject('${subject}')">
+                    <div class="rc-folder-card" onclick="rcSelectSubject('${subject.replace(/'/g, "\\'")}')">
                         <div class="rc-folder-icon"></div>
                         <span>${subject}</span>
                     </div>
@@ -13218,6 +13311,8 @@
 
         window.rcSelectSubject = function (subject) {
             rcCurrentPath.subject = subject;
+            rcCurrentPath.paper = null;
+            rcCurrentPath.chapter = null;
             const subjectData = rcRecordedData[subject];
             document.getElementById('rcModalTitle').innerHTML = `${rcLogoSVG} ${subject}`;
 
@@ -13229,13 +13324,44 @@
                 <div class="rc-folder-grid">
             `;
 
-            for (let chapter in subjectData.chapters) {
-                html += `
-                    <div class="rc-folder-card" onclick="rcSelectChapter('${chapter.replace(/'/g, "\\'")}')">
-                        <div class="rc-folder-icon"></div>
-                        <span>${chapter}</span>
-                    </div>
-                `;
+            if (subjectData && subjectData.papers) {
+                for (let paper in subjectData.papers) {
+                    html += `
+                        <div class="rc-folder-card" onclick="rcSelectPaper('${paper.replace(/'/g, "\\'")}')">
+                            <div class="rc-folder-icon"></div>
+                            <span>${paper}</span>
+                        </div>
+                    `;
+                }
+            }
+            html += '</div>';
+            document.getElementById('rcModalBody').innerHTML = html;
+        }
+
+        window.rcSelectPaper = function (paper) {
+            rcCurrentPath.paper = paper;
+            rcCurrentPath.chapter = null;
+            const paperData = rcRecordedData[rcCurrentPath.subject].papers[paper];
+            document.getElementById('rcModalTitle').innerHTML = `${rcLogoSVG} ${paper}`;
+
+            let html = `
+                <div class="rc-breadcrumb">
+                    <span onclick="rcRenderSubjects()">All Subjects</span> <i>❯</i> 
+                    <span onclick="rcSelectSubject('${rcCurrentPath.subject.replace(/'/g, "\\'")}')">${rcCurrentPath.subject}</span> <i>❯</i> 
+                    <span class="active">${paper}</span>
+                </div>
+                <div class="rc-folder-grid">
+            `;
+
+            if (paperData && paperData.chapters) {
+                for (let chapter in paperData.chapters) {
+                    html += `
+                        <div class="rc-folder-card" onclick="rcSelectChapter('${chapter.replace(/'/g, "\\'")}')">
+                            <div class="rc-folder-icon"></div>
+                            <span>${chapter}</span>
+                        </div>
+                    `;
+                }
             }
             html += '</div>';
             document.getElementById('rcModalBody').innerHTML = html;
@@ -13243,13 +13369,14 @@
 
         window.rcSelectChapter = function (chapter) {
             rcCurrentPath.chapter = chapter;
-            const lectures = rcRecordedData[rcCurrentPath.subject].chapters[chapter];
+            const lectures = rcRecordedData[rcCurrentPath.subject].papers[rcCurrentPath.paper].chapters[chapter] || [];
             document.getElementById('rcModalTitle').innerHTML = `${rcLogoSVG} Lectures`;
 
             let html = `
                 <div class="rc-breadcrumb">
                     <span onclick="rcRenderSubjects()">All Subjects</span> <i>❯</i> 
-                    <span onclick="rcSelectSubject('${rcCurrentPath.subject}')">${rcCurrentPath.subject}</span> <i>❯</i> 
+                    <span onclick="rcSelectSubject('${rcCurrentPath.subject.replace(/'/g, "\\'")}')">${rcCurrentPath.subject}</span> <i>❯</i> 
+                    <span onclick="rcSelectPaper('${rcCurrentPath.paper.replace(/'/g, "\\'")}')">${rcCurrentPath.paper}</span> <i>❯</i> 
                     <span class="active">${chapter}</span>
                 </div>
                 <div class="rc-lecture-list">
@@ -13278,7 +13405,7 @@
             try {
                 const match = videoId.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
                 if (match && match[1]) finalId = match[1];
-            } catch (e) {}
+            } catch (e) { }
 
             const wrapper = document.getElementById('rcVideoWrapper');
             const originUrl = window.location.origin && window.location.origin !== "null" ? window.location.origin : 'https://pialhasan20189-png.github.io';
@@ -13312,7 +13439,7 @@
             document.getElementById('rcVideoPlayerModal').style.display = 'flex';
         }
 
-        window.rcToggleFullscreen = function() {
+        window.rcToggleFullscreen = function () {
             const wrapper = document.getElementById('rcVideoWrapper');
             if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
                 if (wrapper.requestFullscreen) { wrapper.requestFullscreen(); }
@@ -13324,7 +13451,7 @@
                     if (screen.orientation && screen.orientation.lock) {
                         screen.orientation.lock("landscape").catch(e => console.log(e));
                     }
-                } catch (err) {}
+                } catch (err) { }
             } else {
                 if (document.exitFullscreen) { document.exitFullscreen(); }
                 else if (document.msExitFullscreen) { document.msExitFullscreen(); }
@@ -13335,7 +13462,7 @@
                     if (screen.orientation && screen.orientation.unlock) {
                         screen.orientation.unlock();
                     }
-                } catch (err) {}
+                } catch (err) { }
             }
         };
 
@@ -13354,15 +13481,16 @@
             for (let sub in rcRecordedData) {
                 select.innerHTML += `<option value="${sub}">${sub}</option>`;
             }
+            document.getElementById('rcAdminPaperSection').style.display = 'none';
             document.getElementById('rcAdminChapterSection').style.display = 'none';
             document.getElementById('rcAdminLectureSection').style.display = 'none';
         };
 
         window.rcAdminAddSubject = function () {
             const val = document.getElementById('rcAdminNewSubject').value.trim();
-            if(!val) return alert("Enter subject name");
-            if(rcRecordedData[val]) return alert("Subject already exists");
-            rcRecordedData[val] = { chapters: {} };
+            if (!val) return alert("Enter subject name");
+            if (rcRecordedData[val]) return alert("Subject already exists");
+            rcRecordedData[val] = { papers: {} };
             rcSaveAndRefresh();
             document.getElementById('rcAdminNewSubject').value = '';
             rcAdminRenderSubjects();
@@ -13372,23 +13500,26 @@
 
         window.rcAdminSubjectChanged = function () {
             const sub = document.getElementById('rcAdminSubjectSelect').value;
-            if(!sub) {
+            if (!sub) {
+                document.getElementById('rcAdminPaperSection').style.display = 'none';
                 document.getElementById('rcAdminChapterSection').style.display = 'none';
                 document.getElementById('rcAdminLectureSection').style.display = 'none';
                 document.getElementById('rcAdminDeleteSubjectBtn').style.display = 'none';
                 return;
             }
             document.getElementById('rcAdminDeleteSubjectBtn').style.display = 'inline-block';
+            document.getElementById('rcAdminDeletePaperBtn').style.display = 'none';
             document.getElementById('rcAdminDeleteChapterBtn').style.display = 'none';
-            document.getElementById('rcAdminCurrentSubject').innerText = sub;
-            document.getElementById('rcAdminChapterSection').style.display = 'block';
+            document.getElementById('rcAdminCurrentSubjectForPaper').innerText = sub;
+            document.getElementById('rcAdminPaperSection').style.display = 'block';
+            document.getElementById('rcAdminChapterSection').style.display = 'none';
             document.getElementById('rcAdminLectureSection').style.display = 'none';
-            rcAdminRenderChapters(sub);
+            rcAdminRenderPapers(sub);
         };
 
         function showRcConfirm(msg, onConfirm) {
             document.getElementById('rcConfirmMsg').innerText = msg;
-            document.getElementById('rcConfirmYesBtn').onclick = function() {
+            document.getElementById('rcConfirmYesBtn').onclick = function () {
                 document.getElementById('rcConfirmModal').style.display = 'none';
                 onConfirm();
             };
@@ -13397,8 +13528,8 @@
 
         window.rcAdminDeleteCurrentSubject = function () {
             const sub = document.getElementById('rcAdminSubjectSelect').value;
-            if(!sub) return;
-            showRcConfirm(`আপনি কি নিশ্চিত যে আপনি "${sub}" সাবজেক্টটি এবং এর ভেতরের সব চ্যাপ্টার ও লেকচার মুছে ফেলতে চান?`, function() {
+            if (!sub) return;
+            showRcConfirm(`আপনি কি নিশ্চিত যে আপনি "${sub}" সাবজেক্টটি এবং এর ভেতরের সব তথ্য মুছে ফেলতে চান?`, function () {
                 delete rcRecordedData[sub];
                 rcSaveAndRefresh();
                 rcAdminRenderSubjects();
@@ -13406,31 +13537,90 @@
             });
         };
 
-        window.rcAdminRenderChapters = function (sub) {
+        window.rcAdminRenderPapers = function (sub) {
+            const select = document.getElementById('rcAdminPaperSelect');
+            select.innerHTML = '<option value="">-- Select Paper --</option>';
+            if (rcRecordedData[sub] && rcRecordedData[sub].papers) {
+                for (let paper in rcRecordedData[sub].papers) {
+                    select.innerHTML += `<option value="${paper}">${paper}</option>`;
+                }
+            }
+        };
+
+        window.rcAdminAddPaper = function () {
+            const sub = document.getElementById('rcAdminSubjectSelect').value;
+            const val = document.getElementById('rcAdminNewPaper').value.trim();
+            if (!sub || !val) return alert("Select subject and enter paper name");
+            if (!rcRecordedData[sub].papers) rcRecordedData[sub].papers = {};
+            if (rcRecordedData[sub].papers[val]) return alert("Paper already exists");
+            rcRecordedData[sub].papers[val] = { chapters: {} };
+            rcSaveAndRefresh();
+            document.getElementById('rcAdminNewPaper').value = '';
+            rcAdminRenderPapers(sub);
+            document.getElementById('rcAdminPaperSelect').value = val;
+            rcAdminPaperChanged();
+        };
+
+        window.rcAdminPaperChanged = function () {
+            const sub = document.getElementById('rcAdminSubjectSelect').value;
+            const ppr = document.getElementById('rcAdminPaperSelect').value;
+            if (!ppr) {
+                document.getElementById('rcAdminChapterSection').style.display = 'none';
+                document.getElementById('rcAdminLectureSection').style.display = 'none';
+                document.getElementById('rcAdminDeletePaperBtn').style.display = 'none';
+                return;
+            }
+            document.getElementById('rcAdminDeletePaperBtn').style.display = 'inline-block';
+            document.getElementById('rcAdminDeleteChapterBtn').style.display = 'none';
+            document.getElementById('rcAdminCurrentPaper').innerText = ppr;
+            document.getElementById('rcAdminChapterSection').style.display = 'block';
+            document.getElementById('rcAdminLectureSection').style.display = 'none';
+            rcAdminRenderChapters(sub, ppr);
+        };
+
+        window.rcAdminDeleteCurrentPaper = function () {
+            const sub = document.getElementById('rcAdminSubjectSelect').value;
+            const ppr = document.getElementById('rcAdminPaperSelect').value;
+            if (!sub || !ppr) return;
+            showRcConfirm(`আপনি কি নিশ্চিত যে আপনি "${ppr}" এবং এর সব চ্যাপ্টার মুছে ফেলতে চান?`, function () {
+                delete rcRecordedData[sub].papers[ppr];
+                rcSaveAndRefresh();
+                rcAdminRenderPapers(sub);
+                document.getElementById('rcAdminPaperSelect').value = '';
+                rcAdminPaperChanged();
+            });
+        };
+
+        window.rcAdminRenderChapters = function (sub, ppr) {
             const select = document.getElementById('rcAdminChapterSelect');
             select.innerHTML = '<option value="">-- Select Chapter --</option>';
-            for (let chap in rcRecordedData[sub].chapters) {
-                select.innerHTML += `<option value="${chap}">${chap}</option>`;
+            if (rcRecordedData[sub].papers[ppr] && rcRecordedData[sub].papers[ppr].chapters) {
+                for (let chap in rcRecordedData[sub].papers[ppr].chapters) {
+                    select.innerHTML += `<option value="${chap}">${chap}</option>`;
+                }
             }
         };
 
         window.rcAdminAddChapter = function () {
             const sub = document.getElementById('rcAdminSubjectSelect').value;
+            const ppr = document.getElementById('rcAdminPaperSelect').value;
             const val = document.getElementById('rcAdminNewChapter').value.trim();
-            if(!sub || !val) return alert("Select subject and enter chapter name");
-            if(rcRecordedData[sub].chapters[val]) return alert("Chapter already exists");
-            rcRecordedData[sub].chapters[val] = [];
+            if (!sub || !ppr || !val) return alert("Select subject, paper and enter chapter name");
+            if (!rcRecordedData[sub].papers[ppr].chapters) rcRecordedData[sub].papers[ppr].chapters = {};
+            if (rcRecordedData[sub].papers[ppr].chapters[val]) return alert("Chapter already exists");
+            rcRecordedData[sub].papers[ppr].chapters[val] = [];
             rcSaveAndRefresh();
             document.getElementById('rcAdminNewChapter').value = '';
-            rcAdminRenderChapters(sub);
+            rcAdminRenderChapters(sub, ppr);
             document.getElementById('rcAdminChapterSelect').value = val;
             rcAdminChapterChanged();
         };
 
         window.rcAdminChapterChanged = function () {
             const sub = document.getElementById('rcAdminSubjectSelect').value;
+            const ppr = document.getElementById('rcAdminPaperSelect').value;
             const chap = document.getElementById('rcAdminChapterSelect').value;
-            if(!chap) {
+            if (!chap) {
                 document.getElementById('rcAdminLectureSection').style.display = 'none';
                 document.getElementById('rcAdminDeleteChapterBtn').style.display = 'none';
                 return;
@@ -13438,27 +13628,30 @@
             document.getElementById('rcAdminDeleteChapterBtn').style.display = 'inline-block';
             document.getElementById('rcAdminCurrentChapter').innerText = chap;
             document.getElementById('rcAdminLectureSection').style.display = 'block';
-            rcAdminRenderLectures(sub, chap);
+            rcAdminRenderLectures(sub, ppr, chap);
         };
 
         window.rcAdminDeleteCurrentChapter = function () {
             const sub = document.getElementById('rcAdminSubjectSelect').value;
+            const ppr = document.getElementById('rcAdminPaperSelect').value;
             const chap = document.getElementById('rcAdminChapterSelect').value;
-            if(!sub || !chap) return;
-            showRcConfirm(`আপনি কি নিশ্চিত যে আপনি "${chap}" চ্যাপ্টারটি এবং এর সব লেকচার মুছে ফেলতে চান?`, function() {
-                delete rcRecordedData[sub].chapters[chap];
+            if (!sub || !ppr || !chap) return;
+            showRcConfirm(`আপনি কি নিশ্চিত যে আপনি "${chap}" চ্যাপ্টারটি এবং এর সব লেকচার মুছে ফেলতে চান?`, function () {
+                delete rcRecordedData[sub].papers[ppr].chapters[chap];
                 rcSaveAndRefresh();
-                rcAdminRenderChapters(sub);
+                rcAdminRenderChapters(sub, ppr);
                 document.getElementById('rcAdminChapterSelect').value = '';
                 rcAdminChapterChanged();
             });
         };
 
-        window.rcAdminRenderLectures = function (sub, chap) {
+        window.rcAdminRenderLectures = function (sub, ppr, chap) {
             const list = document.getElementById('rcAdminLectureList');
             let html = '';
-            rcRecordedData[sub].chapters[chap].forEach((lec, idx) => {
+            let lectures = rcRecordedData[sub].papers[ppr].chapters[chap] || [];
+            lectures.forEach((lec, idx) => {
                 const subStr = sub.replace(/'/g, "\\'");
+                const pprStr = ppr.replace(/'/g, "\\'");
                 const chapStr = chap.replace(/'/g, "\\'");
                 html += `
                     <div style="background: var(--bg); padding: 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--text-muted); margin-bottom:10px; flex-wrap: wrap; gap: 10px;">
@@ -13467,9 +13660,9 @@
                             <p style="color: var(--text-muted); margin: 5px 0 0 0; font-size: 12px;">ID: ${lec.videoId} | ${lec.duration}</p>
                         </div>
                         <div style="display: flex; gap: 6px;">
-                            ${idx > 0 ? `<button onclick="rcAdminMoveLecture('${subStr}', '${chapStr}', ${idx}, -1)" style="background: var(--primary); color: #fff; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer;" title="Move Up"><i class="fas fa-arrow-up"></i></button>` : ''}
-                            ${idx < rcRecordedData[sub].chapters[chap].length - 1 ? `<button onclick="rcAdminMoveLecture('${subStr}', '${chapStr}', ${idx}, 1)" style="background: var(--primary); color: #fff; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer;" title="Move Down"><i class="fas fa-arrow-down"></i></button>` : ''}
-                            <button onclick="rcAdminDeleteLecture('${subStr}', '${chapStr}', ${idx})" style="background: var(--danger); color: #fff; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer;">Delete</button>
+                            ${idx > 0 ? `<button onclick="rcAdminMoveLecture('${subStr}', '${pprStr}', '${chapStr}', ${idx}, -1)" style="background: var(--primary); color: #fff; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer;" title="Move Up"><i class="fas fa-arrow-up"></i></button>` : ''}
+                            ${idx < lectures.length - 1 ? `<button onclick="rcAdminMoveLecture('${subStr}', '${pprStr}', '${chapStr}', ${idx}, 1)" style="background: var(--primary); color: #fff; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer;" title="Move Down"><i class="fas fa-arrow-down"></i></button>` : ''}
+                            <button onclick="rcAdminDeleteLecture('${subStr}', '${pprStr}', '${chapStr}', ${idx})" style="background: var(--danger); color: #fff; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer;">Delete</button>
                         </div>
                     </div>
                 `;
@@ -13477,45 +13670,47 @@
             list.innerHTML = html || '<p style="color: var(--text-muted);">No lectures added yet.</p>';
         };
 
-        window.rcAdminMoveLecture = function (sub, chap, idx, dir) {
-            const arr = rcRecordedData[sub].chapters[chap];
+        window.rcAdminMoveLecture = function (sub, ppr, chap, idx, dir) {
+            const arr = rcRecordedData[sub].papers[ppr].chapters[chap];
             if (idx + dir < 0 || idx + dir >= arr.length) return;
             const temp = arr[idx];
             arr[idx] = arr[idx + dir];
             arr[idx + dir] = temp;
             rcSaveAndRefresh();
-            rcAdminRenderLectures(sub, chap);
+            rcAdminRenderLectures(sub, ppr, chap);
         };
 
         window.rcAdminAddLecture = function () {
             const sub = document.getElementById('rcAdminSubjectSelect').value;
+            const ppr = document.getElementById('rcAdminPaperSelect').value;
             const chap = document.getElementById('rcAdminChapterSelect').value;
             const title = document.getElementById('rcAdminLectureTitle').value.trim();
             let videoId = document.getElementById('rcAdminLectureVideoId').value.trim();
             const duration = document.getElementById('rcAdminLectureDuration').value.trim();
-            
-            if(!sub || !chap || !title || !videoId || !duration) return alert("Fill all fields");
-            
+
+            if (!sub || !ppr || !chap || !title || !videoId || !duration) return alert("Fill all fields");
+
             try {
                 const match = videoId.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
                 if (match && match[1]) videoId = match[1];
-            } catch (e) {}
-            
-            rcRecordedData[sub].chapters[chap].push({ title, videoId, duration });
+            } catch (e) { }
+
+            if (!rcRecordedData[sub].papers[ppr].chapters[chap]) rcRecordedData[sub].papers[ppr].chapters[chap] = [];
+            rcRecordedData[sub].papers[ppr].chapters[chap].push({ title, videoId, duration });
             rcSaveAndRefresh();
-            
+
             document.getElementById('rcAdminLectureTitle').value = '';
             document.getElementById('rcAdminLectureVideoId').value = '';
             document.getElementById('rcAdminLectureDuration').value = '';
-            
-            rcAdminRenderLectures(sub, chap);
+
+            rcAdminRenderLectures(sub, ppr, chap);
         };
 
-        window.rcAdminDeleteLecture = function (sub, chap, idx) {
-            showRcConfirm('আপনি কি এই লেকচারটি ডিলিট করতে চান?', function() {
-                rcRecordedData[sub].chapters[chap].splice(idx, 1);
+        window.rcAdminDeleteLecture = function (sub, ppr, chap, idx) {
+            showRcConfirm('আপনি কি এই লেকচারটি ডিলিট করতে চান?', function () {
+                rcRecordedData[sub].papers[ppr].chapters[chap].splice(idx, 1);
                 rcSaveAndRefresh();
-                rcAdminRenderLectures(sub, chap);
+                rcAdminRenderLectures(sub, ppr, chap);
             });
         };
 
@@ -13525,13 +13720,18 @@
     </script>
 
     <!-- Custom Confirm Modal for Recorded Classes -->
-    <div id="rcConfirmModal" class="rc-modal-overlay" style="z-index: 3000; display: none; align-items: center; justify-content: center;">
+    <div id="rcConfirmModal" class="rc-modal-overlay"
+        style="z-index: 3000; display: none; align-items: center; justify-content: center;">
         <div class="rc-modal-content" style="max-width: 400px; padding: 25px; text-align: center; border-radius: 16px;">
-            <i class="fas fa-exclamation-triangle" style="font-size: 40px; color: var(--danger); margin-bottom: 15px;"></i>
-            <h3 id="rcConfirmMsg" style="color: var(--text-main); font-size: 16px; margin-bottom: 20px; line-height: 1.5;"></h3>
+            <i class="fas fa-exclamation-triangle"
+                style="font-size: 40px; color: var(--danger); margin-bottom: 15px;"></i>
+            <h3 id="rcConfirmMsg"
+                style="color: var(--text-main); font-size: 16px; margin-bottom: 20px; line-height: 1.5;"></h3>
             <div style="display: flex; gap: 10px;">
-                <button id="rcConfirmYesBtn" class="btn-primary" style="flex: 1; background: var(--danger); padding: 10px;">হ্যাঁ, ডিলিট করুন</button>
-                <button onclick="document.getElementById('rcConfirmModal').style.display = 'none'" class="btn-primary" style="flex: 1; background: var(--text-muted); padding: 10px;">না</button>
+                <button id="rcConfirmYesBtn" class="btn-primary"
+                    style="flex: 1; background: var(--danger); padding: 10px;">হ্যাঁ, ডিলিট করুন</button>
+                <button onclick="document.getElementById('rcConfirmModal').style.display = 'none'" class="btn-primary"
+                    style="flex: 1; background: var(--text-muted); padding: 10px;">না</button>
             </div>
         </div>
     </div>
@@ -13574,5 +13774,392 @@
             </div>
         </div>
     </div>
+
+    <!-- Uni Hub BD Modal and Styles -->
+    <style>
+    #uniModal {
+        --primary-color: var(--primary, #2563eb);
+        --secondary-color: var(--primary, #2563eb);
+        --bg-color: var(--bg, #f1f5f9);
+        --text-color: var(--text-main, #0f172a);
+        --card-bg: var(--card-bg, #ffffff);
+        --text-muted-color: var(--text-muted, #64748b);
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    #uniModal.modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(5px);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000000;
+        padding: 20px;
+    }
+
+    #uniModal.modal-overlay.active {
+        display: flex;
+    }
+
+    #uniModal .modal-content {
+        background: var(--bg-color);
+        width: 100%;
+        max-width: 900px;
+        border-radius: 20px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        position: relative;
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
+        animation: slideUpUni 0.4s ease;
+    }
+
+    @keyframes slideUpUni {
+        from { transform: translateY(50px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    #uniModal .modal-header {
+        background: var(--primary-color);
+        color: white;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #uniModal .modal-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0;
+        color: white;
+    }
+
+    #uniModal .close-modal-btn {
+        background: rgba(255,255,255,0.2) !important;
+        border: none !important;
+        color: white !important;
+        width: 36px !important;
+        height: 36px !important;
+        border-radius: 50% !important;
+        font-size: 1.2rem !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: background 0.3s !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    #uniModal .close-modal-btn:hover {
+        background: rgba(255,255,255,0.4) !important;
+    }
+
+    #uniModal .modal-body {
+        padding: 20px;
+        overflow-y: auto;
+    }
+
+    #uniModal .search-bar-container {
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    #uniModal .search-input {
+        width: 100%;
+        padding: 15px 20px 15px 50px !important;
+        border: 2px solid var(--text-muted-color) !important;
+        border-radius: 12px !important;
+        font-size: 1rem !important;
+        outline: none !important;
+        transition: border-color 0.3s !important;
+        background: var(--bg-color) !important;
+        color: var(--text-color) !important;
+    }
+
+    #uniModal .search-input:focus {
+        border-color: var(--primary-color) !important;
+    }
+
+    #uniModal .search-icon {
+        position: absolute;
+        left: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted-color);
+        font-size: 1.1rem;
+    }
+
+    #uniModal .results-count {
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+        color: var(--text-muted-color);
+        font-weight: 500;
+    }
+
+    #uniModal .uni-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 20px;
+    }
+
+    #uniModal .uni-card {
+        background: var(--card-bg) !important;
+        border-radius: 16px !important;
+        padding: 0 !important;
+        box-shadow: var(--shadow) !important;
+        transition: transform 0.3s, box-shadow 0.3s !important;
+        overflow: hidden !important;
+        border: 1px solid rgba(128,128,128,0.1) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100% !important;
+        margin: 0 !important;
+    }
+
+    #uniModal .uni-card:hover {
+        transform: translateY(-5px) !important;
+        box-shadow: var(--shadow-hover) !important;
+    }
+
+    #uniModal .card-top {
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(128,128,128,0.05);
+        border-bottom: 1px solid rgba(128,128,128,0.1);
+    }
+
+    #uniModal .uni-short-en {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: var(--gold-300, #F3C876) !important;
+        background: var(--gold-900, #2E2412) !important;
+        padding: 5px 10px;
+        border-radius: 8px;
+    }
+
+    #uniModal .uni-short-bn {
+        font-weight: 600;
+        color: var(--text-muted-color);
+        font-size: 0.95rem;
+    }
+
+    #uniModal .card-body {
+        padding: 15px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #uniModal .uni-name-bn {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: var(--text-color);
+    }
+
+    #uniModal .uni-name-en {
+        font-size: 0.85rem;
+        color: var(--text-muted-color);
+        font-family: 'Poppins', sans-serif;
+        margin-bottom: 15px;
+        min-height: 40px; 
+    }
+
+    #uniModal .visit-btn {
+        margin-top: auto;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        width: 100% !important;
+        padding: 10px !important;
+        background: var(--primary-color) !important;
+        color: white !important;
+        text-decoration: none !important;
+        border-radius: 8px !important;
+        font-weight: 500 !important;
+        transition: opacity 0.3s !important;
+    }
+
+    #uniModal .visit-btn:hover {
+        opacity: 0.9 !important;
+    }
+
+    #uniModal .visit-btn.disabled {
+        background: var(--text-muted-color) !important;
+        cursor: not-allowed !important;
+        pointer-events: none !important;
+    }
+
+    @media (max-width: 768px) {
+        #uniModal .modal-title {
+            font-size: 1.2rem;
+        }
+        #uniModal .uni-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    </style>
+
+    <div class="modal-overlay" id="uniModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">বাংলাদেশের ৫৯টি বিশ্ববিদ্যালয়</h2>
+                <button class="close-modal-btn" id="closeUniModalBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="search-bar-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" id="searchUniInput" placeholder="বিশ্ববিদ্যালয়ের নাম বা শর্ট নেম লিখে সার্চ করুন...">
+                </div>
+                
+                <div class="results-count" id="uniResultsCount">৫৯টি ফলাফল পাওয়া গেছে</div>
+
+                <div class="uni-grid" id="uniGrid">
+                    <!-- University Cards will be injected here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const universities = [
+            { sl: 1, enName: "University of Dhaka", bnName: "ঢাকা বিশ্ববিদ্যালয়", enShort: "DU", bnShort: "ঢাবি", web: "www.du.ac.bd" },
+            { sl: 2, enName: "University of Rajshahi", bnName: "রাজশাহী বিশ্ববিদ্যালয়", enShort: "RU", bnShort: "রাবি", web: "www.ru.ac.bd" },
+            { sl: 3, enName: "Bangladesh Agricultural University", bnName: "বাংলাদেশ কৃষি বিশ্ববিদ্যালয়", enShort: "BAU", bnShort: "বাকৃবি", web: "www.bau.edu.bd" },
+            { sl: 4, enName: "Bangladesh University of Engineering & Technology", bnName: "বাংলাদেশ প্রকৌশল বিশ্ববিদ্যালয়", enShort: "BUET", bnShort: "বুয়েট", web: "www.buet.ac.bd" },
+            { sl: 5, enName: "University of Chittagong", bnName: "চট্টগ্রাম বিশ্ববিদ্যালয়", enShort: "CU", bnShort: "চবি", web: "www.cu.ac.bd" },
+            { sl: 6, enName: "Jahangirnagar University", bnName: "জাহাঙ্গীরনগর বিশ্ববিদ্যালয়", enShort: "JU", bnShort: "জাবি", web: "www.juniv.edu" },
+            { sl: 7, enName: "Islamic University, Bangladesh", bnName: "ইসলামী বিশ্ববিদ্যালয়, বাংলাদেশ", enShort: "IU", bnShort: "ইবি", web: "www.iu.ac.bd" },
+            { sl: 8, enName: "Shahjalal University of Science & Technology", bnName: "শাহজালাল বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়", enShort: "SUST", bnShort: "শাবিপ্রবি", web: "www.sust.edu" },
+            { sl: 9, enName: "Khulna University", bnName: "খুলনা বিশ্ববিদ্যালয়", enShort: "KU", bnShort: "খুবি", web: "www.ku.ac.bd" },
+            { sl: 10, enName: "National University", bnName: "জাতীয় বিশ্ববিদ্যালয়", enShort: "NU", bnShort: "জাতীয় বিশ্ববিদ্যালয়", web: "www.nu.edu.bd" },
+            { sl: 11, enName: "Bangladesh Open University", bnName: "বাংলাদেশ উন্মুক্ত বিশ্ববিদ্যালয়", enShort: "BOU", bnShort: "বাউবি", web: "www.bou.ac.bd" },
+            { sl: 12, enName: "Bangladesh Medical University", bnName: "বাংলাদেশ মেডিক্যাল বিশ্ববিদ্যালয়", enShort: "BMU", bnShort: "বিএমইউ", web: "www.bmu.ac.bd" },
+            { sl: 13, enName: "Gazipur Agricultural University", bnName: "গাজীপুর কৃষি বিশ্ববিদ্যালয়", enShort: "GAU", bnShort: "গাকৃবি", web: "https://gau.edu.bd/" },
+            { sl: 14, enName: "Hajee Mohammad Danesh Science & Technology University", bnName: "হাজী মোহাম্মদ দানেশ বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়", enShort: "HSTU", bnShort: "হাবিপ্রবি", web: "www.hstu.ac.bd" },
+            { sl: 15, enName: "Mawlana Bhashani Science & Technology University", bnName: "মাওলানা ভাসানী বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়", enShort: "MBSTU", bnShort: "মাবিপ্রবি", web: "www.mbstu.ac.bd" },
+            { sl: 16, enName: "Patuakhali Science And Technology University", bnName: "পটুয়াখালী বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়", enShort: "PSTU", bnShort: "পবিপ্রবি", web: "www.pstu.ac.bd" },
+            { sl: 17, enName: "Sher-e-Bangla Agricultural University", bnName: "শেরেবাংলা কৃষি বিশ্ববিদ্যালয়", enShort: "SAU", bnShort: "শেকৃবি", web: "www.sau.edu.bd" },
+            { sl: 18, enName: "Chittagong University of Engineering & Technology", bnName: "চট্টগ্রাম প্রকৌশল ও প্রযুক্তি বিশ্ববিদ্যালয়", enShort: "CUET", bnShort: "চুয়েট", web: "www.cuet.ac.bd" },
+            { sl: 19, enName: "Rajshahi University of Engineering & Technology", bnName: "রাজশাহী প্রকৌশল ও প্রযুক্তি বিশ্ববিদ্যালয়", enShort: "RUET", bnShort: "রুয়েট", web: "www.ruet.ac.bd" },
+            { sl: 20, enName: "Khulna University of Engineering & Technology", bnName: "খুলনা প্রকৌশল ও প্রযুক্তি বিশ্ববিদ্যালয়", enShort: "KUET", bnShort: "কুয়েট", web: "www.kuet.ac.bd" },
+            { sl: 21, enName: "Dhaka University of Engineering & Technology", bnName: "ঢাকা প্রকৌশল ও প্রযুক্তি বিশ্ববিদ্যালয়", enShort: "DUET", bnShort: "ডুয়েট", web: "www.duet.ac.bd" },
+            { sl: 22, enName: "Noakhali Science & Technology University", bnName: "নোয়াখালী বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়", enShort: "NSTU", bnShort: "নোবিপ্রবি", web: "www.nstu.edu.bd" },
+            { sl: 23, enName: "Jagannath University", bnName: "জগন্নাথ বিশ্ববিদ্যালয়", enShort: "JnU", bnShort: "জবি", web: "www.jnu.ac.bd" },
+            { sl: 24, enName: "Comilla University", bnName: "কুমিল্লা বিশ্ববিদ্যালয়", enShort: "CoU", bnShort: "কুবি", web: "www.cou.ac.bd" },
+            { sl: 25, enName: "Jatiya Kabi Kazi Nazrul Islam University", bnName: "জাতীয় কবি কাজী নজরুল ইসলাম বিশ্ববিদ্যালয়", enShort: "JKKNIU", bnShort: "জাককানইবি", web: "www.jkkniu.edu.bd" },
+            { sl: 26, enName: "Chittagong Veterinary and Animal Sciences University", bnName: "চট্টগ্রাম ভেটেরিনারি ও এনিম্যাল সাইন্সেস বিশ্ববিদ্যালয়", enShort: "CVASU", bnShort: "সিভাসু", web: "www.cvasu.ac.bd" },
+            { sl: 27, enName: "Sylhet Agricultural University", bnName: "সিলেট কৃষি বিশ্ববিদ্যালয়", enShort: "SAU", bnShort: "সিকৃবি", web: "www.sau.ac.bd" },
+            { sl: 28, enName: "Jessore University of Science & Technology", bnName: "যশোর বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়", enShort: "JUST", bnShort: "যোবিপ্রবি", web: "www.just.edu.bd" },
+            { sl: 29, enName: "Pabna University of Science and Technology", bnName: "পাবনা বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়", enShort: "PUST", bnShort: "পাবিপ্রবি", web: "www.pust.ac.bd" },
+            { sl: 30, enName: "Begum Rokeya University, Rangpur", bnName: "বেগম রোকেয়া বিশ্ববিদ্যালয়, রংপুর", enShort: "BRUR", bnShort: "বেরোবি", web: "www.brur.ac.bd" },
+            { sl: 31, enName: "Bangladesh University of Professionals", bnName: "বাংলাদেশ ইউনিভার্সিটি অব প্রফেশনালস", enShort: "BUP", bnShort: "বিইউপি", web: "www.bup.edu.bd" },
+            { sl: 32, enName: "Gopalganj Science & Technology University", bnName: "গোপালগঞ্জ বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়", enShort: "GSTU", bnShort: "গোবিপ্রবি", web: "www.bsmrstu.edu.bd" },
+            { sl: 33, enName: "Bangladesh University of Textiles", bnName: "বাংলাদেশ টেক্সটাইল বিশ্ববিদ্যালয়", enShort: "BUTEX", bnShort: "বুটেক্স", web: "www.butex.edu.bd" },
+            { sl: 34, enName: "University of Barishal", bnName: "বরিশাল বিশ্ববিদ্যালয়", enShort: "BU", bnShort: "ববি", web: "www.bu.ac.bd" },
+            { sl: 35, enName: "Rangamati Science and Technology University", bnName: "রাঙ্গামাটি বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়", enShort: "RMSTU", bnShort: "রাবিপ্রবি", web: "www.rmstu.edu.bd" },
+            { sl: 36, enName: "Bangladesh Maritime University", bnName: "বাংলাদেশ মেরিটাইম বিশ্ববিদ্যালয়", enShort: "BMU", bnShort: "বিএমইউ", web: "https://bmu.edu.bd/" },
+            { sl: 37, enName: "Islamic Arabic University", bnName: "ইসলামি আরবি বিশ্ববিদ্যালয়", enShort: "IAU", bnShort: "ইআবি", web: "www.iau.edu.bd" },
+            { sl: 38, enName: "Chittagong Medical University", bnName: "চট্টগ্রাম মেডিকেল বিশ্ববিদ্যালয়", enShort: "CMU", bnShort: "চমেবি", web: "www.cmu.edu.bd" },
+            { sl: 39, enName: "Rajshahi Medical University", bnName: "রাজশাহী মেডিকেল বিশ্ববিদ্যালয়", enShort: "RMU", bnShort: "রামেবি", web: "www.rmu.edu.bd" },
+            { sl: 40, enName: "Rabindra University, Bangladesh", bnName: "রবীন্দ্র বিশ্ববিদ্যালয়, বাংলাদেশ", enShort: "RUB", bnShort: "রবি", web: "www.rub.ac.bd" },
+            { sl: 41, enName: "University of Frontier Technology, Bangladesh", bnName: "ইউনিভার্সিটি অব ফ্রন্টিয়ার টেকনোলজি, বাংলাদেশ", enShort: "UFTB", bnShort: "ইউএফটিবি", web: "www.uftb.ac.bd" },
+            { sl: 42, enName: "Netrokona University", bnName: "নেত্রকোণা বিশ্ববিদ্যালয়", enShort: "NU / SHU", bnShort: "নেত্রবি", web: "https://www.shu.edu.bd/" },
+            { sl: 43, enName: "Khulna Agricultural University", bnName: "খুলনা কৃষি বিশ্ববিদ্যালয়", enShort: "KAU", bnShort: "খুকৃবি", web: "www.kau.edu.bd" },
+            { sl: 44, enName: "Jamalpur Science and Technology University", bnName: "জামালপুর বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়", enShort: "JSTU / BSFMSTU", bnShort: "জাবিপ্রবি", web: "https://bsfmstu.ac.bd/" },
+            { sl: 45, enName: "Sylhet Medical University, Sylhet", bnName: "সিলেট মেডিকেল বিশ্ববিদ্যালয়", enShort: "SMU", bnShort: "সিমেবি", web: "www.bsfmmu.edu.bd" },
+            { sl: 46, enName: "Aviation And Aerospace University, Bangladesh", bnName: "অ্যাভিয়েশন অ্যান্ড অ্যারোস্পেস বিশ্ববিদ্যালয়, বাংলাদেশ", enShort: "AAUB", bnShort: "এএইউবি", web: "www.aaub.edu.bd" },
+            { sl: 47, enName: "Chandpur Science and Technology University", bnName: "চাঁদপুর বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়", enShort: "CSTU", bnShort: "চাবিপ্রবি", web: "www.cstu.ac.bd" },
+            { sl: 48, enName: "Kishoreganj University", bnName: "কিশোরগঞ্জ বিশ্ববিদ্যালয়", enShort: "KU / BSMRU", bnShort: "কিবি", web: "bsmru.ac.bd" },
+            { sl: 49, enName: "Hobiganj Agricultural University", bnName: "হবিগঞ্জ কৃষি বিশ্ববিদ্যালয়", enShort: "HAU", bnShort: "হকৃবি", web: "www.hau.ac.bd" },
+            { sl: 50, enName: "Khulna Medical University, Khulna", bnName: "খুলনা মেডিকেল বিশ্ববিদ্যালয়", enShort: "KMU", bnShort: "খমেবি", web: "www.shmu.ac.bd" },
+            { sl: 51, enName: "Kurigram Agricultural University", bnName: "কুড়িগ্রাম কৃষি বিশ্ববিদ্যালয়", enShort: "KuriAU / KAU", bnShort: "কুকৃবি", web: "www.kuriau.edu.bd" },
+            { sl: 52, enName: "Sunamganj Science and Technology University", bnName: "সুনামগঞ্জ বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়", enShort: "SSTU", bnShort: "সুবিপ্রবি", web: "www.sstu.ac.bd" },
+            { sl: 53, enName: "Pirojpur Science & Technology University", bnName: "পিরোজপুর বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়", enShort: "PRSTU", bnShort: "পিবিপ্রবি", web: "www.prstu.ac.bd" },
+            { sl: 54, enName: "Naogaon University", bnName: "নওগাঁ বিশ্ববিদ্যালয়", enShort: "NU", bnShort: "নওবি", web: "" },
+            { sl: 55, enName: "Meherpur University", bnName: "মেহেরপুর বিশ্ববিদ্যালয়", enShort: "MU", bnShort: "মেবি", web: "" },
+            { sl: 56, enName: "Bogra Science and Technology University", bnName: "বগুড়া বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়", enShort: "BSTU", bnShort: "ববিপ্রবি", web: "bstu.ac.bd" },
+            { sl: 57, enName: "Dhaka Central University", bnName: "ঢাকা সেন্ট্রাল ইউনিভার্সিটি", enShort: "DCU", bnShort: "ঢাসেনবি", web: "https://dcu.ac.bd" },
+            { sl: 58, enName: "Thakurgaon University", bnName: "ঠাকুরগাঁও বিশ্ববিদ্যালয়", enShort: "TU", bnShort: "ঠাবি", web: "" },
+            { sl: 59, enName: "Lakshmipur Science & Technology University", bnName: "লক্ষ্মীপুর বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়", enShort: "LSTU", bnShort: "লবিপ্রবি", web: "" }
+        ];
+
+        const uniModal = document.getElementById('uniModal');
+        const closeUniModalBtn = document.getElementById('closeUniModalBtn');
+        const uniGrid = document.getElementById('uniGrid');
+        const searchUniInput = document.getElementById('searchUniInput');
+        const uniResultsCount = document.getElementById('uniResultsCount');
+
+        closeUniModalBtn.addEventListener('click', () => {
+            uniModal.classList.remove('active');
+        });
+
+        uniModal.addEventListener('click', (e) => {
+            if (e.target === uniModal) {
+                uniModal.classList.remove('active');
+            }
+        });
+
+        searchUniInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filtered = universities.filter(uni => 
+                uni.bnName.toLowerCase().includes(searchTerm) ||
+                uni.enName.toLowerCase().includes(searchTerm) ||
+                uni.enShort.toLowerCase().includes(searchTerm) ||
+                uni.bnShort.toLowerCase().includes(searchTerm)
+            );
+            renderUniversities(filtered);
+        });
+
+        function renderUniversities(list) {
+            uniGrid.innerHTML = '';
+            uniResultsCount.innerText = `${list.length}টি ফলাফল পাওয়া গেছে`;
+
+            if (list.length === 0) {
+                uniGrid.innerHTML = '<p style="text-align: center; color: #64748b; grid-column: 1/-1; padding: 40px;">কোনো বিশ্ববিদ্যালয় পাওয়া যায়নি।</p>';
+                return;
+            }
+
+            list.forEach(uni => {
+                const formattedWeb = uni.web ? (uni.web.startsWith('http') ? uni.web : `https://${uni.web}`) : '#';
+                const isDisabled = uni.web === '' ? 'disabled' : '';
+                const btnText = uni.web === '' ? 'ওয়েবসাইট নেই' : 'ভিজিট ওয়েবসাইট';
+                const btnIcon = uni.web === '' ? '<i class="fas fa-times-circle"></i>' : '<i class="fas fa-external-link-alt"></i>';
+
+                const card = document.createElement('div');
+                card.classList.add('uni-card');
+                card.innerHTML = `
+                    <div class="card-top">
+                        <span class="uni-short-en">${uni.enShort}</span>
+                        <span class="uni-short-bn">${uni.bnShort}</span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="uni-name-bn">${uni.bnName}</h3>
+                        <p class="uni-name-en">${uni.enName}</p>
+                        <a href="${formattedWeb}" target="_blank" class="visit-btn ${isDisabled}">
+                            ${btnIcon} ${btnText}
+                        </a>
+                    </div>
+                `;
+                uniGrid.appendChild(card);
+            });
+        }
+    </script>
 </body>
 </html>
